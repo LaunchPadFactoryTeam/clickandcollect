@@ -8,7 +8,7 @@ Les maquettes Claude Design d'origine sont dans `project/` et `chats/` (référe
 
 - Node 22, pnpm 10 (`corepack enable`)
 - Pour `pnpm test:db` en local : PostgreSQL 16 et pgTAP (`apt install postgresql-16 postgresql-16-pgtap libtap-parser-sourcehandler-pgtap-perl`),
-  ou une base Supabase locale (`supabase db start` dans `packages/db`, puis `PGHOST=127.0.0.1 PGPORT=54322 PGUSER=postgres PGPASSWORD=postgres`).
+  ou une base Supabase locale (voir « Base de données »).
 
 ## Commandes
 
@@ -29,9 +29,30 @@ Les maquettes Claude Design d'origine sont dans `project/` et `chats/` (référe
 `LP_SITE_DIR=<dossier>` construit le site sur une autre configuration (par défaut `examples/maison-ferrand`).
 La page de contrôle du thème est servie sous `/theme/preview.html`.
 
+## Base de données (lot 2)
+
+Migrations dans `packages/db/supabase/migrations`, données de démonstration dans `packages/db/supabase/seed.sql`
+(générées par `node packages/db/scripts/generate-seed.mjs` depuis la maquette du back-office).
+
+```sh
+cd packages/db
+npx supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
+npx supabase db reset          # rejoue migrations et données de démonstration
+pnpm types                     # régénère src/database.types.ts (vérifié en CI)
+```
+
+Avec la pile locale démarrée :
+
+- `PGHOST=127.0.0.1 PGPORT=54322 PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres pnpm test:db` : pgTAP et numérotation concurrente ;
+- `LP_SUPABASE_URL=http://127.0.0.1:54321 LP_SUPABASE_DB_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres LP_SUPABASE_JWT_SECRET=super-secret-jwt-token-with-at-least-32-characters-long pnpm --filter @launchpadfactoryteam/db exec vitest run` :
+  tests d'intégration du jeton de site à travers l'API REST.
+
+Sans pile Supabase, `pnpm test:db` crée un Postgres jetable et reproduit les rôles et le schéma `auth` de Supabase
+(`packages/db/test/support/supabase-shim.psql`).
+
 ## Organisation
 
-- `packages/*` : paquets du core (`@launchpadfactoryteam/config`, `@launchpadfactoryteam/theme`, puis les paquets réservés aux lots suivants).
+- `packages/*` : paquets du core (`config`, `theme`, `db`, `content`, puis les paquets réservés aux lots suivants).
 - `apps/site` : application Next.js de tous les sites (`@launchpadfactoryteam/site`, commande `lp-site build|deploy`).
 - `tools/client-lint` : règle qui refuse tout code dans un repo client (`lp-client-lint`).
 - `templates/client-repo` : gabarit d'un repo client (configuration, assets, wrangler, CI).

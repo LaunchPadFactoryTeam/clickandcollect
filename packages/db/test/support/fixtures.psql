@@ -1,0 +1,33 @@
+-- Données de test communes : deux boutiques A et B, un commerçant par boutique, un admin LaunchPad.
+-- À inclure (\ir) dans une transaction de test, en tant que propriétaire de la base.
+insert into auth.users (id, email) values
+  ('00000000-0000-0000-0000-00000000000a', 'commandes@boutique-a.fr'),
+  ('00000000-0000-0000-0000-00000000000b', 'commandes@boutique-b.fr'),
+  ('00000000-0000-0000-0000-0000000000ad', 'equipe@launchpadfactory.fr');
+
+insert into public.shops (id, slug, name, domain, core_version) values
+  ('aaaaaaaa-0000-0000-0000-000000000000', 'boutique-a', 'Boutique A', 'boutique-a.fr', '1.0.0'),
+  ('bbbbbbbb-0000-0000-0000-000000000000', 'boutique-b', 'Boutique B', 'boutique-b.fr', '1.0.0');
+
+insert into public.shop_users (user_id, shop_id) values
+  ('00000000-0000-0000-0000-00000000000a', 'aaaaaaaa-0000-0000-0000-000000000000'),
+  ('00000000-0000-0000-0000-00000000000b', 'bbbbbbbb-0000-0000-0000-000000000000');
+
+insert into public.launchpad_admins (user_id) values ('00000000-0000-0000-0000-0000000000ad');
+
+insert into public.product_availability (shop_id, product_id, available) values
+  ('aaaaaaaa-0000-0000-0000-000000000000', 'miel', true),
+  ('bbbbbbbb-0000-0000-0000-000000000000', 'vin', true);
+
+insert into public.orders (id, shop_id, slot_start, slot_end, email, customer_hash, total_cents, stripe_session_id, paid_at) values
+  ('a0000000-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000000', '2026-10-02 14:00Z', '2026-10-02 17:00Z',
+   'client.a@exemple.fr', repeat('a', 64), 2500, 'cs_test_a1', '2026-10-02 07:12Z'),
+  ('b0000000-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000000', '2026-10-02 14:00Z', '2026-10-02 17:00Z',
+   'client.b@exemple.fr', repeat('b', 64), 4400, 'cs_test_b1', '2026-10-02 06:47Z');
+
+insert into public.order_items (order_id, shop_id, product_id, name, format, unit_price_cents, vat_rate, quantity) values
+  ('a0000000-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000000', 'miel', 'Miel de châtaignier', 'Pot 250 g', 1250, 5.5, 2),
+  ('b0000000-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000000', 'vin', 'Vin orange', 'Bouteille 75 cl', 2200, 20, 2);
+
+insert into public.stripe_events (event_id, shop_id, type) values
+  ('evt_a1', 'aaaaaaaa-0000-0000-0000-000000000000', 'checkout.session.completed');

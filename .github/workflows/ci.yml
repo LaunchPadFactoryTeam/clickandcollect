@@ -41,16 +41,31 @@ jobs:
       PGUSER: postgres
       PGPASSWORD: postgres
       PGDATABASE: postgres
+      LP_SUPABASE_URL: http://127.0.0.1:54321
+      LP_SUPABASE_DB_URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+      # Secret JWT HS256 par défaut de la pile Supabase locale (pas un secret de production).
+      LP_SUPABASE_JWT_SECRET: super-secret-jwt-token-with-at-least-32-characters-long
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - uses: supabase/setup-cli@v1
         with:
           version: latest
       - run: sudo apt-get update && sudo apt-get install -y postgresql-client libtap-parser-sourcehandler-pgtap-perl
-      # Démarre uniquement Postgres de Supabase et applique les migrations de packages/db.
-      - run: supabase db start
+      # Postgres, passerelle et PostgREST seulement ; migrations et données de démonstration appliquées au démarrage.
+      - run: supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
         working-directory: packages/db
-      - run: bash tools/scripts/test-db.sh
+      - name: Tests pgTAP et numérotation concurrente
+        run: bash tools/scripts/test-db.sh
+      - name: Tests d'intégration via l'API (jeton de site)
+        run: pnpm --filter @launchpadfactoryteam/db exec vitest run
+      - name: Types générés à jour
+        run: pnpm --filter @launchpadfactoryteam/db types && git diff --exit-code packages/db/src/database.types.ts
 
   site:
     name: site
