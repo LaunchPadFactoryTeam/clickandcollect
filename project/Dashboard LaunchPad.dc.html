@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Dashboard hub LaunchPad — chiffre d'affaires, commandes et performance de toutes les boutiques click & collect.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; background:#F7F8FA; color:#16181D; font-family:"Geist","Helvetica Neue",Arial,sans-serif; font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  a { color:#1F4B7A; text-underline-offset:3px; }
+  a:hover { color:#143454; }
+  :focus-visible { outline:2px solid #1F4B7A; outline-offset:2px; border-radius:6px; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:grid;grid-template-columns:232px minmax(0,1fr)">
+
+  <aside style="background:#16181D;color:#C7CCD4;padding:24px 16px;display:flex;flex-direction:column;gap:28px;position:sticky;top:0;height:100vh">
+    <div style="padding:0 10px">
+      <p style="margin:0;font-size:16.5px;font-weight:600;color:#FFFFFF;letter-spacing:-0.015em">LaunchPad</p>
+      <p style="margin:2px 0 0;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#777E8A">Hub click &amp; collect</p>
+    </div>
+
+    <nav aria-label="Sections" style="display:flex;flex-direction:column;gap:3px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="3">
+        <button type="button" onClick="{{ n.go }}" aria-current="{{ n.current }}" style="font:inherit;text-align:left;font-size:14.5px;font-weight:500;padding:11px 14px;min-height:44px;border:0;background:{{ n.bg }};color:{{ n.fg }};cursor:pointer;border-radius:8px">{{ n.label }}</button>
+      </sc-for>
+    </nav>
+
+    <div style="margin-top:auto;padding:16px 14px;background:#20242B;border-radius:10px">
+      <p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#FFFFFF">5 boutiques en production</p>
+      <p style="margin:0;font-size:12.5px;color:#9BA2AE;line-height:1.5">Toutes sur le core 1.0.0. Prochaine montée de version planifiée en novembre.</p>
+    </div>
+  </aside>
+
+  <main style="min-width:0">
+
+    <header style="position:sticky;top:0;z-index:20;background:#FFFFFFF2;backdrop-filter:blur(10px);border-bottom:1px solid #E3E6EB;padding:18px clamp(20px,2.6vw,36px);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <div>
+        <h1 style="margin:0;font-size:22px;font-weight:600;letter-spacing:-0.025em">{{ title }}</h1>
+        <p style="margin:2px 0 0;font-size:13.5px;color:#5B6372">{{ subtitle }}</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ periods }}" as="p" hint-placeholder-count="3">
+          <button type="button" onClick="{{ p.go }}" aria-pressed="{{ p.active }}" style="font:inherit;font-size:13.5px;font-weight:500;min-height:40px;padding:9px 15px;border:1px solid {{ p.border }};background:{{ p.bg }};color:{{ p.fg }};cursor:pointer;border-radius:8px">{{ p.label }}</button>
+        </sc-for>
+      </div>
+    </header>
+
+    <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:20px">
+
+        <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:16px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:22px 24px">
+              <p style="margin:0 0 12px;font-size:13.5px;color:#5B6372;font-weight:500">{{ k.label }}</p>
+              <p style="margin:0 0 10px;font-size:40px;font-weight:600;letter-spacing:-0.035em;line-height:1;font-variant-numeric:tabular-nums">{{ k.value }}</p>
+              <p style="margin:0;display:flex;align-items:center;gap:8px;font-size:13.5px">
+                <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:{{ k.deltaBg }};color:{{ k.deltaFg }};font-weight:600;font-variant-numeric:tabular-nums">{{ k.delta }}</span>
+                <span style="color:#5B6372">vs septembre</span>
+              </p>
+            </div>
+          </sc-for>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between;margin-bottom:28px">
+            <div>
+              <h2 style="margin:0 0 3px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Chiffre d'affaires mensuel</h2>
+              <p style="margin:0;font-size:13.5px;color:#5B6372">Toutes boutiques confondues, 12 derniers mois</p>
+            </div>
+            <div style="display:flex;gap:18px;font-size:13px;color:#5B6372">
+              <span style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:#1F4B7A"></span>Réalisé</span>
+              <span style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:#C7D6E6"></span>Mois en cours</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:clamp(6px,1vw,14px);height:216px;padding-bottom:4px">
+            <sc-for list="{{ months }}" as="m" hint-placeholder-count="12">
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px;height:100%;justify-content:flex-end">
+                <span style="font-family:'Geist Mono',monospace;font-size:11.5px;color:#16181D;font-weight:500;white-space:nowrap">{{ m.short }}</span>
+                <div style="width:100%;height:{{ m.h }};background:{{ m.color }};border-radius:5px 5px 0 0;min-height:4px"></div>
+                <span style="font-size:12px;color:#5B6372">{{ m.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+          <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+            <h2 style="margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Produits les plus commandés</h2>
+            <p style="margin:0 0 22px;font-size:13.5px;color:#5B6372">Unités vendues en octobre, toutes boutiques</p>
+            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px">
+              <sc-for list="{{ topProducts }}" as="p" hint-placeholder-count="5">
+                <li>
+                  <div style="display:flex;justify-content:space-between;gap:14px;margin-bottom:7px">
+                    <span style="font-size:14.5px;font-weight:500">{{ p.nom }}</span>
+                    <span style="font-size:14.5px;font-variant-numeric:tabular-nums;color:#5B6372;flex:none">{{ p.value }}</span>
+                  </div>
+                  <div style="height:9px;background:#EFF1F4;border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ p.w }};background:#1F4B7A;border-radius:999px"></div></div>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+            <h2 style="margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Créneaux les plus demandés</h2>
+            <p style="margin:0 0 22px;font-size:13.5px;color:#5B6372">Part des commandes par plage de retrait</p>
+            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px">
+              <sc-for list="{{ topSlots }}" as="p" hint-placeholder-count="5">
+                <li>
+                  <div style="display:flex;justify-content:space-between;gap:14px;margin-bottom:7px">
+                    <span style="font-size:14.5px;font-weight:500">{{ p.nom }}</span>
+                    <span style="font-size:14.5px;font-variant-numeric:tabular-nums;color:#5B6372;flex:none">{{ p.value }}</span>
+                  </div>
+                  <div style="height:9px;background:#EFF1F4;border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ p.w }};background:#9A7108;border-radius:999px"></div></div>
+                </li>
+              </sc-for>
+            </ul>
+          </div>
+        </section>
+
+        <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+          <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+            <h2 style="margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Clients</h2>
+            <p style="margin:0 0 24px;font-size:13.5px;color:#5B6372">Regroupés par email haché, aucune donnée nominative</p>
+            <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:22px">
+              <div><p style="margin:0 0 5px;font-size:34px;font-weight:600;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums">612</p><p style="margin:0;font-size:13.5px;color:#5B6372">Clients uniques</p></div>
+              <div><p style="margin:0 0 5px;font-size:34px;font-weight:600;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums">38 %</p><p style="margin:0;font-size:13.5px;color:#5B6372">Ont déjà commandé</p></div>
+            </div>
+            <div style="display:flex;height:34px;border-radius:8px;overflow:hidden">
+              <div style="width:62%;background:#1F4B7A;display:grid;place-items:center;color:#FFFFFF;font-size:12.5px;font-weight:600">Nouveaux 62 %</div>
+              <div style="width:38%;background:#C7D6E6;display:grid;place-items:center;color:#174063;font-size:12.5px;font-weight:600">Récurrents 38 %</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+            <h2 style="margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Audience</h2>
+            <p style="margin:0 0 24px;font-size:13.5px;color:#5B6372">Mesure sans cookies, croisée avec les commandes</p>
+            <dl style="margin:0;display:grid;gap:0">
+              <sc-for list="{{ audience }}" as="a" hint-placeholder-count="4">
+                <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #EFF1F4">
+                  <dt style="font-size:14.5px;color:#5B6372">{{ a.label }}</dt>
+                  <dd style="margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">{{ a.value }}</dd>
+                </div>
+              </sc-for>
+            </dl>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isShops }}">
+      <div style="padding:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:20px">
+        <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:16px">
+          <sc-for list="{{ shopKpis }}" as="k" hint-placeholder-count="3">
+            <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:22px 24px">
+              <p style="margin:0 0 12px;font-size:13.5px;color:#5B6372;font-weight:500">{{ k.label }}</p>
+              <p style="margin:0 0 6px;font-size:36px;font-weight:600;letter-spacing:-0.035em;line-height:1;font-variant-numeric:tabular-nums">{{ k.value }}</p>
+              <p style="margin:0;font-size:13.5px;color:#5B6372">{{ k.note }}</p>
+            </div>
+          </sc-for>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;overflow:hidden">
+          <div style="padding:22px 26px;border-bottom:1px solid #E3E6EB">
+            <h2 style="margin:0 0 3px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Classement des boutiques</h2>
+            <p style="margin:0;font-size:13.5px;color:#5B6372">Octobre 2026, trié par chiffre d'affaires</p>
+          </div>
+          <div style="overflow-x:auto">
+            <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:860px">
+              <thead><tr>
+                <th style="text-align:left;padding:13px 26px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Boutique</th>
+                <th style="text-align:right;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">CA du mois</th>
+                <th style="text-align:right;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Évolution</th>
+                <th style="text-align:right;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Commandes</th>
+                <th style="text-align:right;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Panier moyen</th>
+                <th style="text-align:right;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Conversion</th>
+                <th style="text-align:left;padding:13px 26px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Part du CA</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ shops }}" as="s" hint-placeholder-count="5">
+                  <tr>
+                    <td style="padding:16px 26px;border-bottom:1px solid #EFF1F4">
+                      <p style="margin:0 0 2px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">{{ s.nom }}</p>
+                      <p style="margin:0;font-family:'Geist Mono',monospace;font-size:12px;color:#5B6372">{{ s.domaine }}</p>
+                    </td>
+                    <td style="padding:16px;border-bottom:1px solid #EFF1F4;text-align:right;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.015em">{{ s.ca }}</td>
+                    <td style="padding:16px;border-bottom:1px solid #EFF1F4;text-align:right"><span style="display:inline-block;padding:4px 10px;border-radius:999px;background:{{ s.deltaBg }};color:{{ s.deltaFg }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums">{{ s.delta }}</span></td>
+                    <td style="padding:16px;border-bottom:1px solid #EFF1F4;text-align:right;font-variant-numeric:tabular-nums">{{ s.commandes }}</td>
+                    <td style="padding:16px;border-bottom:1px solid #EFF1F4;text-align:right;font-variant-numeric:tabular-nums">{{ s.panier }}</td>
+                    <td style="padding:16px;border-bottom:1px solid #EFF1F4;text-align:right;font-variant-numeric:tabular-nums">{{ s.conv }}</td>
+                    <td style="padding:16px 26px;border-bottom:1px solid #EFF1F4;min-width:160px">
+                      <div style="display:flex;align-items:center;gap:11px">
+                        <div style="flex:1;height:9px;background:#EFF1F4;border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ s.w }};background:#1F4B7A;border-radius:999px"></div></div>
+                        <span style="font-size:13px;color:#5B6372;font-variant-numeric:tabular-nums;flex:none">{{ s.part }}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px">
+          <h2 style="margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Catégories les plus commandées</h2>
+          <p style="margin:0 0 22px;font-size:13.5px;color:#5B6372">Part du chiffre d'affaires d'octobre</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 32px">
+            <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6">
+              <li>
+                <div style="display:flex;justify-content:space-between;gap:14px;margin-bottom:7px">
+                  <span style="font-size:14.5px;font-weight:500">{{ c.nom }}</span>
+                  <span style="font-size:14.5px;font-variant-numeric:tabular-nums;color:#5B6372;flex:none">{{ c.value }}</span>
+                </div>
+                <div style="height:9px;background:#EFF1F4;border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ c.w }};background:#2A6B40;border-radius:999px"></div></div>
+              </li>
+            </sc-for>
+          </ul>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isExports }}">
+      <div style="padding:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:20px">
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:24px 26px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+          <div style="max-width:58ch">
+            <h2 style="margin:0 0 6px;font-size:16px;font-weight:600;letter-spacing:-0.01em">Exports mensuels commerçants</h2>
+            <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Un PDF lisible et un CSV par boutique, envoyés le 1<sup>er</sup> de chaque mois. Chiffre d'affaires, commandes, panier moyen, top produits et catégories, créneaux, évolution. Aucune donnée personnelle, seulement des agrégats.</p>
+          </div>
+          <button type="button" style="font:inherit;font-size:14.5px;font-weight:600;min-height:46px;padding:12px 22px;border:0;background:#1F4B7A;color:#FFFFFF;cursor:pointer;border-radius:8px" style-hover="background:#143454">Générer les exports d'octobre</button>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;overflow:hidden">
+          <div style="padding:22px 26px;border-bottom:1px solid #E3E6EB">
+            <h2 style="margin:0;font-size:16px;font-weight:600;letter-spacing:-0.01em">Historique</h2>
+          </div>
+          <div style="overflow-x:auto">
+            <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:680px">
+              <thead><tr>
+                <th style="text-align:left;padding:13px 26px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Période</th>
+                <th style="text-align:left;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Boutiques</th>
+                <th style="text-align:left;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Généré le</th>
+                <th style="text-align:left;padding:13px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Statut</th>
+                <th style="text-align:right;padding:13px 26px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:12.5px;color:#5B6372">Fichiers</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ exportsList }}" as="e" hint-placeholder-count="5">
+                  <tr>
+                    <td style="padding:15px 26px;border-bottom:1px solid #EFF1F4;font-weight:600">{{ e.periode }}</td>
+                    <td style="padding:15px 16px;border-bottom:1px solid #EFF1F4;font-variant-numeric:tabular-nums">{{ e.boutiques }}</td>
+                    <td style="padding:15px 16px;border-bottom:1px solid #EFF1F4;color:#5B6372">{{ e.date }}</td>
+                    <td style="padding:15px 16px;border-bottom:1px solid #EFF1F4"><span style="display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:999px;background:{{ e.bg }};color:{{ e.fg }};font-size:13px;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:{{ e.dot }}"></span>{{ e.statut }}</span></td>
+                    <td style="padding:15px 26px;border-bottom:1px solid #EFF1F4;text-align:right"><a href="#" style="font-size:14px;margin-right:14px">PDF</a><a href="#" style="font-size:14px">CSV</a></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section style="background:#FFFFFF;border:1px solid #E3E6EB;border-left:3px solid #1F4B7A;border-radius:12px;padding:20px 26px">
+          <p style="margin:0;font-size:14.5px;color:#3A4049;line-height:1.6"><strong style="font-weight:600;color:#16181D">Cloisonnement.</strong> Chaque export ne contient que les lignes portant l'identifiant de sa boutique. Les emails clients y sont absents : seuls les identifiants hachés servent au calcul des clients uniques, et ils ne sortent jamais de la base.</p>
+        </section>
+      </div>
+    </sc-if>
+
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440}}">
+const MONTHS = [
+  { short:"Nov", v:4200 }, { short:"Déc", v:9800 }, { short:"Jan", v:5100 }, { short:"Fév", v:5600 },
+  { short:"Mar", v:6900 }, { short:"Avr", v:7400 }, { short:"Mai", v:8100 }, { short:"Juin", v:8900 },
+  { short:"Juil", v:7200 }, { short:"Août", v:5400 }, { short:"Sep", v:9600 }, { short:"Oct", v:11240, current:true }
+];
+const SHOPS = [
+  { nom:"Maison Ferrand", domaine:"maison-ferrand.fr", ca:3840, delta:"+18 %", up:true, commandes:112, panier:"34,30 €", conv:"4,2 %" },
+  { nom:"Noir & Sel", domaine:"noiretsel.fr", ca:3120, delta:"+9 %", up:true, commandes:71, panier:"43,90 €", conv:"3,6 %" },
+  { nom:"Comptoir Saint-Roch", domaine:"comptoir-saint-roch.fr", ca:2260, delta:"+24 %", up:true, commandes:96, panier:"23,50 €", conv:"5,1 %" },
+  { nom:"Les Quatre Saisons", domaine:"quatre-saisons-epicerie.fr", ca:1340, delta:"−6 %", up:false, commandes:44, panier:"30,40 €", conv:"2,8 %" },
+  { nom:"La Réserve du Causse", domaine:"reserve-du-causse.fr", ca:680, delta:"+3 %", up:true, commandes:19, panier:"35,80 €", conv:"2,1 %" }
+];
+const eur = n => n.toLocaleString("fr-FR") + " €";
+
+class Component extends DCLogic {
+  state = { view:"overview", period:"Octobre 2026" };
+  go(view) { return () => this.setState({ view }); }
+
+  renderVals() {
+    const { view, period } = this.state;
+    const maxM = Math.max(...MONTHS.map(m => m.v));
+    const totalCa = SHOPS.reduce((a, s) => a + s.ca, 0);
+    const titles = { overview:["Vue d'ensemble", "5 boutiques en production · données à jour il y a 4 minutes"],
+      shops:["Boutiques", "Performance comparée des 5 boutiques en production"],
+      exports:["Exports", "Rapports mensuels envoyés aux commerçants"] };
+    const pos = { deltaBg:"#E0F0E4", deltaFg:"#1F5130" }, neg = { deltaBg:"#FBE9E9", deltaFg:"#8A1C1C" };
+
+    return {
+      nav: [["overview","Vue d'ensemble"],["shops","Boutiques"],["exports","Exports"]].map(([id, label]) => ({
+        label, go:this.go(id), current: view === id ? "page" : "false",
+        bg: view === id ? "#2A2E36" : "transparent", fg: view === id ? "#FFFFFF" : "#C7CCD4" })),
+      title: titles[view][0], subtitle: titles[view][1],
+      isOverview: view === "overview", isShops: view === "shops", isExports: view === "exports",
+      periods: ["Octobre 2026", "3 derniers mois", "12 mois"].map(p => ({ label:p, active:p === period,
+        go:() => this.setState({ period:p }),
+        bg: p === period ? "#16181D" : "#FFFFFF", fg: p === period ? "#FFFFFF" : "#16181D",
+        border: p === period ? "#16181D" : "#D9DDE3" })),
+
+      kpis: [
+        { label:"Chiffre d'affaires", value:eur(11240), delta:"+17 %", ...pos },
+        { label:"Commandes", value:"342", delta:"+12 %", ...pos },
+        { label:"Panier moyen", value:"32,90 €", delta:"+4 %", ...pos },
+        { label:"Taux de conversion", value:"3,8 %", delta:"−0,3 pt", ...neg }
+      ],
+
+      months: MONTHS.map(m => ({ short:m.short, label:(m.v / 1000).toFixed(1).replace(".", ",") + " k",
+        h: Math.round(m.v / maxM * 168) + "px", color: m.current ? "#C7D6E6" : "#1F4B7A" })),
+
+      topProducts: [
+        { nom:"Pélardon fermier", value:"214 u.", w:"100%" },
+        { nom:"Miel de châtaignier", value:"168 u.", w:"78%" },
+        { nom:"Tomme du Larzac affinée", value:"141 u.", w:"66%" },
+        { nom:"Huile d'olive Lucques", value:"97 u.", w:"45%" },
+        { nom:"Anchois de Collioure", value:"83 u.", w:"39%" }
+      ],
+      topSlots: [
+        { nom:"Samedi 10:00 – 13:00", value:"28 %", w:"100%" },
+        { nom:"Vendredi 16:00 – 19:00", value:"21 %", w:"75%" },
+        { nom:"Samedi 16:00 – 19:00", value:"17 %", w:"61%" },
+        { nom:"Mercredi 16:00 – 19:00", value:"12 %", w:"43%" },
+        { nom:"Mardi 10:00 – 12:00", value:"9 %", w:"32%" }
+      ],
+      audience: [
+        { label:"Visites", value:"9 014" },
+        { label:"Pages produit vues", value:"21 380" },
+        { label:"Produit le plus vu", value:"Pélardon fermier" },
+        { label:"Première source de trafic", value:"Google Business" }
+      ],
+
+      shopKpis: [
+        { label:"CA cumulé du mois", value:eur(totalCa), note:"Octobre 2026, 5 boutiques" },
+        { label:"Meilleure croissance", value:"+24 %", note:"Comptoir Saint-Roch" },
+        { label:"Boutique à surveiller", value:"−6 %", note:"Les Quatre Saisons, 2e mois de baisse" }
+      ],
+      shops: SHOPS.map(s => ({ ...s, ca:eur(s.ca), part:Math.round(s.ca / totalCa * 100) + " %",
+        w:Math.round(s.ca / SHOPS[0].ca * 100) + "%", ...(s.up ? pos : neg) })),
+      categories: [
+        { nom:"Fromages", value:"26 %", w:"100%" },
+        { nom:"Vins", value:"21 %", w:"81%" },
+        { nom:"Conserves", value:"18 %", w:"69%" },
+        { nom:"Miels & confitures", value:"14 %", w:"54%" },
+        { nom:"Huiles & condiments", value:"13 %", w:"50%" },
+        { nom:"Épicerie sucrée", value:"8 %", w:"31%" }
+      ],
+
+      exportsList: [
+        { periode:"Septembre 2026", boutiques:"5", date:"1 oct. 2026, 06:00", statut:"Envoyé", bg:"#E0F0E4", fg:"#1F5130", dot:"#2A6B40" },
+        { periode:"Août 2026", boutiques:"5", date:"1 sept. 2026, 06:00", statut:"Envoyé", bg:"#E0F0E4", fg:"#1F5130", dot:"#2A6B40" },
+        { periode:"Juillet 2026", boutiques:"4", date:"1 août 2026, 06:00", statut:"Envoyé", bg:"#E0F0E4", fg:"#1F5130", dot:"#2A6B40" },
+        { periode:"Juin 2026", boutiques:"4", date:"1 juil. 2026, 06:12", statut:"Renvoyé", bg:"#FBF0D9", fg:"#6B4D07", dot:"#9A7108" },
+        { periode:"Mai 2026", boutiques:"3", date:"1 juin 2026, 06:00", statut:"Envoyé", bg:"#E0F0E4", fg:"#1F5130", dot:"#2A6B40" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

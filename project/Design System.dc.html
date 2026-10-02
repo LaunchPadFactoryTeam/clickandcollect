@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Design system du hub click & collect LaunchPadFactory : fondations agnostiques, trois templates vitrine, composants, conformité RGPD et accessibilité.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#FFFFFF; color:#16181D; font-family:"Geist","Helvetica Neue",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { color:#1F4B7A; text-underline-offset:3px; }
+  a:hover { color:#143454; }
+  :focus-visible { outline:2px solid #1F4B7A; outline-offset:3px; border-radius:3px; }
+</style>
+</helmet>
+
+<div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 140px;font-size:16px;line-height:1.6">
+
+  <header style="display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-end;padding:72px 0 36px;border-bottom:1px solid #16181D">
+    <div style="max-width:46ch">
+      <p style="margin:0 0 20px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5B6372">LaunchPadFactory — Fondations v1.0</p>
+      <h1 style="margin:0 0 18px;font-size:clamp(38px,5.4vw,60px);line-height:1.02;letter-spacing:-0.035em;font-weight:600">Design system<br>Hub click &amp; collect</h1>
+      <p style="margin:0;font-size:19px;line-height:1.5;color:#3A4049;text-wrap:pretty">Le socle commun de tous les sites générés : des fondations agnostiques de la charte, trois templates vitrine interchangeables, et les outils internes de LaunchPad.</p>
+    </div>
+    <dl style="margin:0;display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:16px;min-width:260px">
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:12px 16px"><dt style="margin:0;font-size:12px;color:#5B6372">Core</dt><dd style="margin:3px 0 0;font-weight:600;font-family:'Geist Mono',monospace;font-size:14px">1.0.0</dd></div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:12px 16px"><dt style="margin:0;font-size:12px;color:#5B6372">Templates</dt><dd style="margin:3px 0 0;font-weight:600;font-family:'Geist Mono',monospace;font-size:14px">A · B · C</dd></div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:12px 16px"><dt style="margin:0;font-size:12px;color:#5B6372">Applications</dt><dd style="margin:3px 0 0;font-weight:600;font-family:'Geist Mono',monospace;font-size:14px">3</dd></div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:12px 16px"><dt style="margin:0;font-size:12px;color:#5B6372">Statut</dt><dd style="margin:3px 0 0;font-weight:600;font-family:'Geist Mono',monospace;font-size:14px">Phase 0</dd></div>
+    </dl>
+  </header>
+
+  <nav aria-label="Sommaire" style="position:sticky;top:0;z-index:20;background:#FFFFFFF2;backdrop-filter:blur(10px);border-bottom:1px solid #E3E6EB;margin-bottom:72px;display:flex;gap:4px;overflow-x:auto;padding:12px 0">
+    <a href="#principes" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Principes</a>
+    <a href="#templates" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Templates</a>
+    <a href="#couleur" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Couleur</a>
+    <a href="#typo" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Typographie</a>
+    <a href="#espace" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Espace &amp; forme</a>
+    <a href="#composants" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Composants</a>
+    <a href="#tunnel" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Tunnel</a>
+    <a href="#a11y" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Accessibilité</a>
+    <a href="#rgpd" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">RGPD</a>
+    <a href="#seo" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">SEO &amp; GEO</a>
+    <a href="#perf" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Performance</a>
+    <a href="#config" style="flex:none;padding:7px 12px;border-radius:999px;font-size:13.5px;text-decoration:none;color:#3A4049;white-space:nowrap" style-hover="background:#F1F4F8">Config</a>
+  </nav>
+
+  <section id="principes" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">01 — Principes</p>
+    <h2 style="margin:0 0 28px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:20ch">Cinq règles qui tiennent tout le système</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:16px">
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:24px">
+        <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">01</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.01em">La charte est une donnée</h3>
+        <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Aucune couleur, police ou rayon n'est écrit en dur dans un template. Tout passe par les jetons sémantiques alimentés par le fichier de configuration client.</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:24px">
+        <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">02</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.01em">Trois mises en page, un seul contenu</h3>
+        <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Les templates A, B et C consomment exactement le même modèle de données. Changer de template ne change jamais ce qui est dit, seulement comment c'est montré.</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:24px">
+        <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">03</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.01em">La conformité est dans le core</h3>
+        <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">RGPD, accessibilité, mentions INCO et loi Évin sont des composants du socle, pas des ajouts par site. Un site ne peut pas être livré sans eux.</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:24px">
+        <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">04</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.01em">Le produit avant le décor</h3>
+        <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">10 à 30 références. Chaque écran mène au panier en deux gestes. Pas de carrousel, pas d'animation d'entrée, pas de pop-in.</p>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:24px">
+        <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">05</p>
+        <h3 style="margin:0 0 8px;font-size:17px;font-weight:600;letter-spacing:-0.01em">Le luxe, c'est l'espace</h3>
+        <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Marges généreuses, peu d'éléments, une hiérarchie nette. Aucun dégradé décoratif, aucune ombre portée gratuite, aucune icône qui ne sert pas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="templates" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">02 — Templates vitrine</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Trois directions, choisies au brief</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Chaque template couvre les sept écrans du parcours client. Le choix se fait page par page dans la configuration : un client peut prendre l'accueil de B et la boutique de A.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+      <article style="border:1px solid #E3E6EB;display:flex;flex-direction:column">
+        <div style="aspect-ratio:4/3;background:#FAFAF8;background-image:repeating-linear-gradient(45deg,#00000008 0 8px,transparent 8px 16px);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;border-bottom:1px solid #E3E6EB">
+          <div style="height:9px;width:62%;background:#16181D;margin-bottom:7px"></div>
+          <div style="height:9px;width:40%;background:#16181D;margin-bottom:14px"></div>
+          <div style="height:4px;width:85%;background:#C3C8D0;margin-bottom:5px"></div>
+          <div style="height:4px;width:72%;background:#C3C8D0"></div>
+        </div>
+        <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:#1F4B7A">A</span><h3 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Éditorial</h3></div>
+          <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Grande typographie sérif, colonnes larges, longues respirations. Le récit de la maison porte la page ; les produits arrivent comme des chapitres.</p>
+          <p style="margin:auto 0 0;padding-top:12px;font-size:13px;color:#5B6372"><strong style="font-weight:600;color:#16181D">Pour qui —</strong> maison de terroir avec une histoire, un savoir-faire, peu de références très qualitatives.</p>
+        </div>
+      </article>
+      <article style="border:1px solid #E3E6EB;display:flex;flex-direction:column">
+        <div style="aspect-ratio:4/3;background:#16181D;display:flex;align-items:center;justify-content:center;padding:20px;border-bottom:1px solid #E3E6EB;position:relative">
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,#FFFFFF0D 0 8px,transparent 8px 16px)"></div>
+          <div style="position:relative;background:#FFFFFF;padding:16px 20px;width:70%">
+            <div style="height:8px;width:72%;background:#16181D;margin-bottom:7px"></div>
+            <div style="height:4px;width:90%;background:#C3C8D0;margin-bottom:5px"></div>
+            <div style="height:4px;width:60%;background:#C3C8D0"></div>
+          </div>
+        </div>
+        <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:#1F4B7A">B</span><h3 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Immersif</h3></div>
+          <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Photographie plein cadre, cartels superposés, fonds sombres. L'écran se comporte comme une vitrine éclairée la nuit.</p>
+          <p style="margin:auto 0 0;padding-top:12px;font-size:13px;color:#5B6372"><strong style="font-weight:600;color:#16181D">Pour qui —</strong> épicerie haut de gamme disposant de vraies photographies, positionnement cadeau et coffret.</p>
+        </div>
+      </article>
+      <article style="border:1px solid #E3E6EB;display:flex;flex-direction:column">
+        <div style="aspect-ratio:4/3;background:#FBF6EE;display:flex;flex-direction:column;gap:9px;padding:20px;border-bottom:1px solid #E3E6EB">
+          <div style="display:flex;gap:9px;flex:1">
+            <div style="flex:1;background:#FFFFFF;border-radius:10px;background-image:repeating-linear-gradient(45deg,#00000008 0 8px,transparent 8px 16px)"></div>
+            <div style="flex:1;background:#FFFFFF;border-radius:10px;background-image:repeating-linear-gradient(45deg,#00000008 0 8px,transparent 8px 16px)"></div>
+          </div>
+          <div style="height:30px;background:#FFFFFF;border-radius:10px;display:flex;align-items:center;padding:0 12px"><div style="height:5px;width:48%;background:#C9BDA9"></div></div>
+        </div>
+        <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:10px;flex:1">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:#1F4B7A">C</span><h3 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Chaleureux artisanal</h3></div>
+          <p style="margin:0;font-size:14.5px;color:#5B6372;line-height:1.55">Blocs arrondis, fond crème, grille en mosaïque. Proximité de quartier, ton direct, le commerçant parle à la première personne.</p>
+          <p style="margin:auto 0 0;padding-top:12px;font-size:13px;color:#5B6372"><strong style="font-weight:600;color:#16181D">Pour qui —</strong> épicerie de quartier, clientèle d'habitués, catalogue large et rotatif.</p>
+        </div>
+      </article>
+    </div>
+
+    <div style="margin-top:20px;padding:18px 22px;border:1px solid #E3E6EB;border-left:3px solid #1F4B7A;background:#F7F9FC">
+      <p style="margin:0;font-size:14.5px;color:#3A4049"><strong style="font-weight:600;color:#16181D">Contrat commun aux trois templates.</strong> Mêmes composants, mêmes champs, mêmes jetons, même ordre de lecture pour un lecteur d'écran. Seules changent la densité, la place de l'image et l'échelle typographique.</p>
+    </div>
+  </section>
+
+  <section id="couleur" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">03 — Couleur</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Des rôles, jamais des valeurs</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Le brief fournit trois couleurs. Le système en dérive une palette complète et vérifie les contrastes au build : si un couple descend sous 4,5:1, la compilation échoue.</p>
+
+    <div style="overflow-x:auto;border:1px solid #E3E6EB">
+      <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:620px">
+        <thead><tr>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Jeton</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Rôle</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Dérivation</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Contrainte</th>
+        </tr></thead>
+        <tbody>
+          <sc-for list="{{ colorTokens }}" as="t" hint-placeholder-count="9">
+            <tr>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top"><span style="display:flex;align-items:center;gap:9px"><span style="width:14px;height:14px;flex:none;border:1px solid #00000018;background:{{ t.swatch }}"></span><code style="font-family:'Geist Mono',monospace;font-size:12.5px;color:#16181D">{{ t.name }}</code></span></td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top">{{ t.role }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;color:#5B6372;font-size:13.5px">{{ t.from }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;color:#5B6372;font-size:13.5px;font-family:'Geist Mono',monospace">{{ t.rule }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin:48px 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">La même palette, trois chartes</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+      <sc-for list="{{ brandExamples }}" as="b" hint-placeholder-count="3">
+        <div style="border:1px solid #E3E6EB">
+          <div style="display:flex;height:72px">
+            <div style="flex:2;background:{{ b.bg }}"></div>
+            <div style="flex:1;background:{{ b.primary }}"></div>
+            <div style="flex:1;background:{{ b.accent }}"></div>
+            <div style="flex:1;background:{{ b.ink }}"></div>
+          </div>
+          <div style="padding:14px 16px;border-top:1px solid #E3E6EB">
+            <p style="margin:0 0 3px;font-size:14.5px;font-weight:600">{{ b.name }}</p>
+            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:11.5px;color:#5B6372">{{ b.codes }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="margin:48px 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Statuts de commande</h3>
+    <p style="margin:0 0 18px;max-width:62ch;color:#3A4049">Quatre statuts, quatre couleurs fixes indépendantes de la charte client : elles doivent être lues de la même façon par LaunchPad sur toutes les boutiques.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:#E8EFF7;color:#174063;font-size:13.5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#1F4B7A"></span>Nouvelle</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:#FBF0D9;color:#6B4D07;font-size:13.5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#9A7108"></span>En préparation</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:#E0F0E4;color:#1F5130;font-size:13.5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#2A6B40"></span>Prête</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:#EEF0F3;color:#454B55;font-size:13.5px;font-weight:500"><span style="width:7px;height:7px;border-radius:50%;background:#767D89"></span>Retirée</span>
+    </div>
+  </section>
+
+  <section id="typo" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">04 — Typographie</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Deux familles, une échelle fluide</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Le brief nomme une police de titre et une police de texte. L'échelle, elle, ne bouge jamais : elle est exprimée en <code style="font-family:'Geist Mono',monospace;font-size:13px;background:#F1F4F8;padding:1px 5px">clamp()</code> et s'adapte seule du mobile au grand écran.</p>
+
+    <div style="border:1px solid #E3E6EB">
+      <sc-for list="{{ typeScale }}" as="s" hint-placeholder-count="7">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #EFF1F4">
+          <span style="font-size:{{ s.px }};line-height:1.1;letter-spacing:-0.02em;font-weight:{{ s.weight }};min-width:0;flex:1">{{ s.sample }}</span>
+          <span style="font-family:'Geist Mono',monospace;font-size:12px;color:#5B6372;flex:none;text-align:right">{{ s.meta }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px">
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:20px">
+        <h3 style="margin:0 0 8px;font-size:16px;font-weight:600">Règles non négociables</h3>
+        <ul style="margin:0;padding-left:18px;font-size:14.5px;color:#5B6372;line-height:1.6">
+          <li>Corps de texte jamais sous 16&nbsp;px.</li>
+          <li>Mesure de 60 à 75 caractères maximum.</li>
+          <li>Deux familles au maximum, plus une monospace système pour les prix et références.</li>
+          <li>Prix en chiffres tabulaires.</li>
+        </ul>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:20px">
+        <h3 style="margin:0 0 8px;font-size:16px;font-weight:600">Chargement</h3>
+        <ul style="margin:0;padding-left:18px;font-size:14.5px;color:#5B6372;line-height:1.6">
+          <li>Deux graisses par famille maximum, en WOFF2 auto-hébergé.</li>
+          <li><code style="font-family:'Geist Mono',monospace;font-size:12.5px">font-display: swap</code> et police de repli métriquement proche.</li>
+          <li>Préchargement de la seule police de titre visible au-dessus de la ligne de flottaison.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="espace" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">05 — Espace &amp; forme</p>
+    <h2 style="margin:0 0 32px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Une trame de 4&nbsp;px, trois jeux de rayons</h2>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:44px">
+      <sc-for list="{{ spacing }}" as="sp" hint-placeholder-count="8">
+        <div style="display:flex;flex-direction:column;gap:7px;align-items:center">
+          <div style="width:{{ sp.px }};height:{{ sp.px }};background:#E8EFF7;border:1px solid #1F4B7A"></div>
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:#5B6372">{{ sp.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Rayons — <code style="font-family:'Geist Mono',monospace;font-size:14px;background:#F1F4F8;padding:2px 6px;font-weight:400">arrondis: net | doux | rond</code></h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:44px">
+      <div style="border:1px solid #E3E6EB;padding:20px">
+        <div style="height:64px;background:#E8EFF7;border:1px solid #1F4B7A;border-radius:0;margin-bottom:14px"></div>
+        <p style="margin:0 0 3px;font-weight:600;font-size:15px">net</p>
+        <p style="margin:0;font-size:13.5px;color:#5B6372;font-family:'Geist Mono',monospace">0 · 0 · 0</p>
+      </div>
+      <div style="border:1px solid #E3E6EB;padding:20px">
+        <div style="height:64px;background:#E8EFF7;border:1px solid #1F4B7A;border-radius:6px;margin-bottom:14px"></div>
+        <p style="margin:0 0 3px;font-weight:600;font-size:15px">doux</p>
+        <p style="margin:0;font-size:13.5px;color:#5B6372;font-family:'Geist Mono',monospace">4px · 6px · 10px</p>
+      </div>
+      <div style="border:1px solid #E3E6EB;padding:20px">
+        <div style="height:64px;background:#E8EFF7;border:1px solid #1F4B7A;border-radius:18px;margin-bottom:14px"></div>
+        <p style="margin:0 0 3px;font-weight:600;font-size:15px">rond</p>
+        <p style="margin:0;font-size:13.5px;color:#5B6372;font-family:'Geist Mono',monospace">10px · 18px · 28px</p>
+      </div>
+    </div>
+
+    <h3 style="margin:0 0 12px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Grille et largeurs</h3>
+    <p style="margin:0 0 18px;max-width:62ch;color:#3A4049">Une colonne unique sous 720&nbsp;px, deux de 720 à 1024, puis la grille de 12 colonnes. Les gouttières suivent la trame. Aucune largeur fixe nulle part : <code style="font-family:'Geist Mono',monospace;font-size:13px;background:#F1F4F8;padding:1px 5px">max-width</code> uniquement.</p>
+    <div style="overflow-x:auto;border:1px solid #E3E6EB">
+      <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px">
+        <thead><tr>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Point de rupture</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Colonnes</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Marge</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Grille produits</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">&lt; 720</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">1</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">20 px</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">1 colonne</td></tr>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">720 – 1024</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">6</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">32 px</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">2 colonnes</td></tr>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">1024 – 1440</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">12</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">48 px</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">3 colonnes</td></tr>
+          <tr><td style="padding:11px 16px;font-family:'Geist Mono',monospace;font-size:13px">&gt; 1440</td><td style="padding:11px 16px">12, contenu centré à 1320</td><td style="padding:11px 16px">auto</td><td style="padding:11px 16px">3 ou 4 colonnes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="composants" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">06 — Composants</p>
+    <h2 style="margin:0 0 32px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Le vocabulaire partagé</h2>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Boutons</h3>
+    <div style="border:1px solid #E3E6EB;padding:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:14px">
+      <button type="button" style="font:inherit;font-weight:500;font-size:15px;padding:13px 24px;min-height:48px;border:1px solid #1F4B7A;background:#1F4B7A;color:#FFFFFF;cursor:pointer;border-radius:4px" style-hover="background:#174063;border-color:#174063">Ajouter au panier</button>
+      <button type="button" style="font:inherit;font-weight:500;font-size:15px;padding:13px 24px;min-height:48px;border:1px solid #16181D;background:transparent;color:#16181D;cursor:pointer;border-radius:4px" style-hover="background:#16181D;color:#FFFFFF">Voir la boutique</button>
+      <button type="button" style="font:inherit;font-weight:500;font-size:15px;padding:13px 10px;min-height:48px;border:0;background:transparent;color:#1F4B7A;cursor:pointer;text-decoration:underline;text-underline-offset:4px">Tout le catalogue</button>
+      <button type="button" disabled="{{ true }}" style="font:inherit;font-weight:500;font-size:15px;padding:13px 24px;min-height:48px;border:1px solid #E3E6EB;background:#F7F8FA;color:#9BA2AE;cursor:not-allowed;border-radius:4px">Indisponible</button>
+    </div>
+    <p style="margin:0 0 44px;font-size:14px;color:#5B6372">Hauteur minimale 48&nbsp;px partout, y compris sur le back-office tactile. Un seul bouton primaire par écran.</p>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Champs de formulaire</h3>
+    <div style="border:1px solid #E3E6EB;padding:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-bottom:44px">
+      <div>
+        <label for="ds-f1" style="display:block;font-size:14px;font-weight:500;margin-bottom:6px">Adresse email <span style="color:#A32020">*</span></label>
+        <input id="ds-f1" type="email" placeholder="vous@exemple.fr" style="font:inherit;font-size:16px;width:100%;padding:12px 14px;min-height:48px;border:1px solid #C3C8D0;border-radius:4px;background:#FFFFFF;color:#16181D">
+        <p style="margin:6px 0 0;font-size:13px;color:#5B6372">Pour recevoir la confirmation de commande.</p>
+      </div>
+      <div>
+        <label for="ds-f2" style="display:block;font-size:14px;font-weight:500;margin-bottom:6px">Téléphone <span style="color:#5B6372;font-weight:400">(facultatif)</span></label>
+        <input id="ds-f2" type="tel" placeholder="06 00 00 00 00" style="font:inherit;font-size:16px;width:100%;padding:12px 14px;min-height:48px;border:1px solid #C3C8D0;border-radius:4px;background:#FFFFFF;color:#16181D">
+        <p style="margin:6px 0 0;font-size:13px;color:#5B6372">Utilisé seulement en cas de problème sur la commande.</p>
+      </div>
+      <div>
+        <label for="ds-f3" style="display:block;font-size:14px;font-weight:500;margin-bottom:6px">État d'erreur</label>
+        <input id="ds-f3" type="text" value="paul@" aria-invalid="true" aria-describedby="ds-f3-err" style="font:inherit;font-size:16px;width:100%;padding:12px 14px;min-height:48px;border:1px solid #A32020;border-radius:4px;background:#FFFFFF;color:#16181D">
+        <p id="ds-f3-err" style="margin:6px 0 0;font-size:13px;color:#A32020;font-weight:500">Cette adresse email semble incomplète.</p>
+      </div>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Carte produit</h3>
+    <p style="margin:0 0 18px;max-width:62ch;color:#3A4049">Même structure dans les trois templates : visuel en ratio 4/5, dénomination, mention de poids net, prix, mention d'indisponibilité. L'allergène n'apparaît jamais sur la carte, toujours sur la fiche.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:44px">
+      <article style="border:1px solid #E3E6EB">
+        <div style="aspect-ratio:4/5;background:#FAFAF8;background-image:repeating-linear-gradient(45deg,#0000000A 0 9px,transparent 9px 18px);display:grid;place-items:center"><span style="font-family:'Geist Mono',monospace;font-size:11px;color:#8A919D;background:#FFFFFFD9;padding:4px 8px">photo produit · 4:5</span></div>
+        <div style="padding:14px 16px 18px">
+          <h4 style="margin:0 0 3px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">Miel de châtaignier</h4>
+          <p style="margin:0 0 10px;font-size:13px;color:#5B6372">Pot 250 g</p>
+          <p style="margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">12,50 €</p>
+        </div>
+      </article>
+      <article style="border:1px solid #E3E6EB;opacity:.72">
+        <div style="aspect-ratio:4/5;background:#FAFAF8;background-image:repeating-linear-gradient(45deg,#0000000A 0 9px,transparent 9px 18px);position:relative;display:grid;place-items:center">
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:#8A919D;background:#FFFFFFD9;padding:4px 8px">photo produit · 4:5</span>
+          <span style="position:absolute;top:10px;left:10px;background:#16181D;color:#FFFFFF;font-size:11.5px;font-weight:500;padding:4px 9px;letter-spacing:.02em">Indisponible</span>
+        </div>
+        <div style="padding:14px 16px 18px">
+          <h4 style="margin:0 0 3px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">Terrine de canard</h4>
+          <p style="margin:0 0 10px;font-size:13px;color:#5B6372">Bocal 180 g</p>
+          <p style="margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">9,80 €</p>
+        </div>
+      </article>
+      <article style="border:1px solid #E3E6EB">
+        <div style="aspect-ratio:4/5;background:#FAFAF8;background-image:repeating-linear-gradient(45deg,#0000000A 0 9px,transparent 9px 18px);position:relative;display:grid;place-items:center">
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;color:#8A919D;background:#FFFFFFD9;padding:4px 8px">photo produit · 4:5</span>
+          <span style="position:absolute;top:10px;left:10px;background:#FFFFFF;border:1px solid #16181D;color:#16181D;font-size:11.5px;font-weight:500;padding:4px 9px">Alcool · 18 ans</span>
+        </div>
+        <div style="padding:14px 16px 18px">
+          <h4 style="margin:0 0 3px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">Vin orange, Domaine Lasserre</h4>
+          <p style="margin:0 0 10px;font-size:13px;color:#5B6372">Bouteille 75 cl · 12,5 % vol.</p>
+          <p style="margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">22,00 €</p>
+        </div>
+      </article>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Sélecteur de créneau</h3>
+    <div style="border:1px solid #E3E6EB;padding:28px;margin-bottom:44px">
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend style="padding:0;font-size:14px;font-weight:500;margin-bottom:4px">Créneau de retrait</legend>
+        <p style="margin:0 0 16px;font-size:13.5px;color:#5B6372">Délai de préparation minimum : 2 heures.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <label style="display:inline-flex;align-items:center;gap:9px;padding:11px 16px;min-height:48px;border:1px solid #1F4B7A;background:#E8EFF7;border-radius:4px;cursor:pointer;font-size:14.5px;font-weight:500"><input type="radio" name="ds-slot" checked="{{ true }}" style="accent-color:#1F4B7A;width:17px;height:17px">Aujourd'hui 16:00 – 19:00</label>
+          <label style="display:inline-flex;align-items:center;gap:9px;padding:11px 16px;min-height:48px;border:1px solid #C3C8D0;background:#FFFFFF;border-radius:4px;cursor:pointer;font-size:14.5px" style-hover="border-color:#16181D"><input type="radio" name="ds-slot" style="accent-color:#1F4B7A;width:17px;height:17px">Demain 10:00 – 12:00</label>
+          <span style="display:inline-flex;align-items:center;gap:9px;padding:11px 16px;min-height:48px;border:1px dashed #D5D9DF;background:#FAFBFC;border-radius:4px;font-size:14.5px;color:#9BA2AE">Demain 09:00 – 10:00 · complet</span>
+        </div>
+      </fieldset>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Encarts de conformité</h3>
+    <div style="display:grid;gap:12px">
+      <div style="border:1px solid #E3E6EB;border-left:3px solid #9A7108;background:#FDFAF3;padding:16px 20px">
+        <p style="margin:0 0 4px;font-weight:600;font-size:14.5px">Mention sanitaire — loi Évin</p>
+        <p style="margin:0;font-size:14px;color:#3A4049">L'abus d'alcool est dangereux pour la santé. À consommer avec modération. La vente d'alcool aux mineurs de moins de 18 ans est interdite.</p>
+      </div>
+      <div style="border:1px solid #E3E6EB;border-left:3px solid #1F4B7A;background:#F7F9FC;padding:16px 20px">
+        <p style="margin:0 0 4px;font-weight:600;font-size:14.5px">Bloc INCO — fiche produit</p>
+        <p style="margin:0;font-size:14px;color:#3A4049">Dénomination, ingrédients avec allergènes en gras, quantité nette, conservation, coordonnées du fabricant, origine. La DLC est communiquée à la remise en boutique.</p>
+      </div>
+      <div style="border:1px solid #E3E6EB;border-left:3px solid #A32020;background:#FDF6F6;padding:16px 20px">
+        <p style="margin:0 0 4px;font-weight:600;font-size:14.5px">Rétractation — CGV</p>
+        <p style="margin:0;font-size:14px;color:#3A4049">Pas de droit de rétractation sur les denrées susceptibles de se détériorer rapidement. La mention est rappelée avant le paiement, pas seulement dans les CGV.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tunnel" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">07 — Tunnel invité</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Trois écrans, aucun compte</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Panier et créneau, puis paiement Stripe intégré, puis confirmation. Le client ne quitte jamais le domaine de la boutique. La commande n'est écrite en base qu'à réception du webhook Stripe.</p>
+
+    <ol style="list-style:none;margin:0 0 32px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px">
+      <li style="background:#FFFFFF;border:1px solid #E3E6EB;padding:20px"><p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">Étape 1</p><h3 style="margin:0 0 6px;font-size:16px;font-weight:600">Panier &amp; créneau</h3><p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">Récapitulatif modifiable, choix du créneau, rappel de l'adresse de retrait.</p></li>
+      <li style="background:#FFFFFF;border:1px solid #E3E6EB;padding:20px"><p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">Étape 2</p><h3 style="margin:0 0 6px;font-size:16px;font-weight:600">Paiement intégré</h3><p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">Stripe Checkout embarqué dans la page : email, téléphone, consentements, carte ou wallet.</p></li>
+      <li style="background:#FFFFFF;border:1px solid #E3E6EB;padding:20px"><p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;color:#1F4B7A">Étape 3</p><h3 style="margin:0 0 6px;font-size:16px;font-weight:600">Confirmation</h3><p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">Numéro de commande, créneau, adresse, plan d'accès. Email envoyé en parallèle.</p></li>
+    </ol>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Champs de l'étape 2 — spécification</h3>
+    <div style="overflow-x:auto;border:1px solid #E3E6EB">
+      <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:660px">
+        <thead><tr>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Champ</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Type</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Obligatoire</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Règle</th>
+        </tr></thead>
+        <tbody>
+          <sc-for list="{{ checkoutFields }}" as="f" hint-placeholder-count="8">
+            <tr>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-weight:500">{{ f.label }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-family:'Geist Mono',monospace;font-size:12.5px;color:#5B6372">{{ f.type }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-size:13.5px">{{ f.required }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-size:13.5px;color:#5B6372">{{ f.rule }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:20px;padding:18px 22px;border:1px solid #E3E6EB;border-left:3px solid #A32020;background:#FDF6F6">
+      <p style="margin:0;font-size:14.5px;color:#3A4049"><strong style="font-weight:600;color:#16181D">La case de consentement marketing est toujours décochée</strong> et toujours séparée de l'acceptation des CGV. Le core enregistre la date, l'identifiant boutique et la version exacte du texte affiché. Une case pré-cochée invalide le consentement.</p>
+    </div>
+  </section>
+
+  <section id="a11y" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">08 — Accessibilité</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">RGAA 4.1 / WCAG 2.1 AA</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Contrôlé automatiquement au build. Un échec bloque le déploiement : l'accessibilité n'est pas une relecture de fin de projet.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:16px">
+      <sc-for list="{{ a11y }}" as="a" hint-placeholder-count="8">
+        <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:22px">
+          <h3 style="margin:0 0 7px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">{{ a.title }}</h3>
+          <p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">{{ a.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="rgpd" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">09 — RGPD</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:24ch">Un module du core, actif sur tous les sites</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Le commerçant est responsable de traitement, LaunchPad sous-traitant au sens de l'article 28, Stripe responsable pour les données de paiement. Aucune donnée bancaire ne transite par nos serveurs.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(256px,1fr));gap:16px;margin-bottom:28px">
+      <sc-for list="{{ rgpd }}" as="r" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:22px">
+          <h3 style="margin:0 0 7px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">{{ r.title }}</h3>
+          <p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">{{ r.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Pages légales livrées avec chaque site</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px">
+      <span style="padding:8px 14px;border:1px solid #C3C8D0;border-radius:999px;font-size:13.5px">Politique de confidentialité</span>
+      <span style="padding:8px 14px;border:1px solid #C3C8D0;border-radius:999px;font-size:13.5px">Mentions légales</span>
+      <span style="padding:8px 14px;border:1px solid #C3C8D0;border-radius:999px;font-size:13.5px">Conditions générales de vente</span>
+      <span style="padding:8px 14px;border:1px solid #C3C8D0;border-radius:999px;font-size:13.5px">Gestion des cookies</span>
+      <span style="padding:8px 14px;border:1px solid #C3C8D0;border-radius:999px;font-size:13.5px">Exercer mes droits</span>
+    </div>
+
+    <h3 style="margin:0 0 16px;font-size:19px;font-weight:600;letter-spacing:-0.015em">Durées de conservation</h3>
+    <div style="overflow-x:auto;border:1px solid #E3E6EB">
+      <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px">
+        <thead><tr>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Donnée</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Durée</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Puis</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">Commandes et pièces comptables</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">10 ans</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;color:#5B6372;font-size:13.5px">Anonymisation des coordonnées dès la clôture de la relation</td></tr>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">Coordonnées client</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">3 ans</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;color:#5B6372;font-size:13.5px">Anonymisation automatique</td></tr>
+          <tr><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4">Consentements marketing</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;font-family:'Geist Mono',monospace;font-size:13px">Jusqu'au retrait</td><td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;color:#5B6372;font-size:13.5px">Conservation de la preuve le temps de la prescription</td></tr>
+          <tr><td style="padding:11px 16px">Identifiants hachés et agrégats</td><td style="padding:11px 16px;font-family:'Geist Mono',monospace;font-size:13px">Durée du contrat</td><td style="padding:11px 16px;color:#5B6372;font-size:13.5px">Agrégats sans identifiant conservables</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:14px 0 0;font-size:13.5px;color:#5B6372">Durées proposées, à valider une fois par un juriste avant la mise en ligne du client pilote.</p>
+  </section>
+
+  <section id="seo" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">10 — SEO &amp; GEO</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:24ch">Trouvable par Google, citable par les modèles</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Deux publics distincts : le moteur de recherche local, et les assistants qui répondent à « où acheter du bon miel à Montpellier ». Les deux se nourrissent de la même chose, des données structurées propres et un contenu factuel.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:16px;margin-bottom:28px">
+      <sc-for list="{{ seo }}" as="s" hint-placeholder-count="8">
+        <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:22px">
+          <p style="margin:0 0 7px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#1F4B7A">{{ s.tag }}</p>
+          <h3 style="margin:0 0 7px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em">{{ s.title }}</h3>
+          <p style="margin:0;font-size:14px;color:#5B6372;line-height:1.55">{{ s.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <pre style="margin:0;padding:20px 22px;background:#F7F8FA;border:1px solid #E3E6EB;overflow-x:auto;font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.6;color:#16181D">{
+  "@context": "https://schema.org",
+  "@type": "GroceryStore",
+  "name": "{{ boutique.nom }}",
+  "address": { "@type": "PostalAddress", "streetAddress": "…", "postalCode": "34000", "addressLocality": "Montpellier" },
+  "telephone": "{{ boutique.telephone }}",
+  "openingHoursSpecification": [ … ],
+  "sameAs": [ "https://maps.app.goo.gl/…" ],
+  "hasOfferCatalog": { "@type": "OfferCatalog", "itemListElement": [ … ] }
+}</pre>
+  </section>
+
+  <section id="perf" style="margin:0 0 104px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">11 — Performance</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:22ch">Un budget, pas une intention</h2>
+    <p style="margin:0 0 32px;max-width:62ch;color:#3A4049">Mesuré en 4G simulée sur mobile milieu de gamme. Dépasser le budget fait échouer le build, comme un test unitaire.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px">
+      <sc-for list="{{ perf }}" as="p" hint-placeholder-count="6">
+        <div style="background:#FFFFFF;border:1px solid #E3E6EB;padding:22px">
+          <p style="margin:0 0 6px;font-size:28px;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums">{{ p.value }}</p>
+          <p style="margin:0 0 7px;font-size:14px;font-weight:600">{{ p.label }}</p>
+          <p style="margin:0;font-size:13.5px;color:#5B6372;line-height:1.5">{{ p.note }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:20px;padding:18px 22px;border:1px solid #E3E6EB;background:#F7F8FA">
+      <p style="margin:0 0 10px;font-size:14.5px;font-weight:600">Comment on y arrive</p>
+      <ul style="margin:0;padding-left:18px;font-size:14.5px;color:#3A4049;line-height:1.65">
+        <li>Pages catalogue en génération statique avec revalidation, aucun rendu client pour afficher un produit.</li>
+        <li>Zéro JavaScript sur l'accueil, la boutique et les pages éditoriales. Le panier et le tunnel sont les seules îlots interactifs.</li>
+        <li>Images AVIF/WebP servies en tailles multiples, dimensions déclarées, chargement différé sauf la première.</li>
+        <li>Deux polices, deux graisses, auto-hébergées. Aucune bibliothèque d'icônes : le peu d'icônes nécessaires sont des SVG en ligne.</li>
+        <li>Mesure d'audience sans cookies, script sous 2 ko.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="config" style="margin:0 0 72px;scroll-margin-top:84px">
+    <p style="margin:0 0 12px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#1F4B7A">12 — Configuration</p>
+    <h2 style="margin:0 0 16px;font-size:clamp(28px,3.4vw,38px);line-height:1.1;letter-spacing:-0.025em;font-weight:600;max-width:24ch">Du brief client aux jetons du système</h2>
+    <p style="margin:0 0 28px;max-width:62ch;color:#3A4049">Voilà le point de contact exact entre le fichier de configuration décrit dans le cadrage et ce design system. Tout ce qui n'est pas dans cette table est identique d'un site à l'autre.</p>
+    <div style="overflow-x:auto;border:1px solid #E3E6EB">
+      <table style="border-collapse:collapse;width:100%;font-size:14.5px;min-width:620px">
+        <thead><tr>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Clé de configuration</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Alimente</th>
+          <th style="text-align:left;padding:12px 16px;background:#F7F8FA;border-bottom:1px solid #E3E6EB;font-weight:600;font-size:13px">Validation au build</th>
+        </tr></thead>
+        <tbody>
+          <sc-for list="{{ configMap }}" as="c" hint-placeholder-count="8">
+            <tr>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-family:'Geist Mono',monospace;font-size:12.5px;color:#16181D">{{ c.key }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top">{{ c.feeds }}</td>
+              <td style="padding:11px 16px;border-bottom:1px solid #EFF1F4;vertical-align:top;font-size:13.5px;color:#5B6372">{{ c.check }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #16181D;padding-top:24px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:baseline">
+    <p style="margin:0;font-size:13.5px;color:#5B6372">LaunchPadFactory — design system du hub click &amp; collect, v1.0.0, phase 0.</p>
+    <p style="margin:0;font-size:13.5px;color:#5B6372;font-family:'Geist Mono',monospace">Templates A · B · C — Back-office — Dashboard</p>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      boutique: { nom: "Maison Ferrand", telephone: "+33 4 67 00 00 00" },
+      colorTokens: [
+        { name: "--c-bg", swatch: "#FAF8F4", role: "Fond de page", from: "design.couleurs.fond", rule: "≥ 4.5:1 avec --c-ink" },
+        { name: "--c-surface", swatch: "#FFFFFF", role: "Cartes, panneaux, champs", from: "fond éclairci de 4 %", rule: "distinct du fond" },
+        { name: "--c-ink", swatch: "#1A1A17", role: "Texte courant et titres", from: "dérivé du primaire, L ≤ 20 %", rule: "≥ 4.5:1" },
+        { name: "--c-ink-muted", swatch: "#6B6B62", role: "Légendes, poids net, aides", from: "ink à 62 % de luminance", rule: "≥ 4.5:1" },
+        { name: "--c-line", swatch: "#DEDAD2", role: "Filets, séparateurs, bordures", from: "ink à 12 %", rule: "≥ 3:1 si porteur de sens" },
+        { name: "--c-primary", swatch: "#2F4A3A", role: "Actions, liens, prix en avant", from: "design.couleurs.primaire", rule: "≥ 4.5:1 sur surface" },
+        { name: "--c-on-primary", swatch: "#FFFFFF", role: "Texte sur fond primaire", from: "calculé, noir ou blanc", rule: "≥ 4.5:1 imposé" },
+        { name: "--c-accent", swatch: "#B08D57", role: "Soulignements, filets d'accent", from: "design.couleurs.secondaire", rule: "jamais seul porteur de sens" },
+        { name: "--c-danger", swatch: "#A32020", role: "Erreurs, indisponibilité", from: "fixe, non configurable", rule: "≥ 4.5:1" }
+      ],
+      brandExamples: [
+        { name: "Maison Ferrand — template A", bg: "#FAF8F4", primary: "#2F4A3A", accent: "#B08D57", ink: "#1A1A17", codes: "#FAF8F4 · #2F4A3A · #B08D57" },
+        { name: "Noir & Sel — template B", bg: "#F2F0ED", primary: "#161513", accent: "#8A2E2E", ink: "#0C0C0B", codes: "#F2F0ED · #161513 · #8A2E2E" },
+        { name: "Comptoir Saint-Roch — template C", bg: "#FDF6EC", primary: "#A8572C", accent: "#6B7A4F", ink: "#33291F", codes: "#FDF6EC · #A8572C · #6B7A4F" }
+      ],
+      typeScale: [
+        { px: "clamp(40px,6vw,64px)", weight: "600", sample: "Titre d'accueil", meta: "display-1 · 40→64 · 1.02" },
+        { px: "clamp(30px,4vw,44px)", weight: "600", sample: "Titre de section", meta: "display-2 · 30→44 · 1.08" },
+        { px: "clamp(22px,2.6vw,28px)", weight: "600", sample: "Titre de bloc", meta: "heading · 22→28 · 1.2" },
+        { px: "19px", weight: "400", sample: "Chapô et accroches produit", meta: "lead · 19 · 1.5" },
+        { px: "16px", weight: "400", sample: "Texte courant, descriptions, ingrédients", meta: "body · 16 · 1.6" },
+        { px: "14px", weight: "400", sample: "Légendes, poids net, aides de champ", meta: "small · 14 · 1.5" },
+        { px: "12px", weight: "500", sample: "SURTITRE / CATÉGORIE", meta: "overline · 12 · .14em" }
+      ],
+      spacing: [
+        { px: "4px", label: "4" }, { px: "8px", label: "8" }, { px: "12px", label: "12" },
+        { px: "16px", label: "16" }, { px: "24px", label: "24" }, { px: "32px", label: "32" },
+        { px: "48px", label: "48" }, { px: "64px", label: "64" }, { px: "96px", label: "96" }
+      ],
+      checkoutFields: [
+        { label: "Adresse email", type: "email", required: "Oui", rule: "Seule donnée d'identification. Sert à la confirmation et au suivi ; hachée en HMAC-SHA256 pour les analytics." },
+        { label: "Téléphone", type: "tel", required: "Non", rule: "Annoncé comme facultatif. Utilisé uniquement en cas de problème sur la commande." },
+        { label: "Nom sur la carte", type: "text", required: "Oui", rule: "Géré par Stripe. Jamais stocké côté LaunchPad." },
+        { label: "Moyen de paiement", type: "card | apple_pay | google_pay", required: "Oui", rule: "Wallets affichés en premier quand l'appareil les supporte. Apple Pay exige la vérification du domaine dans Stripe." },
+        { label: "Créneau de retrait", type: "hidden", required: "Oui", rule: "Reporté depuis l'étape 1 dans les métadonnées de la session, et réaffiché en clair au-dessus du formulaire." },
+        { label: "Acceptation des CGV", type: "checkbox", required: "Oui", rule: "Décochée. Bloque la soumission. Lien vers les CGV ouvert dans un panneau, pas un nouvel onglet." },
+        { label: "Déclaration de majorité", type: "checkbox", required: "Si alcool au panier", rule: "N'apparaît que si le panier contient un produit alcoolisé. Décochée, bloquante." },
+        { label: "Consentement marketing", type: "checkbox", required: "Non", rule: "Décochée, distincte des CGV, sans incidence sur la commande. Date, boutique et version du texte enregistrées." }
+      ],
+      a11y: [
+        { title: "Contraste vérifié au build", body: "Chaque couple couleur du fichier de configuration est testé. Sous 4,5:1 pour le texte ou 3:1 pour les éléments d'interface, le build échoue avec le couple fautif nommé." },
+        { title: "Navigation au clavier complète", body: "Lien d'évitement en premier élément, ordre de tabulation conforme à l'ordre visuel, focus visible à 2 px avec un décalage de 3 px, aucun piège au clavier dans le panneau Stripe." },
+        { title: "Cibles de 44 px minimum", body: "Tous les contrôles tactiles, y compris les pastilles de créneau et les interrupteurs du back-office consultés au comptoir." },
+        { title: "Structure sémantique", body: "Un seul h1 par page, hiérarchie sans saut de niveau, points de repère header / nav / main / footer, listes de produits en véritables listes." },
+        { title: "Formulaires annoncés", body: "Chaque champ a son label visible lié, les erreurs sont décrites en texte et reliées par aria-describedby, aucune information portée par la seule couleur." },
+        { title: "Images décrites", body: "Alternative descriptive pour les photos produit, alternative vide pour le décoratif. Le texte n'est jamais inclus dans une image." },
+        { title: "Mouvement respectueux", body: "prefers-reduced-motion désactive les transitions. Aucune animation automatique, aucun défilement détourné, aucun contenu qui bouge seul." },
+        { title: "Déclaration d'accessibilité", body: "Page générée par site, état de conformité, moyens de contact et voie de recours, conformément à l'obligation applicable au commerce en ligne." }
+      ],
+      rgpd: [
+        { title: "Consentement marketing explicite", body: "Case décochée, séparée des CGV, facultative pour commander. Date, boutique et version exacte du texte affiché sont enregistrées. Lien de désinscription dans chaque email." },
+        { title: "Hachage des emails", body: "Email normalisé puis HMAC-SHA256 avec une clé secrète propre à chaque boutique. Une clé par boutique : impossible de croiser les clients d'une enseigne à l'autre." },
+        { title: "Pas de compte client", body: "Commande en invité uniquement. L'email en clair ne vit que dans la commande elle-même, où il est nécessaire au service." },
+        { title: "Droits des personnes", body: "Une fonction d'administration exporte ou anonymise, à partir d'un email, toutes les données d'un client sur une boutique. Adresse de contact dédiée en politique de confidentialité." },
+        { title: "Aucun bandeau cookies", body: "Mesure d'audience sans cookies, aucun traceur publicitaire. Seuls les cookies Stripe nécessaires au paiement et à la lutte contre la fraude sont déposés." },
+        { title: "Contrat de sous-traitance", body: "Modèle article 28 annexé au contrat client, plus une fiche prête à verser au registre des traitements du commerçant." }
+      ],
+      seo: [
+        { tag: "SEO", title: "Données structurées GroceryStore", body: "Nom, adresse, téléphone, horaires, zone desservie, lien vers la fiche Google Business. Vérifié avant mise en ligne." },
+        { tag: "SEO", title: "Un Product par référence", body: "Prix, disponibilité, devise et conditions de retrait en JSON-LD sur chaque fiche. Les allergènes y figurent aussi." },
+        { tag: "SEO", title: "Titres pensés pour le local", body: "Dénomination, puis catégorie, puis ville. Métadescriptions rédigées à la main pour l'accueil et la boutique, générées pour les fiches." },
+        { tag: "SEO", title: "Rendu côté serveur", body: "Tout le contenu est dans le HTML initial. Aucune information produit ne dépend de JavaScript." },
+        { tag: "GEO", title: "Réponses factuelles et autonomes", body: "Chaque page répond à une question complète sans contexte extérieur : où, quand, combien, comment retirer. Un assistant doit pouvoir citer le paragraphe tel quel." },
+        { tag: "GEO", title: "Informations clés en texte", body: "Adresse, horaires, créneaux et prix sont du texte sélectionnable, jamais une image ni un composant chargé après coup." },
+        { tag: "GEO", title: "Page « L'épicerie » comme source", body: "Origine des produits, producteurs, savoir-faire, en phrases courtes et vérifiables. C'est le contenu que les modèles reprennent pour recommander la boutique." },
+        { tag: "GEO", title: "Accès autorisé aux robots d'IA", body: "robots.txt et llms.txt explicites, sitemap à jour, flux de catalogue lisible. Le choix d'autoriser ou non reste client par client." }
+      ],
+      perf: [
+        { value: "≤ 1,8 s", label: "LCP mobile", note: "4G simulée, appareil milieu de gamme" },
+        { value: "≤ 0,05", label: "CLS", note: "Dimensions déclarées sur toute image" },
+        { value: "≤ 200 ms", label: "INP", note: "Mesuré sur l'ajout au panier" },
+        { value: "≤ 90 ko", label: "JS initial", note: "Hors panneau Stripe, chargé à la demande" },
+        { value: "≤ 180 ko", label: "Poids de l'accueil", note: "Hors images, compressé" },
+        { value: "0", label: "Script tiers", note: "Hors Stripe et mesure d'audience" }
+      ],
+      configMap: [
+        { key: "design.couleurs.*", feeds: "Les neuf jetons de couleur, par dérivation", check: "Format hexadécimal valide, contrastes recalculés et vérifiés" },
+        { key: "design.typographies.*", feeds: "--font-display et --font-body", check: "Police disponible en WOFF2, deux graisses maximum" },
+        { key: "design.arrondis", feeds: "--radius-sm / md / lg", check: "Valeur dans net | doux | rond" },
+        { key: "design.logo", feeds: "En-tête, pied de page, favicon, emails", check: "SVG présent, ratio et zone de protection respectés" },
+        { key: "design.variantes.*", feeds: "Le template retenu pour chaque page", check: "Valeur dans A | B | C pour chaque page listée" },
+        { key: "boutique.*", feeds: "En-tête, contact, mentions légales, JSON-LD", check: "Adresse géocodable, téléphone au format E.164" },
+        { key: "retrait.creneaux", feeds: "Sélecteur de créneau, emails, back-office", check: "Au moins un créneau futur, format horaire valide" },
+        { key: "features.alcool", feeds: "Badge produit, case de majorité, mention Évin", check: "Si un produit est marqué alcool, l'option doit être active" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

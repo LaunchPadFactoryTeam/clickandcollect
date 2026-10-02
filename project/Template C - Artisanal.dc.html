@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Template C — Chaleureux artisanal. Site vitrine click & collect pour épicerie fine de quartier, agnostique de la charte graphique.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Karla:wght@400;500;600&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; }
+  body {
+    margin:0;
+    --c-bg:#FDF6EC; --c-surface:#FFFFFF; --c-warm:#F6EBDA; --c-ink:#33291F; --c-muted:#73644F;
+    --c-line:#E7D9C4; --c-primary:#A8572C; --c-on-primary:#FFFFFF; --c-accent:#5C6B42;
+    --c-danger:#A32020; --r-sm:10px; --r-md:18px; --r-lg:28px;
+    --f-display:"Lora",Georgia,serif; --f-body:"Karla","Helvetica Neue",Arial,sans-serif;
+    background:var(--c-bg); color:var(--c-ink); font-family:var(--f-body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:var(--c-primary); text-underline-offset:3px; }
+  a:hover { color:var(--c-ink); }
+  :focus-visible { outline:2px solid var(--c-primary); outline-offset:3px; border-radius:6px; }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--c-bg)">
+
+  <div role="toolbar" aria-label="Navigation de maquette" style="position:sticky;top:0;z-index:60;background:#16181D;color:#FFFFFF;font-family:'Geist',sans-serif;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:9px 16px">
+    <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A919D;flex:none">Template C · Artisanal</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <sc-for list="{{ pages }}" as="p" hint-placeholder-count="7">
+        <button type="button" onClick="{{ p.go }}" style="font:inherit;font-size:12.5px;padding:5px 11px;border:0;border-radius:999px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }}">{{ p.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <header style="background:var(--c-bg);position:sticky;top:39px;z-index:50">
+    <div style="max-width:1240px;margin:0 auto;padding:14px clamp(16px,3vw,32px)">
+      <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:999px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 12px 10px 24px;flex-wrap:wrap">
+        <p style="margin:0;font-family:var(--f-display);font-size:clamp(18px,2.2vw,22px);font-weight:600;letter-spacing:-0.01em;line-height:1.1">{{ brandName }}</p>
+        <nav aria-label="Principale" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:14.5px;background:none;border:0;padding:11px 15px;min-height:44px;cursor:pointer;color:var(--c-ink);border-radius:999px" style-hover="background:var(--c-warm)">Nos produits</button>
+          <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:14.5px;background:none;border:0;padding:11px 15px;min-height:44px;cursor:pointer;color:var(--c-ink);border-radius:999px" style-hover="background:var(--c-warm)">Notre histoire</button>
+          <button type="button" onClick="{{ goContact }}" style="font:inherit;font-size:14.5px;background:none;border:0;padding:11px 15px;min-height:44px;cursor:pointer;color:var(--c-ink);border-radius:999px" style-hover="background:var(--c-warm)">Contact</button>
+          <button type="button" onClick="{{ goPanier }}" style="font:inherit;font-size:14.5px;font-weight:600;min-height:44px;padding:11px 20px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;border-radius:999px" style-hover="background:var(--c-ink)">Panier · {{ cartCount }}</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,3vw,32px)">
+
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin:clamp(12px,2vw,24px) 0 14px">
+        <div style="grid-column:span 2;min-width:0;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(28px,4.5vw,56px);display:flex;flex-direction:column;justify-content:center">
+          <p style="margin:0 0 20px;display:inline-flex;align-self:flex-start;align-items:center;gap:8px;background:var(--c-warm);color:var(--c-ink);font-size:13px;font-weight:600;padding:7px 15px;border-radius:999px">Montpellier · Quartier Saint-Roch</p>
+          <h1 style="margin:0 0 22px;font-family:var(--f-display);font-weight:600;font-size:clamp(34px,5.6vw,60px);line-height:1.08;letter-spacing:-0.02em;max-width:17ch;text-wrap:balance">Votre panier vous attend au comptoir.</h1>
+          <p style="margin:0 0 30px;font-size:18px;line-height:1.6;max-width:44ch;color:var(--c-muted)">Choisissez vos produits, réglez en ligne, passez quand vous voulez. On vous prépare tout, et on vous garde la conversation pour quand vous arrivez.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:15.5px;font-weight:600;min-height:52px;padding:15px 28px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;border-radius:999px" style-hover="background:var(--c-ink)">Voir nos produits</button>
+            <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:15.5px;font-weight:600;min-height:52px;padding:15px 28px;border:1px solid var(--c-line);background:transparent;color:var(--c-ink);cursor:pointer;border-radius:999px" style-hover="background:var(--c-warm)">Qui sommes-nous</button>
+          </div>
+        </div>
+        <div style="min-width:0;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border:1px solid var(--c-line);border-radius:var(--r-lg);min-height:300px;display:grid;place-items:center">
+          <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:var(--c-muted);background:var(--c-surface);padding:7px 13px;border-radius:999px">devanture · portrait</span>
+        </div>
+      </section>
+
+      <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:clamp(36px,5vw,64px)">
+        <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px">
+          <p style="margin:0 0 6px;font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1">2 h</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">De préparation, et c'est prêt</p>
+        </div>
+        <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px">
+          <p style="margin:0 0 6px;font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1">31</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">Produits au comptoir cette semaine</p>
+        </div>
+        <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px">
+          <p style="margin:0 0 6px;font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1">0 €</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">De frais, le retrait est gratuit</p>
+        </div>
+        <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px">
+          <p style="margin:0 0 6px;font-family:var(--f-display);font-size:30px;font-weight:600;line-height:1">6j/7</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">Du mardi au dimanche matin</p>
+        </div>
+      </section>
+
+      <section style="margin-bottom:clamp(36px,5vw,64px)">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:baseline;margin-bottom:22px">
+          <h2 style="margin:0;font-family:var(--f-display);font-weight:600;font-size:clamp(26px,3.6vw,38px);letter-spacing:-0.02em;line-height:1.1">Ce qu'on aime en ce moment</h2>
+          <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:15px;font-weight:600;background:none;border:0;padding:8px 0;cursor:pointer;color:var(--c-primary)">Tout voir →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px">
+          <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+            <article style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:14px;display:flex;gap:16px;align-items:flex-start">
+              <button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer;flex:none">
+                <div style="width:92px;height:118px;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 9px,transparent 9px 18px);border-radius:var(--r-md)"></div>
+              </button>
+              <div style="flex:1;min-width:0">
+                <p style="margin:0 0 5px;font-size:12.5px;font-weight:600;color:var(--c-accent)">{{ p.categorie }}</p>
+                <h3 style="margin:0 0 4px;font-family:var(--f-display);font-size:18.5px;font-weight:600;line-height:1.25"><button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer">{{ p.nom }}</button></h3>
+                <p style="margin:0 0 12px;font-size:13.5px;color:var(--c-muted)">{{ p.format }}</p>
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">{{ p.prix }}</span>
+                  <button type="button" onClick="{{ p.add }}" style="font:inherit;font-size:14px;font-weight:600;min-height:44px;padding:11px 18px;border:0;background:var(--c-warm);color:var(--c-ink);cursor:pointer;border-radius:999px" style-hover="background:var(--c-primary);color:var(--c-on-primary)">Ajouter</button>
+                </div>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="background:var(--c-warm);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(28px,4.5vw,56px);margin-bottom:clamp(36px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,4vw,56px);align-items:center">
+        <div>
+          <p style="margin:0 0 16px;font-size:13px;font-weight:600;color:var(--c-accent)">Notre histoire</p>
+          <blockquote style="margin:0 0 20px;font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(22px,2.8vw,30px);line-height:1.35;letter-spacing:-0.01em;text-wrap:pretty">« On tient la boutique à deux. Si vous avez une question sur un produit, c'est l'un de nous qui vous répond. »</blockquote>
+          <p style="margin:0 0 26px;font-size:15px;color:var(--c-muted)">Inès et Thomas, depuis 2019</p>
+          <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:15.5px;font-weight:600;min-height:52px;padding:15px 28px;border:0;background:var(--c-surface);color:var(--c-ink);cursor:pointer;border-radius:999px" style-hover="background:var(--c-primary);color:var(--c-on-primary)">Lire la suite</button>
+        </div>
+        <div style="aspect-ratio:4/3;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border-radius:var(--r-md);display:grid;place-items:center">
+          <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:var(--c-muted);background:var(--c-bg);padding:7px 13px;border-radius:999px">portrait des gérants · 4:3</span>
+        </div>
+      </section>
+
+      <section style="margin-bottom:clamp(36px,5vw,64px)">
+        <h2 style="margin:0 0 22px;font-family:var(--f-display);font-weight:600;font-size:clamp(24px,3.2vw,32px);letter-spacing:-0.02em">Passer au comptoir</h2>
+        <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:14px">
+          <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:9px">Adresse</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">7 place Saint-Roch<br>34000 Montpellier</dd></div>
+          <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:9px">Créneaux de retrait</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">Mardi au samedi<br>10:00–13:00 · 16:00–19:30</dd></div>
+          <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:9px">Préparation</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">2 heures minimum<br>Payé en ligne</dd></div>
+          <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:22px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:9px">Téléphone</dt><dd style="margin:0;font-size:16.5px"><a href="tel:+33467000000" style="color:var(--c-ink)">04 67 00 00 00</a></dd></div>
+        </dl>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isBoutique }}">
+    <section style="padding:clamp(24px,4vw,48px) 0 clamp(40px,6vw,80px)">
+      <h1 style="margin:0 0 14px;font-family:var(--f-display);font-weight:600;font-size:clamp(32px,5vw,54px);line-height:1.08;letter-spacing:-0.02em">Nos produits</h1>
+      <p style="margin:0 0 clamp(26px,4vw,40px);font-size:17.5px;color:var(--c-muted);max-width:52ch">Trente et une références au comptoir cette semaine. Ce qui est marqué disponible est prêt à partir dès le prochain créneau.</p>
+
+      <div role="group" aria-label="Filtrer par catégorie" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(22px,3vw,32px)">
+        <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+          <button type="button" onClick="{{ c.go }}" aria-pressed="{{ c.active }}" style="font:inherit;font-size:14.5px;font-weight:500;min-height:44px;padding:11px 18px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};cursor:pointer;border-radius:999px">{{ c.label }}</button>
+        </sc-for>
+      </div>
+
+      <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:14px">
+        <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="8">
+          <li style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:14px;display:flex;gap:16px;align-items:flex-start;opacity:{{ p.opacity }}">
+            <button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer;flex:none;position:relative">
+              <div style="width:100px;height:128px;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 9px,transparent 9px 18px);border-radius:var(--r-md)"></div>
+              <sc-if value="{{ p.badge }}">
+                <span style="position:absolute;top:7px;left:7px;background:var(--c-ink);color:var(--c-bg);font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:999px">{{ p.badge }}</span>
+              </sc-if>
+            </button>
+            <div style="flex:1;min-width:0">
+              <p style="margin:0 0 5px;font-size:12.5px;font-weight:600;color:var(--c-accent)">{{ p.categorie }}</p>
+              <h2 style="margin:0 0 4px;font-family:var(--f-display);font-size:18.5px;font-weight:600;line-height:1.25"><button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer">{{ p.nom }}</button></h2>
+              <p style="margin:0 0 12px;font-size:13.5px;color:var(--c-muted)">{{ p.format }}</p>
+              <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">{{ p.prix }}</span>
+                <button type="button" onClick="{{ p.add }}" disabled="{{ p.disabled }}" style="font:inherit;font-size:14px;font-weight:600;min-height:44px;padding:11px 18px;border:0;background:{{ p.btnBg }};color:{{ p.btnColor }};cursor:{{ p.cursor }};border-radius:999px">{{ p.btnLabel }}</button>
+              </div>
+            </div>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isFiche }}">
+    <article style="padding:clamp(18px,3vw,32px) 0 clamp(40px,6vw,80px)">
+      <nav aria-label="Fil d'Ariane" style="margin-bottom:18px;font-size:14px;color:var(--c-muted)">
+        <button type="button" onClick="{{ goBoutique }}" style="font:inherit;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--c-primary);font-weight:500">Nos produits</button>
+        <span style="margin:0 8px">/</span><span>{{ current.categorie }}</span>
+      </nav>
+
+      <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(18px,2.5vw,28px);display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(24px,4vw,48px);align-items:start;margin-bottom:14px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="aspect-ratio:4/5;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border-radius:var(--r-md);display:grid;place-items:center">
+            <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:var(--c-muted);background:var(--c-surface);padding:7px 13px;border-radius:999px">photo principale · 4:5</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 8px,transparent 8px 16px);border-radius:var(--r-sm)"></div>
+            <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 8px,transparent 8px 16px);border-radius:var(--r-sm)"></div>
+            <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 8px,transparent 8px 16px);border-radius:var(--r-sm)"></div>
+          </div>
+        </div>
+
+        <div style="max-width:54ch">
+          <p style="margin:0 0 12px;display:inline-flex;align-items:center;gap:8px;background:var(--c-warm);font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:999px">{{ current.producteur }}</p>
+          <h1 style="margin:0 0 12px;font-family:var(--f-display);font-weight:600;font-size:clamp(28px,4vw,44px);line-height:1.12;letter-spacing:-0.02em">{{ current.nom }}</h1>
+          <p style="margin:0 0 24px;font-size:17px;color:var(--c-muted)">{{ current.format }}</p>
+          <p style="margin:0 0 28px;font-size:17px;line-height:1.7;text-wrap:pretty">{{ current.description }}</p>
+
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--c-warm);border-radius:var(--r-md);padding:18px 22px;margin-bottom:28px">
+            <div>
+              <span style="display:block;font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1.1">{{ current.prix }}</span>
+              <span style="font-size:13px;color:var(--c-muted)">TVA {{ current.tva }} incluse</span>
+            </div>
+            <button type="button" onClick="{{ addCurrent }}" style="font:inherit;font-size:15.5px;font-weight:600;min-height:52px;padding:15px 28px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;margin-left:auto;border-radius:999px" style-hover="background:var(--c-ink)">Ajouter au panier</button>
+          </div>
+
+          <h2 style="margin:0 0 14px;font-family:var(--f-display);font-size:20px;font-weight:600">Informations réglementaires</h2>
+          <dl style="margin:0 0 16px;display:grid;gap:0;border:1px solid var(--c-line);border-radius:var(--r-md);overflow:hidden">
+            <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Dénomination</dt><dd style="margin:0;font-size:15px">{{ current.denomination }}</dd></div>
+            <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Ingrédients</dt><dd style="margin:0;font-size:15px;line-height:1.55">{{ current.ingredients }} <strong style="font-weight:600;text-decoration:underline;text-underline-offset:2px">{{ current.allergenes }}</strong></dd></div>
+            <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Quantité nette</dt><dd style="margin:0;font-size:15px">{{ current.poids }}</dd></div>
+            <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:16px;padding:13px 18px;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Conservation</dt><dd style="margin:0;font-size:15px">{{ current.conservation }}</dd></div>
+            <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:16px;padding:13px 18px"><dt style="font-size:13.5px;color:var(--c-muted)">Fabricant</dt><dd style="margin:0;font-size:15px">{{ current.fabricant }}</dd></div>
+          </dl>
+          <p style="margin:0;font-size:13.5px;color:var(--c-muted);line-height:1.6">La date limite de consommation dépend du lot : on vous la donne au moment du retrait.</p>
+        </div>
+      </div>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isHistoire }}">
+    <article style="padding:clamp(24px,4vw,48px) 0 clamp(40px,6vw,80px)">
+      <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(28px,4.5vw,64px);margin-bottom:14px">
+        <p style="margin:0 0 18px;display:inline-flex;align-items:center;gap:8px;background:var(--c-warm);font-size:13px;font-weight:600;padding:7px 15px;border-radius:999px">Notre histoire</p>
+        <h1 style="margin:0 0 28px;font-family:var(--f-display);font-weight:600;font-size:clamp(32px,5.4vw,58px);line-height:1.08;letter-spacing:-0.02em;max-width:18ch;text-wrap:balance">On a ouvert pour vendre ce qu'on aimait manger</h1>
+        <div style="max-width:66ch;font-size:18px;line-height:1.75">
+          <p style="margin:0 0 24px">Nous sommes Inès et Thomas. Avant, nous travaillions tous les deux en cuisine, et nous passions nos jours de congé à chercher de quoi remplir nos placards. En 2019 nous avons repris une ancienne mercerie place Saint-Roch, et nous y avons mis exactement ce que nous cherchions.</p>
+          <p style="margin:0 0 24px">Pas de catalogue de cent références. Trente, trente-cinq produits, renouvelés quand la saison change ou quand un producteur nous convainc. Nous les goûtons tous. Si nous ne savons pas vous dire d'où ça vient et comment c'est fait, ça ne rentre pas en boutique.</p>
+          <p style="margin:0">Le click &amp; collect est venu d'une demande des habitués : beaucoup travaillent et arrivent après la fermeture. Maintenant vous commandez le matin, nous préparons dans la journée, et vous passez récupérer votre sac entre deux rendez-vous.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:14px">
+        <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border:1px solid var(--c-line);border-radius:var(--r-lg);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:var(--c-muted);background:var(--c-surface);padding:6px 12px;border-radius:999px">la boutique</span></div>
+        <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border:1px solid var(--c-line);border-radius:var(--r-lg);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:var(--c-muted);background:var(--c-surface);padding:6px 12px;border-radius:999px">un producteur</span></div>
+        <div style="aspect-ratio:1;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border:1px solid var(--c-line);border-radius:var(--r-lg);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:var(--c-muted);background:var(--c-surface);padding:6px 12px;border-radius:999px">le comptoir</span></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:14px">
+        <sc-for list="{{ chiffres }}" as="c" hint-placeholder-count="4">
+          <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:26px 24px">
+            <p style="margin:0 0 8px;font-family:var(--f-display);font-size:clamp(30px,3.8vw,42px);font-weight:600;line-height:1">{{ c.value }}</p>
+            <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">{{ c.label }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}">
+    <section style="padding:clamp(24px,4vw,48px) 0 clamp(40px,6vw,80px)">
+      <h1 style="margin:0 0 14px;font-family:var(--f-display);font-weight:600;font-size:clamp(32px,5vw,54px);line-height:1.08;letter-spacing:-0.02em">Une question ?</h1>
+      <p style="margin:0 0 clamp(26px,4vw,40px);font-size:17.5px;color:var(--c-muted);max-width:50ch">Écrivez-nous, passez nous voir, ou appelez pendant les heures d'ouverture. C'est l'un de nous deux qui répond.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <form onSubmit="{{ noSubmit }}" style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(24px,3.5vw,36px);display:flex;flex-direction:column;gap:20px">
+          <div>
+            <label for="c-nom" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Votre nom <span style="color:var(--c-danger)">*</span></label>
+            <input id="c-nom" type="text" required="{{ true }}" autocomplete="name" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+          </div>
+          <div>
+            <label for="c-mail" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Votre email <span style="color:var(--c-danger)">*</span></label>
+            <input id="c-mail" type="email" required="{{ true }}" autocomplete="email" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+          </div>
+          <div>
+            <label for="c-msg" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Votre message <span style="color:var(--c-danger)">*</span></label>
+            <textarea id="c-msg" rows="6" required="{{ true }}" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);resize:vertical;border-radius:var(--r-sm)"></textarea>
+          </div>
+          <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;color:var(--c-muted)">
+            <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-primary)">
+            <span>J'accepte que mes coordonnées servent à répondre à ce message, et à rien d'autre. Elles sont effacées sous trois ans. <a href="#" onClick="{{ noSubmit }}">Politique de confidentialité</a>.</span>
+          </label>
+          <button type="submit" style="font:inherit;font-size:15.5px;font-weight:600;min-height:52px;padding:15px 28px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;align-self:flex-start;border-radius:999px" style-hover="background:var(--c-ink)">Envoyer le message</button>
+        </form>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="aspect-ratio:4/3;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 10px,transparent 10px 20px);border:1px solid var(--c-line);border-radius:var(--r-lg);display:grid;place-items:center">
+            <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:var(--c-muted);background:var(--c-surface);padding:7px 13px;border-radius:999px">plan statique · fiche Google Business</span>
+          </div>
+          <dl style="margin:0;display:grid;gap:14px">
+            <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:20px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:8px">Adresse</dt><dd style="margin:0;font-size:16.5px">7 place Saint-Roch, 34000 Montpellier</dd></div>
+            <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:20px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:8px">Horaires</dt><dd style="margin:0;font-size:16.5px;line-height:1.6">Mardi – samedi · 10:00 – 13:00, 16:00 – 19:30<br>Dimanche · 9:00 – 13:00<br>Lundi · fermé</dd></div>
+            <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:20px 24px"><dt style="font-size:12.5px;font-weight:600;color:var(--c-accent);margin-bottom:8px">Contact direct</dt><dd style="margin:0;font-size:16.5px;line-height:1.6"><a href="tel:+33467000000" style="color:var(--c-ink)">04 67 00 00 00</a><br><a href="mailto:bonjour@comptoir-saint-roch.fr" style="color:var(--c-ink)">bonjour@comptoir-saint-roch.fr</a></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isPanier }}">
+    <section style="padding:clamp(24px,4vw,48px) 0 clamp(40px,6vw,80px);max-width:1040px;margin:0 auto">
+      <ol style="list-style:none;margin:0 0 clamp(24px,3.5vw,40px);padding:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px">
+        <li style="display:flex;align-items:center;gap:9px;font-weight:600"><span style="width:26px;height:26px;border-radius:50%;background:var(--c-primary);color:var(--c-on-primary);display:grid;place-items:center;font-size:12.5px">1</span>Panier &amp; créneau</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:26px;height:26px;border-radius:50%;border:1px solid var(--c-line);display:grid;place-items:center;font-size:12.5px">2</span>Paiement</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:26px;height:26px;border-radius:50%;border:1px solid var(--c-line);display:grid;place-items:center;font-size:12.5px">3</span>Confirmation</li>
+      </ol>
+
+      <h1 style="margin:0 0 clamp(22px,3.5vw,36px);font-family:var(--f-display);font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.08;letter-spacing:-0.02em">Votre panier</h1>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <ul style="list-style:none;margin:0;padding:0;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);overflow:hidden">
+            <sc-for list="{{ cart }}" as="l" hint-placeholder-count="3">
+              <li style="display:flex;gap:16px;padding:18px;border-bottom:1px solid var(--c-line);align-items:flex-start">
+                <div style="width:68px;height:86px;flex:none;background:var(--c-warm);background-image:repeating-linear-gradient(45deg,#0000000A 0 8px,transparent 8px 16px);border-radius:var(--r-sm)"></div>
+                <div style="flex:1;min-width:0">
+                  <h2 style="margin:0 0 3px;font-family:var(--f-display);font-size:17.5px;font-weight:600">{{ l.nom }}</h2>
+                  <p style="margin:0 0 12px;font-size:13.5px;color:var(--c-muted)">{{ l.format }}</p>
+                  <div style="display:flex;align-items:center;gap:8px;background:var(--c-warm);border-radius:999px;padding:3px;width:fit-content">
+                    <button type="button" onClick="{{ l.dec }}" aria-label="Retirer une unité" style="font:inherit;width:38px;height:38px;border:0;background:var(--c-surface);color:var(--c-ink);cursor:pointer;font-size:17px;border-radius:50%">−</button>
+                    <span style="min-width:24px;text-align:center;font-variant-numeric:tabular-nums;font-size:15px;font-weight:600">{{ l.qte }}</span>
+                    <button type="button" onClick="{{ l.inc }}" aria-label="Ajouter une unité" style="font:inherit;width:38px;height:38px;border:0;background:var(--c-surface);color:var(--c-ink);cursor:pointer;font-size:17px;border-radius:50%">+</button>
+                  </div>
+                </div>
+                <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ l.total }}</span>
+              </li>
+            </sc-for>
+          </ul>
+
+          <fieldset style="border:1px solid var(--c-line);background:var(--c-surface);border-radius:var(--r-lg);padding:clamp(20px,3vw,28px);margin:0">
+            <legend style="padding:0 8px;margin-left:-8px;font-family:var(--f-display);font-size:20px;font-weight:600">Quand passez-vous ?</legend>
+            <p style="margin:6px 0 18px;font-size:14.5px;color:var(--c-muted)">7 place Saint-Roch. Il nous faut 2 heures pour préparer.</p>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ slots }}" as="s" hint-placeholder-count="4">
+                <label style="display:flex;align-items:center;gap:13px;padding:15px 18px;min-height:56px;border:1px solid {{ s.border }};background:{{ s.bg }};cursor:{{ s.cursor }};font-size:15.5px;border-radius:var(--r-md);color:{{ s.fg }}">
+                  <input type="radio" name="slot-c" checked="{{ s.checked }}" disabled="{{ s.disabled }}" onChange="{{ s.pick }}" style="width:18px;height:18px;flex:none;accent-color:var(--c-primary)">
+                  <span style="flex:1">{{ s.label }}</span>
+                  <span style="font-size:13px;color:var(--c-muted)">{{ s.note }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+        </div>
+
+        <aside style="border:1px solid var(--c-line);background:var(--c-surface);border-radius:var(--r-lg);padding:clamp(22px,3vw,30px);position:sticky;top:150px">
+          <h2 style="margin:0 0 20px;font-family:var(--f-display);font-size:20px;font-weight:600">Récapitulatif</h2>
+          <dl style="margin:0 0 18px;display:grid;gap:12px;font-size:15px">
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Sous-total</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ subtotal }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Dont TVA 5,5 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ tva55 }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Dont TVA 20 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ tva20 }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Retrait en boutique</dt><dd style="margin:0">Gratuit</dd></div>
+          </dl>
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:16px 0;border-top:1px solid var(--c-line);margin-bottom:6px">
+            <span style="font-size:16px;font-weight:600">Total</span>
+            <span style="font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ total }}</span>
+          </div>
+          <p style="margin:0 0 20px;font-size:13.5px;color:var(--c-muted)">Créneau retenu : {{ chosenSlot }}</p>
+          <button type="button" onClick="{{ goCheckout }}" style="font:inherit;font-size:15.5px;font-weight:600;width:100%;min-height:56px;padding:16px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;border-radius:999px" style-hover="background:var(--c-ink)">Passer au paiement</button>
+          <p style="margin:14px 0 0;font-size:13px;color:var(--c-muted);line-height:1.55">Paiement sécurisé par Stripe. Aucune donnée bancaire n'est conservée par la boutique.</p>
+        </aside>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}">
+    <section style="padding:clamp(24px,4vw,48px) 0 clamp(40px,6vw,80px);max-width:1040px;margin:0 auto">
+      <ol style="list-style:none;margin:0 0 clamp(24px,3.5vw,40px);padding:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px">
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:26px;height:26px;border-radius:50%;border:1px solid var(--c-primary);color:var(--c-primary);display:grid;place-items:center;font-size:12.5px">✓</span><button type="button" onClick="{{ goPanier }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-primary);font-weight:500">Panier &amp; créneau</button></li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;font-weight:600"><span style="width:26px;height:26px;border-radius:50%;background:var(--c-primary);color:var(--c-on-primary);display:grid;place-items:center;font-size:12.5px">2</span>Paiement</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:26px;height:26px;border-radius:50%;border:1px solid var(--c-line);display:grid;place-items:center;font-size:12.5px">3</span>Confirmation</li>
+      </ol>
+
+      <h1 style="margin:0 0 10px;font-family:var(--f-display);font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.08;letter-spacing:-0.02em">Paiement</h1>
+      <p style="margin:0 0 clamp(24px,3.5vw,40px);font-size:17px;color:var(--c-muted);max-width:50ch">Pas besoin de créer un compte. Le formulaire ci-dessous est celui de Stripe, affiché directement dans la page.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <form onSubmit="{{ noSubmit }}" style="border:1px solid var(--c-line);background:var(--c-surface);border-radius:var(--r-lg);overflow:hidden">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid var(--c-line);background:var(--c-warm)">
+            <span style="font-size:13px;font-weight:600;color:var(--c-muted)">Stripe Checkout intégré</span>
+            <span style="font-size:12.5px;color:var(--c-muted);display:flex;align-items:center;gap:7px"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#2A6B40"></span>Connexion chiffrée</span>
+          </div>
+
+          <div style="padding:clamp(22px,3vw,30px);display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button type="button" style="font:inherit;font-size:15px;font-weight:600;min-height:52px;border:0;background:#000000;color:#FFFFFF;cursor:pointer;border-radius:var(--r-sm)">Payer avec Apple&nbsp;Pay</button>
+              <button type="button" style="font:inherit;font-size:15px;font-weight:600;min-height:52px;border:1px solid var(--c-line);background:#FFFFFF;color:#1A1A17;cursor:pointer;border-radius:var(--r-sm)">Payer avec Google&nbsp;Pay</button>
+              <p style="margin:6px 0 0;font-size:12.5px;color:var(--c-muted)">Apple&nbsp;Pay n'apparaît que si le domaine est vérifié dans Stripe pour ce compte connecté.</p>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:14px"><span style="flex:1;height:1px;background:var(--c-line)"></span><span style="font-size:13px;color:var(--c-muted)">ou par carte</span><span style="flex:1;height:1px;background:var(--c-line)"></span></div>
+
+            <div>
+              <label for="c-co-mail" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Votre email <span style="color:var(--c-danger)">*</span></label>
+              <input id="c-co-mail" type="email" required="{{ true }}" autocomplete="email" inputmode="email" placeholder="vous@exemple.fr" aria-describedby="c-co-mail-h" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+              <p id="c-co-mail-h" style="margin:7px 0 0;font-size:13px;color:var(--c-muted)">Pour recevoir la confirmation, puis l'avis « c'est prêt ».</p>
+            </div>
+
+            <div>
+              <label for="c-co-tel" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Téléphone <span style="color:var(--c-muted);font-weight:400">(facultatif)</span></label>
+              <input id="c-co-tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 00 00 00 00" aria-describedby="c-co-tel-h" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+              <p id="c-co-tel-h" style="margin:7px 0 0;font-size:13px;color:var(--c-muted)">On vous appelle seulement s'il y a un souci sur la commande.</p>
+            </div>
+
+            <div>
+              <label for="c-co-nom" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Nom sur la carte <span style="color:var(--c-danger)">*</span></label>
+              <input id="c-co-nom" type="text" required="{{ true }}" autocomplete="cc-name" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+            </div>
+
+            <div>
+              <label for="c-co-card" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Informations de carte <span style="color:var(--c-danger)">*</span></label>
+              <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px">
+                <input id="c-co-card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 16px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+                <input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / AA" aria-label="Date d'expiration" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 10px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+                <input type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="CVC" aria-label="Cryptogramme" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 10px;min-height:50px;border:1px solid var(--c-line);background:var(--c-bg);color:var(--c-ink);border-radius:var(--r-sm)">
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;padding-top:2px">
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer">
+                <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-primary)">
+                <span>J'accepte les <a href="#" onClick="{{ noSubmit }}">conditions générales de vente</a>. Les denrées périssables ne sont pas soumises au droit de rétractation. <span style="color:var(--c-danger)">*</span></span>
+              </label>
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;padding:14px 16px;border:1px solid var(--c-line);background:var(--c-warm);border-radius:var(--r-md)">
+                <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-primary)">
+                <span><strong style="font-weight:600">Je déclare avoir 18 ans ou plus.</strong> Votre panier contient une boisson alcoolisée ; la vente aux mineurs de moins de 18 ans est interdite. <span style="color:var(--c-danger)">*</span></span>
+              </label>
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer">
+                <input type="checkbox" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-primary)">
+                <span>Prévenez-moi des nouveautés et des arrivages du {{ brandName }}. Facultatif, sans incidence sur la commande, désinscription en un clic.</span>
+              </label>
+            </div>
+
+            <button type="submit" style="font:inherit;font-size:15.5px;font-weight:600;width:100%;min-height:56px;padding:16px;border:0;background:var(--c-primary);color:var(--c-on-primary);cursor:pointer;border-radius:999px" style-hover="background:var(--c-ink)">Payer {{ total }}</button>
+            <p style="margin:0;font-size:12.5px;color:var(--c-muted);line-height:1.55;text-align:center">Paiement traité par Stripe. Le {{ brandName }} ne reçoit ni ne stocke vos données bancaires. Votre email est conservé pour le suivi de la commande, <a href="#" onClick="{{ noSubmit }}">politique de confidentialité</a>.</p>
+          </div>
+        </form>
+
+        <aside style="display:flex;flex-direction:column;gap:14px;position:sticky;top:150px">
+          <div style="border:1px solid var(--c-line);background:var(--c-surface);border-radius:var(--r-lg);padding:clamp(22px,3vw,28px)">
+            <h2 style="margin:0 0 16px;font-family:var(--f-display);font-size:19px;font-weight:600">Votre commande</h2>
+            <ul style="list-style:none;margin:0 0 16px;padding:0;display:grid;gap:11px;font-size:14.5px">
+              <sc-for list="{{ cart }}" as="l" hint-placeholder-count="3">
+                <li style="display:flex;justify-content:space-between;gap:14px"><span>{{ l.qte }} × {{ l.nom }}</span><span style="font-variant-numeric:tabular-nums;flex:none">{{ l.total }}</span></li>
+              </sc-for>
+            </ul>
+            <div style="display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding-top:16px;border-top:1px solid var(--c-line)">
+              <span style="font-size:15px;font-weight:600">Total TTC</span>
+              <span style="font-size:23px;font-weight:600;font-variant-numeric:tabular-nums">{{ total }}</span>
+            </div>
+          </div>
+          <div style="border:1px solid var(--c-line);background:var(--c-warm);border-radius:var(--r-lg);padding:clamp(20px,3vw,26px)">
+            <p style="margin:0 0 7px;font-size:12.5px;font-weight:600;color:var(--c-accent)">Vous passez</p>
+            <p style="margin:0 0 5px;font-size:16.5px;font-weight:600">{{ chosenSlot }}</p>
+            <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">7 place Saint-Roch, 34000 Montpellier</p>
+          </div>
+          <p style="margin:0;font-size:13px;color:var(--c-muted);line-height:1.6;background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-md);padding:16px 18px">L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
+        </aside>
+      </div>
+    </section>
+  </sc-if>
+
+  </main>
+
+  <footer style="max-width:1240px;margin:clamp(32px,5vw,64px) auto 0;padding:0 clamp(16px,3vw,32px) clamp(24px,4vw,40px)">
+    <div style="background:var(--c-surface);border:1px solid var(--c-line);border-radius:var(--r-lg);padding:clamp(28px,4vw,48px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(26px,4vw,44px);margin-bottom:clamp(26px,4vw,40px)">
+        <div>
+          <p style="margin:0 0 12px;font-family:var(--f-display);font-size:21px;font-weight:600">{{ brandName }}</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.6">7 place Saint-Roch<br>34000 Montpellier<br>04 67 00 00 00</p>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12.5px;font-weight:600;color:var(--c-accent)">La boutique</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px">
+            <li><button type="button" onClick="{{ goBoutique }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-primary)">Nos produits</button></li>
+            <li><button type="button" onClick="{{ goHistoire }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-primary)">Notre histoire</button></li>
+            <li><button type="button" onClick="{{ goContact }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-primary)">Contact</button></li>
+          </ul>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12.5px;font-weight:600;color:var(--c-accent)">Informations légales</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px">
+            <li><a href="#" onClick="{{ noSubmit }}" style="color:var(--c-ink)">Politique de confidentialité</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}" style="color:var(--c-ink)">Conditions générales de vente</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}" style="color:var(--c-ink)">Mentions légales</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}" style="color:var(--c-ink)">Gestion des cookies</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}" style="color:var(--c-ink)">Accessibilité : conformité partielle</a></li>
+          </ul>
+        </div>
+        <div>
+          <p style="margin:0 0 14px;font-size:12.5px;font-weight:600;color:var(--c-accent)">Vos données</p>
+          <p style="margin:0 0 10px;font-size:14px;color:var(--c-muted);line-height:1.6">Aucun cookie publicitaire, aucun traceur. Notre mesure d'audience est anonyme.</p>
+          <a href="#" onClick="{{ noSubmit }}" style="font-size:14px">Exercer mes droits</a>
+        </div>
+      </div>
+      <p style="margin:0;padding-top:22px;border-top:1px solid var(--c-line);font-size:13px;color:var(--c-muted)">L'abus d'alcool est dangereux pour la santé. À consommer avec modération. · © 2026 {{ brandName }} · Site réalisé par LaunchPadFactory</p>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280},&quot;brandName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Comptoir Saint-Roch&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Charte client&quot;}}">
+const CATALOG = [
+  { id:"pelardon", nom:"Pélardon fermier", categorie:"Fromages", producteur:"Chèvrerie du Roc", format:"Palet 60 g", prix:3.6, tva:"5,5 %", dispo:true, badge:"",
+    description:"Lait cru de chèvre du Mont Aigoual, caillé lentement, affiné dix jours. Encore crémeux au cœur. On en vend trente par semaine et ça part toujours.",
+    denomination:"Pélardon AOP au lait cru de chèvre", ingredients:"Lait cru de chèvre, sel, ferments lactiques, présure.", allergenes:"Contient : lait.", poids:"60 g",
+    conservation:"Entre 4 et 8 °C. À sortir 20 minutes avant de servir.", fabricant:"Chèvrerie du Roc, 30120 Arphy, France" },
+  { id:"olives", nom:"Olives Picholine cassées", categorie:"À l'apéritif", producteur:"Oliveraie de Clapiers", format:"Bocal 300 g", prix:7.2, tva:"5,5 %", dispo:true, badge:"",
+    description:"Cassées à la main puis dessalées pendant trois semaines, avec du fenouil et un peu de coriandre. Fermes, amères comme il faut.",
+    denomination:"Olives vertes cassées en saumure", ingredients:"Olives Picholine 80 %, eau, sel, fenouil, coriandre, ail.", allergenes:"", poids:"300 g égoutté 180 g",
+    conservation:"Au réfrigérateur après ouverture, 15 jours.", fabricant:"Oliveraie de Clapiers, 34830 Clapiers, France" },
+  { id:"brandade", nom:"Brandade de Nîmes", categorie:"Conserves", producteur:"Maison Raymond", format:"Bocal 250 g", prix:10.9, tva:"5,5 %", dispo:true, badge:"",
+    description:"Morue dessalée trois jours, montée à l'huile d'olive, sans pomme de terre. La vraie, celle qu'on passe sous le gril avec une chapelure.",
+    denomination:"Brandade de morue", ingredients:"Morue 48 %, huile d'olive vierge extra, lait, ail, poivre blanc.", allergenes:"Contient : poissons, lait.", poids:"250 g",
+    conservation:"Avant ouverture : température ambiante. Après : 3 jours au réfrigérateur.", fabricant:"Maison Raymond, 30000 Nîmes, France" },
+  { id:"picpoul", nom:"Picpoul de Pinet, Domaine Gaujal", categorie:"Vins", producteur:"Domaine Gaujal", format:"Bouteille 75 cl · 12,5 % vol.", prix:11.5, tva:"20 %", dispo:true, badge:"Alcool · 18 ans",
+    description:"Le blanc de l'étang de Thau, vif et citronné. Celui qu'on ouvre avec un plateau d'huîtres, ou juste comme ça un soir de juillet.",
+    denomination:"Picpoul de Pinet AOP", ingredients:"Raisin. Contient des sulfites.", allergenes:"Contient : sulfites.", poids:"75 cl",
+    conservation:"Couché, entre 10 et 12 °C. À boire dans les deux ans.", fabricant:"Domaine Gaujal de Saint-Bon, 34850 Pinet, France" },
+  { id:"fougasse", nom:"Fougasse aux grattons", categorie:"Boulange", producteur:"Fournil Marcelin", format:"Pièce 280 g", prix:5.4, tva:"5,5 %", dispo:false, badge:"Épuisé",
+    description:"Cuite tous les matins au fournil d'à côté. Mie serrée, grattons de porc fondus dedans. Prête à 8 h, rarement là à midi.",
+    denomination:"Fougasse aux grattons de porc", ingredients:"Farine de blé T65, eau, grattons de porc 18 %, levain, sel, huile d'olive.", allergenes:"Contient : gluten. Peut contenir des traces de lait, œufs.", poids:"280 g",
+    conservation:"À consommer le jour même.", fabricant:"Fournil Marcelin, 34000 Montpellier, France" },
+  { id:"miel", nom:"Miel de garrigue", categorie:"Miels & confitures", producteur:"Rucher de l'Hortus", format:"Pot 400 g", prix:9.8, tva:"5,5 %", dispo:true, badge:"",
+    description:"Thym, romarin, bruyère blanche : ce que les abeilles trouvent sur le pic Saint-Loup au printemps. Cristallise vite, c'est normal.",
+    denomination:"Miel de garrigue de France", ingredients:"Miel toutes fleurs de garrigue 100 %.", allergenes:"", poids:"400 g",
+    conservation:"À l'abri de la lumière, entre 15 et 20 °C.", fabricant:"Rucher de l'Hortus, 34270 Valflaunès, France" },
+  { id:"anchoiade", nom:"Anchoïade du comptoir", categorie:"À l'apéritif", producteur:"Préparation maison", format:"Pot 150 g", prix:6.8, tva:"5,5 %", dispo:true, badge:"Fait ici",
+    description:"On la prépare au comptoir le mardi matin : anchois, ail nouveau, huile d'olive, un trait de vinaigre. Sur du pain grillé, ou avec des légumes crus.",
+    denomination:"Préparation à base d'anchois", ingredients:"Anchois 54 %, huile d'olive vierge extra, ail, vinaigre de vin, poivre.", allergenes:"Contient : poissons, sulfites.", poids:"150 g",
+    conservation:"Au réfrigérateur, 8 jours après ouverture.", fabricant:"Comptoir Saint-Roch, 34000 Montpellier, France" },
+  { id:"croquant", nom:"Croquants aux amandes", categorie:"Épicerie sucrée", producteur:"Biscuiterie Vialla", format:"Sachet 200 g", prix:8.5, tva:"5,5 %", dispo:true, badge:"",
+    description:"La recette de la maison Vialla depuis 1948 : amandes entières, blanc d'œuf, deux cuissons. Très secs, faits pour tremper dans le café.",
+    denomination:"Biscuits secs aux amandes", ingredients:"Farine de blé, sucre, amandes 28 %, blancs d'œufs, miel.", allergenes:"Contient : gluten, amandes, œufs. Peut contenir des traces de noisettes.", poids:"200 g",
+    conservation:"À l'abri de l'humidité, un mois après ouverture.", fabricant:"Biscuiterie Vialla, 34400 Lunel, France" }
+];
+const CATS = ["Tout", "Fromages", "Conserves", "À l'apéritif", "Vins", "Boulange", "Miels & confitures", "Épicerie sucrée"];
+const SLOTS = [
+  { id:"s1", label:"Aujourd'hui · 16:00 – 19:30", note:"à partir de 16:00", full:false },
+  { id:"s2", label:"Demain · 10:00 – 13:00", note:"", full:false },
+  { id:"s3", label:"Demain · 16:00 – 19:30", note:"", full:false },
+  { id:"s4", label:"Dimanche · 9:00 – 13:00", note:"complet", full:true }
+];
+const eur = n => n.toFixed(2).replace(".", ",") + " €";
+
+class Component extends DCLogic {
+  state = { page:"accueil", cat:"Tout", productId:"pelardon", slot:"s1",
+    cart:[{ id:"pelardon", qte:3 }, { id:"anchoiade", qte:1 }, { id:"picpoul", qte:2 }] };
+
+  go(page) { return () => this.setState({ page }); }
+  openProduct(id) { return () => this.setState({ page:"fiche", productId:id }); }
+  add(id) { return () => this.setState(s => {
+    const found = s.cart.find(l => l.id === id);
+    return { cart: found ? s.cart.map(l => l.id === id ? { ...l, qte:l.qte + 1 } : l) : [...s.cart, { id, qte:1 }] };
+  }); }
+  bump(id, d) { return () => this.setState(s => ({
+    cart: s.cart.map(l => l.id === id ? { ...l, qte:Math.max(1, l.qte + d) } : l)
+  })); }
+
+  renderVals() {
+    const { page, cat, productId, slot, cart } = this.state;
+    const p = CATALOG.find(x => x.id === productId) || CATALOG[0];
+    const lines = cart.map(l => ({ ...l, prod:CATALOG.find(x => x.id === l.id) })).filter(l => l.prod);
+    const sub = lines.reduce((a, l) => a + l.prod.prix * l.qte, 0);
+    const t20 = lines.filter(l => l.prod.tva === "20 %").reduce((a, l) => a + l.prod.prix * l.qte, 0);
+    const t55 = sub - t20;
+    const chosen = SLOTS.find(s => s.id === slot) || SLOTS[0];
+    const tabs = [["accueil","Accueil"],["boutique","Nos produits"],["fiche","Fiche produit"],["histoire","Notre histoire"],["contact","Contact"],["panier","Panier & créneau"],["checkout","Paiement Stripe"]];
+
+    return {
+      brandName: this.props.brandName ?? "Comptoir Saint-Roch",
+      pages: tabs.map(([id, label]) => ({ label, go:this.go(id),
+        bg: page === id ? "#FFFFFF" : "#2A2E36", fg: page === id ? "#16181D" : "#C7CCD4" })),
+      isAccueil: page === "accueil", isBoutique: page === "boutique", isFiche: page === "fiche",
+      isHistoire: page === "histoire", isContact: page === "contact", isPanier: page === "panier", isCheckout: page === "checkout",
+      goBoutique: this.go("boutique"), goHistoire: this.go("histoire"), goContact: this.go("contact"),
+      goPanier: this.go("panier"), goCheckout: this.go("checkout"),
+      noSubmit: e => e.preventDefault(),
+      cartCount: cart.reduce((a, l) => a + l.qte, 0),
+      featured: [CATALOG[0], CATALOG[6], CATALOG[5]].map(x => ({ ...x, prix:eur(x.prix), open:this.openProduct(x.id), add:this.add(x.id) })),
+      categories: CATS.map(c => ({ label:c, active:c === cat, go:() => this.setState({ cat:c }),
+        bg: c === cat ? "var(--c-ink)" : "var(--c-surface)", fg: c === cat ? "var(--c-bg)" : "var(--c-ink)",
+        border: c === cat ? "var(--c-ink)" : "var(--c-line)" })),
+      visibleProducts: CATALOG.filter(x => cat === "Tout" || x.categorie === cat).map(x => ({
+        ...x, prix:eur(x.prix), opacity: x.dispo ? "1" : "0.6",
+        disabled: !x.dispo, btnLabel: x.dispo ? "Ajouter" : "Épuisé",
+        btnBg: x.dispo ? "var(--c-warm)" : "transparent", btnColor: x.dispo ? "var(--c-ink)" : "var(--c-muted)",
+        cursor: x.dispo ? "pointer" : "not-allowed", open:this.openProduct(x.id), add:this.add(x.id) })),
+      current: { ...p, prix:eur(p.prix) },
+      addCurrent: this.add(p.id),
+      chiffres: [
+        { value:"2019", label:"Reprise de l'ancienne mercerie place Saint-Roch" },
+        { value:"31", label:"Références au comptoir cette semaine" },
+        { value:"2", label:"Personnes en boutique, Inès et Thomas" },
+        { value:"80 km", label:"Distance maximale de nos producteurs" }
+      ],
+      cart: lines.map(l => ({ nom:l.prod.nom, format:l.prod.format, qte:l.qte, total:eur(l.prod.prix * l.qte),
+        inc:this.bump(l.id, 1), dec:this.bump(l.id, -1) })),
+      slots: SLOTS.map(s => ({ label:s.label, note:s.note, checked:s.id === slot, disabled:s.full,
+        pick:() => this.setState({ slot:s.id }), cursor: s.full ? "not-allowed" : "pointer",
+        bg: s.id === slot ? "var(--c-warm)" : "transparent",
+        border: s.id === slot ? "var(--c-primary)" : "var(--c-line)",
+        fg: s.full ? "var(--c-muted)" : "var(--c-ink)" })),
+      subtotal: eur(sub), tva55: eur(t55 * 0.055 / 1.055), tva20: eur(t20 * 0.2 / 1.2),
+      total: eur(sub), chosenSlot: chosen.label
+    };
+  }
+}
+</script>
+</body>
+</html>

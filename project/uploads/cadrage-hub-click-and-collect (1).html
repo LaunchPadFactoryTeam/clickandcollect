@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadrage : hub click &amp; collect pour épiceries fines | LaunchPadFactory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7F1; --surface:#FFFFFF; --ink:#1E291E; --muted:#5C6558; --line:#D7DCCD;
+  --olive:#4B5A21; --olive-soft:#E4E9D2; --mustard:#A97B12; --mustard-soft:#F3E8C6;
+  --wine:#8A2D3B; --wine-soft:#F4DFE2;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#131712; --surface:#1A2018; --ink:#E7EBE0; --muted:#A1AA9A; --line:#2D3529;
+    --olive:#AFC16E; --olive-soft:#232C19; --mustard:#E2B850; --mustard-soft:#2D2715;
+    --wine:#E58A97; --wine-soft:#2E1B1F;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--olive);text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--mustard);outline-offset:3px;border-radius:2px}
+
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1180px;margin:0 auto;gap:56px;padding:0 32px}
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:48px 0 32px;font-size:14.5px}
+nav.toc p{font-family:var(--display);font-weight:700;margin:0 0 12px;font-size:15px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li{counter-increment:t;margin:0}
+nav.toc a{display:flex;gap:10px;padding:5px 0;color:var(--muted);text-decoration:none}
+nav.toc a::before{content:counter(t);min-width:1.4em;color:var(--olive);font-variant-numeric:tabular-nums;font-weight:600}
+nav.toc a:hover{color:var(--ink)}
+main{padding:48px 0 120px;max-width:780px}
+
+/* Couverture */
+.cover{padding:24px 0 48px;border-bottom:2px solid var(--ink);margin-bottom:56px}
+.cover .who{font-size:15px;color:var(--muted);margin:0 0 28px}
+.cover h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,6vw,68px);line-height:1;letter-spacing:-0.02em;margin:0 0 24px}
+.cover .lede{font-size:20px;line-height:1.5;max-width:36em;margin:0 0 32px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line);background:var(--surface)}
+.meta div{padding:14px 18px;border-right:1px solid var(--line)}
+.meta div:last-child{border-right:0}
+.meta dt{font-size:13px;color:var(--muted);margin:0}
+.meta dd{margin:2px 0 0;font-weight:600}
+
+section{margin:0 0 72px;scroll-margin-top:24px}
+h2{font-family:var(--display);font-weight:700;font-size:32px;line-height:1.15;letter-spacing:-0.01em;margin:0 0 20px;display:flex;gap:14px;align-items:baseline}
+h2 .n{color:var(--olive);font-size:20px;font-variant-numeric:tabular-nums}
+h3{font-family:var(--display);font-weight:700;font-size:21px;margin:36px 0 10px}
+p{margin:0 0 16px}
+ul,ol{margin:0 0 16px;padding-left:1.3em}
+li{margin:0 0 6px}
+strong{font-weight:600}
+code{font-family:var(--mono);font-size:.88em;background:var(--olive-soft);padding:1px 5px;border-radius:3px}
+pre{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--olive);padding:18px 20px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.55;margin:0 0 20px}
+pre code{background:none;padding:0}
+
+.table-wrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;background:var(--olive-soft);font-size:14px}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;color:var(--olive);font-weight:600;width:2.5em}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:0 0 20px}
+.box{background:var(--surface);border:1px solid var(--line);padding:18px 20px}
+.box h4{font-family:var(--display);font-size:17px;margin:0 0 10px}
+.box ul{margin:0}
+.box.in{border-top:4px solid var(--olive)}
+.box.out{border-top:4px solid var(--muted)}
+
+.note{padding:16px 20px;margin:0 0 20px;border-left:4px solid var(--mustard);background:var(--mustard-soft)}
+.note.alert{border-left-color:var(--wine);background:var(--wine-soft)}
+.note p:last-child,.note ul:last-child{margin-bottom:0}
+.note strong:first-child{display:block;margin-bottom:4px}
+
+.tag{display:inline-block;font-size:12.5px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.t-high{background:var(--olive-soft);color:var(--olive)}
+.t-mid{background:var(--mustard-soft);color:var(--mustard)}
+.t-low{background:var(--wine-soft);color:var(--wine)}
+
+/* Phasage : la frise est l'élément fort du document */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);margin:8px 0 28px;border:2px solid var(--ink)}
+.phase{padding:20px 18px;border-right:2px solid var(--ink);background:var(--surface);position:relative}
+.phase:last-child{border-right:0}
+.phase:nth-child(1){background:var(--olive-soft)}
+.phase .num{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--olive)}
+.phase h4{font-family:var(--display);font-size:18px;margin:8px 0 4px}
+.phase .dur{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.phase ul{font-size:14px;padding-left:1.1em;margin:0}
+.phase li{margin-bottom:4px}
+
+.flow{counter-reset:f;list-style:none;padding:0;margin:0 0 20px;border-left:2px solid var(--line)}
+.flow li{counter-increment:f;position:relative;padding:0 0 14px 34px}
+.flow li::before{content:counter(f);position:absolute;left:-13px;top:0;width:24px;height:24px;border-radius:50%;background:var(--paper);border:2px solid var(--olive);color:var(--olive);font-size:12.5px;font-weight:700;display:grid;place-items:center}
+
+figure{margin:0 0 24px}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.svg-ink{stroke:var(--ink)} .svg-fill{fill:var(--surface)} .svg-olive{fill:var(--olive-soft);stroke:var(--olive)}
+.svg-must{fill:var(--mustard-soft);stroke:var(--mustard)} .svg-text{fill:var(--ink);font-family:var(--body);font-size:13px}
+.svg-title{fill:var(--ink);font-family:var(--display);font-weight:700;font-size:15px}
+.svg-muted{fill:var(--muted);font-family:var(--body);font-size:12px}
+.svg-line{stroke:var(--muted);fill:none}
+
+details{background:var(--surface);border:1px solid var(--line);padding:0 18px;margin:0 0 10px}
+summary{cursor:pointer;padding:14px 0;font-weight:600}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:14px}
+
+footer{border-top:2px solid var(--ink);padding-top:20px;color:var(--muted);font-size:14px}
+
+@media (max-width: 980px){
+  .layout{grid-template-columns:1fr;gap:0;padding:0 20px}
+  nav.toc{position:static;height:auto;padding:24px 0 0;border-bottom:1px solid var(--line)}
+  nav.toc ol{columns:2;column-gap:24px}
+  main{padding-top:24px}
+  .timeline{grid-template-columns:1fr 1fr}
+  .phase:nth-child(2){border-right:0}
+  .phase:nth-child(-n+2){border-bottom:2px solid var(--ink)}
+}
+@media (max-width: 600px){
+  body{font-size:16px}
+  nav.toc ol{columns:1}
+  .cols{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr}
+  .phase{border-right:0;border-bottom:2px solid var(--ink)}
+  .phase:last-child{border-bottom:0}
+  .meta div{border-right:0;border-bottom:1px solid var(--line)}
+  h2{font-size:27px}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  nav.toc{display:none}
+  .layout{display:block;padding:0}
+  main{max-width:none;padding:0}
+  section{break-inside:auto;page-break-inside:auto}
+  h2,h3{break-after:avoid}
+  .timeline,.table-wrap,pre,.note{break-inside:avoid}
+  details{border:0;padding:0}
+  details > *{display:block}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc" aria-label="Sommaire">
+  <p>Sommaire</p>
+  <ol>
+    <li><a href="#vision">Vision et objectifs</a></li>
+    <li><a href="#decisions">Décisions actées</a></li>
+    <li><a href="#perimetre">Périmètre de la V1</a></li>
+    <li><a href="#parcours">Parcours utilisateurs</a></li>
+    <li><a href="#architecture">Architecture technique</a></li>
+    <li><a href="#generation">Génération d'un site</a></li>
+    <li><a href="#paiement">Paiement</a></li>
+    <li><a href="#bo">Back-office commerçant</a></li>
+    <li><a href="#hub">Dashboard hub LaunchPad</a></li>
+    <li><a href="#rgpd">Module RGPD</a></li>
+    <li><a href="#conformite">Conformité commerce</a></li>
+    <li><a href="#phasage">Phasage</a></li>
+    <li><a href="#backlog">Backlog priorisé</a></li>
+    <li><a href="#checklist">Checklist de mise en ligne</a></li>
+    <li><a href="#risques">Risques</a></li>
+    <li><a href="#ouvert">Points ouverts</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<header class="cover">
+  <p class="who">LaunchPadFactory, document de cadrage</p>
+  <h1>Hub click &amp; collect pour épiceries fines</h1>
+  <p class="lede">Un produit qui génère, à partir d'un brief standardisé, des sites e-commerce click &amp; collect sobres et rapides pour les épiceries fines, pilotés et enrichis au fil des versions par LaunchPad.</p>
+  <dl class="meta">
+    <div><dt>Version</dt><dd>1.1</dd></div>
+    <div><dt>Date</dt><dd>2 octobre 2026</dd></div>
+    <div><dt>Statut</dt><dd>Cadrage validé, points ouverts tranchés</dd></div>
+    <div><dt>Équipe</dt><dd>LaunchPad en interne</dd></div>
+  </dl>
+</header>
+
+<section id="vision">
+  <h2><span class="n">1</span>Vision et objectifs</h2>
+  <p>Les épiceries fines n'ont pas besoin d'un e-shop national avec livraison partout en France. Elles ont besoin d'une vitrine en ligne qui met en avant 10 à 30 produits phares, et qui permet à leurs clients de commander et payer en quelques secondes avant de passer récupérer leurs achats en boutique.</p>
+  <p>Le produit doit permettre à LaunchPad de :</p>
+  <ul>
+    <li>livrer un nouveau site en quelques jours à partir d'un brief standardisé (nom, produits, charte graphique, textes ou URL de l'ancien site) ;</li>
+    <li>garantir une qualité constante grâce à un design system commun et à trois variantes de design par page ;</li>
+    <li>faire évoluer tous les sites au rythme du produit (livraison, fidélité, coffrets…) en activant des fonctionnalités client par client ;</li>
+    <li>suivre la performance de chaque boutique dans un dashboard central, notamment son chiffre d'affaires mensuel.</li>
+  </ul>
+  <h3>Modèle économique</h3>
+  <p>Frais de mise en place à la création du site, puis abonnement mensuel simple. Pas de commission sur les ventes en V1.</p>
+  <h3>Objectifs de lancement</h3>
+  <p>Un client pilote pour valider le produit de bout en bout, puis cinq boutiques en production pour la première vague.</p>
+</section>
+
+<section id="decisions">
+  <h2><span class="n">2</span>Décisions actées</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sujet</th><th>Décision</th></tr></thead>
+    <tbody>
+      <tr><td>Architecture</td><td>Un core partagé et versionné, plus un repo « mince » par client. Chaque site est déployé séparément, sur le domaine du client.</td></tr>
+      <tr><td>Stack V1</td><td>Next.js, Sanity (contenus et catalogue), Postgres via Supabase (commandes et analytics), Stripe, Umami (audience), Brevo (emails).</td></tr>
+      <tr><td>Hébergement</td><td>Cloudflare Workers avec l'adaptateur OpenNext. Un seul compte Cloudflare LaunchPad pour tous les sites, plan payant à 5 $ par mois dès la mise en production.</td></tr>
+      <tr><td>Paiement</td><td>Stripe Connect avec comptes « Standard » (un compte par commerçant, autonome sur ses paiements et remboursements) et Stripe Checkout intégré à la page, avec carte, Apple Pay et Google Pay.</td></tr>
+      <tr><td>Tunnel</td><td>Commande en invité uniquement : email obligatoire, téléphone facultatif, paiement en une fois.</td></tr>
+      <tr><td>Comptes clients</td><td>Aucun en V1. Aucune donnée bancaire conservée par LaunchPad.</td></tr>
+      <tr><td>Retrait</td><td>Créneaux paramétrés à la création du site, choisis par le client dans le tunnel. Capacité illimitée par créneau en V1.</td></tr>
+      <tr><td>Commandes non retirées</td><td>Gérées hors du produit : contact téléphonique, remboursement éventuel depuis Stripe. Politique décrite dans les CGV.</td></tr>
+      <tr><td>Catalogue</td><td>Produits à prix fixe uniquement, sans variantes. Statut disponible ou indisponible, sans stock chiffré.</td></tr>
+      <tr><td>Alcool</td><td>Possible, en option activable par boutique.</td></tr>
+      <tr><td>Contenus</td><td>Gérés par LaunchPad. Seule exception : le commerçant peut passer un produit en disponible ou indisponible depuis son back-office.</td></tr>
+      <tr><td>Back-office</td><td>Accès commerçant par email et mot de passe pour consulter et traiter les commandes. Email automatique à chaque commande.</td></tr>
+      <tr><td>Analytics</td><td>Dashboard réservé à LaunchPad. Les commerçants reçoivent des exports mensuels.</td></tr>
+      <tr><td>Cookies</td><td>Mesure d'audience sans cookies avec Umami, pour éviter le bandeau de consentement autant que possible.</td></tr>
+      <tr><td>Conservation des données</td><td>Alignée sur le référentiel CNIL de gestion des activités commerciales (voir le module RGPD).</td></tr>
+      <tr><td>Domaines</td><td>Chaque client conserve son propre nom de domaine.</td></tr>
+      <tr><td>Juridique</td><td>CGV, mentions légales et politique de confidentialité génériques, à faire valider une fois par un juriste.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="perimetre">
+  <h2><span class="n">3</span>Périmètre de la V1</h2>
+  <div class="cols">
+    <div class="box in">
+      <h4>Inclus</h4>
+      <ul>
+        <li>Pages : accueil, boutique (tous les produits), fiche produit, l'épicerie, contact, panier et choix du créneau, confirmation, pages légales</li>
+        <li>Trois variantes de design pour chaque page principale</li>
+        <li>Tunnel invité avec Stripe Checkout intégré</li>
+        <li>Créneaux de retrait statiques et délai minimum de préparation</li>
+        <li>Emails transactionnels aux couleurs de la boutique</li>
+        <li>Back-office commerçant pour suivre les commandes et gérer les disponibilités</li>
+        <li>Module RGPD (consentement, hachage, droits)</li>
+        <li>SEO local : données structurées, lien avec la fiche Google Business</li>
+        <li>Mesure d'audience sans cookies</li>
+        <li>Dashboard hub LaunchPad et exports mensuels</li>
+      </ul>
+    </div>
+    <div class="box out">
+      <h4>Exclus de la V1</h4>
+      <ul>
+        <li>Livraison et expédition</li>
+        <li>Comptes clients et programme de fidélité</li>
+        <li>Produits au poids et variantes de produits</li>
+        <li>Stock chiffré et synchronisation avec la caisse</li>
+        <li>Édition des contenus par le commerçant</li>
+        <li>Dashboard accessible au commerçant</li>
+        <li>Composition de coffrets</li>
+        <li>Toute fonctionnalité listée au backlog</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Pourquoi une fiche produit en plus de la page boutique</strong>
+    <p>Pour la vente à distance de denrées préemballées, le règlement INCO impose que les informations obligatoires (dont les allergènes) soient accessibles avant l'achat. La fiche produit est l'endroit naturel pour les afficher. Elle peut aussi prendre la forme d'un panneau qui s'ouvre depuis la page boutique.</p>
+  </div>
+</section>
+
+<section id="parcours">
+  <h2><span class="n">4</span>Parcours utilisateurs</h2>
+  <h3>Le client de l'épicerie</h3>
+  <ol class="flow">
+    <li>Il découvre les produits sur l'accueil ou la page boutique et en ajoute au panier.</li>
+    <li>Il choisit un créneau de retrait parmi ceux proposés.</li>
+    <li>Il paie sur le formulaire Stripe intégré : email, téléphone facultatif, case de consentement marketing facultative, carte ou Apple Pay ou Google Pay.</li>
+    <li>Il reçoit un email de confirmation avec le récapitulatif, le créneau et l'adresse de la boutique.</li>
+    <li>Il reçoit un second email quand le commerçant passe la commande en « prête ».</li>
+    <li>Il récupère sa commande en boutique.</li>
+  </ol>
+  <h3>Le commerçant</h3>
+  <ol class="flow">
+    <li>Il reçoit un email à chaque nouvelle commande.</li>
+    <li>Il se connecte au back-office et voit les commandes triées par créneau.</li>
+    <li>Il passe chaque commande de « nouvelle » à « en préparation », puis « prête », puis « retirée ».</li>
+    <li>En cas de rupture, il passe le produit en « indisponible » depuis la page Disponibilités.</li>
+    <li>Il reçoit chaque mois un export de ses ventes.</li>
+  </ol>
+  <h3>LaunchPad</h3>
+  <ol class="flow">
+    <li>Collecte le brief du client et remplit le prompt de génération.</li>
+    <li>Vérifie le site généré sur un environnement de prévisualisation.</li>
+    <li>Configure le domaine, Stripe Connect et Apple Pay, puis met en ligne.</li>
+    <li>Met à jour produits, prix, textes et photos à la demande du commerçant.</li>
+    <li>Suit l'ensemble des boutiques dans le dashboard hub.</li>
+  </ol>
+</section>
+
+<section id="architecture">
+  <h2><span class="n">5</span>Architecture technique</h2>
+  <p>Chaque site est isolé : son propre repo, son propre déploiement, son domaine, ses secrets et ses fonctionnalités activées. Mais aucun site ne contient de logique métier propre : tout le code vit dans le core, ce qui évite la dérive des forks et permet de propager les évolutions par simple montée de version.</p>
+
+  <figure>
+    <svg viewBox="0 0 760 420" role="img" aria-labelledby="archTitle">
+      <title id="archTitle">Schéma d'architecture : un core partagé, des sites clients isolés, une base centrale</title>
+      <rect x="230" y="14" width="300" height="78" class="svg-olive" stroke-width="2"/>
+      <text x="380" y="44" text-anchor="middle" class="svg-title">Core LaunchPad (monorepo)</text>
+      <text x="380" y="66" text-anchor="middle" class="svg-muted">Composants et variantes, tunnel, back-office,</text>
+      <text x="380" y="82" text-anchor="middle" class="svg-muted">emails, RGPD, connecteurs, abstraction PSP</text>
+
+      <path d="M380 92 V128 M130 128 H630 M130 128 V158 M380 128 V158 M630 128 V158" class="svg-line" stroke-width="1.5"/>
+      <text x="392" y="120" class="svg-muted">version figée par client (ex. core 1.4)</text>
+
+      <g>
+        <rect x="30" y="158" width="200" height="104" class="svg-fill svg-ink" stroke-width="1.5"/>
+        <text x="130" y="184" text-anchor="middle" class="svg-title">Site client A</text>
+        <text x="130" y="206" text-anchor="middle" class="svg-text">config + contenus</text>
+        <text x="130" y="226" text-anchor="middle" class="svg-muted">Sanity A, Stripe compte A</text>
+        <text x="130" y="246" text-anchor="middle" class="svg-muted">epicerie-a.fr</text>
+      </g>
+      <g>
+        <rect x="280" y="158" width="200" height="104" class="svg-fill svg-ink" stroke-width="1.5"/>
+        <text x="380" y="184" text-anchor="middle" class="svg-title">Site client B</text>
+        <text x="380" y="206" text-anchor="middle" class="svg-text">config + contenus</text>
+        <text x="380" y="226" text-anchor="middle" class="svg-muted">Sanity B, Stripe compte B</text>
+        <text x="380" y="246" text-anchor="middle" class="svg-muted">maison-b.com</text>
+      </g>
+      <g>
+        <rect x="530" y="158" width="200" height="104" class="svg-fill svg-ink" stroke-width="1.5"/>
+        <text x="630" y="184" text-anchor="middle" class="svg-title">Site client C</text>
+        <text x="630" y="206" text-anchor="middle" class="svg-text">config + contenus</text>
+        <text x="630" y="226" text-anchor="middle" class="svg-muted">Sanity C, Stripe compte C</text>
+        <text x="630" y="246" text-anchor="middle" class="svg-muted">delices-c.fr</text>
+      </g>
+
+      <path d="M130 262 V300 H630 V262 M380 262 V300 M380 300 V326" class="svg-line" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="392" y="318" class="svg-muted">commandes et événements (emails hachés)</text>
+
+      <rect x="180" y="326" width="400" height="78" class="svg-must" stroke-width="2"/>
+      <text x="380" y="356" text-anchor="middle" class="svg-title">Base centrale LaunchPad (Postgres)</text>
+      <text x="380" y="378" text-anchor="middle" class="svg-muted">une ligne par commande avec identifiant boutique,</text>
+      <text x="380" y="394" text-anchor="middle" class="svg-muted">accès cloisonné par boutique, alimente le dashboard hub</text>
+    </svg>
+    <figcaption>Les sites sont isolés en code, en déploiement et en secrets. Seules les données de commande remontent vers une base centrale, cloisonnée par boutique.</figcaption>
+  </figure>
+
+  <h3>Briques et rôles</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Brique</th><th>Rôle</th><th>Remarque</th></tr></thead>
+    <tbody>
+      <tr><td>Core (monorepo)</td><td>Tout le code partagé : composants avec leurs trois variantes, tunnel, back-office, emails, module RGPD, connecteurs de caisse futurs, couche d'abstraction des PSP.</td><td>Versionné (1.0, 1.1…). Chaque client est figé sur une version et migre quand LaunchPad le décide.</td></tr>
+      <tr><td>Repo client</td><td>Fichier de configuration, contenus de départ, éventuelles surcharges locales minimales.</td><td>Créé par le processus de génération. Aucune logique métier ne doit y vivre.</td></tr>
+      <tr><td>Next.js</td><td>Rendu des pages, routes serveur pour la création des sessions de paiement et la réception des webhooks.</td><td>Pages catalogue en génération statique avec revalidation, pour la vitesse et le SEO.</td></tr>
+      <tr><td>Sanity</td><td>Catalogue, textes, images, horaires.</td><td>Un projet par client pour l'isolation. Vérifier les limites du plan gratuit avant de dépasser quelques clients.</td></tr>
+      <tr><td>Supabase (Postgres)</td><td>Commandes, statuts, comptes du back-office, données analytics hachées.</td><td>Une base centrale avec un identifiant boutique sur chaque ligne et des règles d'accès par boutique (row level security).</td></tr>
+      <tr><td>Stripe</td><td>Encaissement, Apple Pay et Google Pay, reçus, 3D Secure.</td><td>Voir la section Paiement.</td></tr>
+      <tr><td>Mesure d'audience</td><td>Pages vues, produits vus, sources de trafic.</td><td>Umami, sans cookies. Un site Umami par boutique, consultable depuis le dashboard hub.</td></tr>
+      <tr><td>Emails</td><td>Confirmation client, commande prête, alerte commerçant.</td><td>Brevo, un seul compte LaunchPad, un domaine d'envoi authentifié (SPF, DKIM) par boutique. Plan gratuit au lancement, voir la note ci-dessous.</td></tr>
+      <tr><td>Hébergement</td><td>Un projet de déploiement par client.</td><td>Cloudflare Workers via OpenNext. Un Worker par client, tous sur le même compte.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <strong>Pourquoi Cloudflare plutôt que Vercel</strong>
+    <p>Le plan gratuit de Vercel est réservé à un usage personnel et non commercial : un site client réalisé par une agence en est exclu, et il faudrait le plan Pro à 20 $ par mois et par siège. Cloudflare autorise l'usage commercial dès le plan gratuit. Le plan gratuit limite toutefois la taille de chaque Worker à 3 Mo compressés et le temps de calcul à 10 ms par requête, ce qui est juste pour une application Next.js avec paiement et back-office. Le plan payant à 5 $ par mois, facturé une fois pour tout le compte et non par site, porte la limite à 10 Mo et inclut 10 millions de requêtes par mois : il couvre largement les cinq premières boutiques. Le gratuit reste parfait pour les prévisualisations.</p>
+  </div>
+  <div class="note">
+    <strong>Volume d'emails et plan Brevo</strong>
+    <p>Le plan gratuit de Brevo permet 300 emails par jour, partagés entre marketing et transactionnel, et ajoute la marque Brevo dans les emails. Chaque commande génère environ trois emails (confirmation client, alerte commerçant, commande prête) : le gratuit tient jusqu'à une centaine de commandes par jour, toutes boutiques confondues. Passer au premier plan payant dès qu'on approche ce seuil ou si la mention Brevo gêne les commerçants. Le dashboard hub suit ce volume.</p>
+  </div>
+
+  <h3>Fichier de configuration client</h3>
+  <p>C'est le cœur du système : tout ce qui distingue un site d'un autre tient dans ce fichier, validé par un schéma au build. Si une valeur manque ou est invalide, le build échoue avec un message explicite.</p>
+<pre><code>boutique:
+  nom: "Maison Exemple"
+  domaine: "maison-exemple.fr"
+  adresse: "12 rue des Halles, 34000 Montpellier"
+  telephone: "04 00 00 00 00"
+  email_notifications: "commandes@maison-exemple.fr"
+
+design:
+  couleurs: { primaire: "#2F4A3A", secondaire: "#C8A24A", fond: "#FAF8F3" }
+  typographies: { titres: "Playfair Display", texte: "Work Sans" }
+  arrondis: "doux"            # net | doux | rond
+  logo: "./assets/logo.svg"
+  variantes:                  # A, B ou C pour chaque page
+    accueil: B
+    boutique: A
+    fiche_produit: A
+    epicerie: C
+    contact: A
+
+retrait:
+  delai_preparation_heures: 2
+  creneaux:
+    mardi:    ["10:00-12:00", "16:00-19:00"]
+    mercredi: ["10:00-12:00", "16:00-19:00"]
+    samedi:   ["09:00-13:00", "15:00-19:00"]
+  fermetures: []              # dates exceptionnelles
+
+paiement:
+  psp: "stripe"
+  stripe_compte_connecte: "acct_xxx"   # en variable d'environnement en pratique
+
+features:
+  alcool: true
+  codes_promo: false
+  message_cadeau: false
+  precommandes: false
+
+core_version: "1.0.0"</code></pre>
+  <div class="note">
+    <strong>Règle d'or</strong>
+    <p>Toute nouvelle fonctionnalité est développée dans le core derrière un interrupteur dans <code>features</code>. Un site client n'a jamais de code spécifique pour une fonctionnalité ; au pire, une surcharge de style documentée.</p>
+  </div>
+</section>
+
+<section id="generation">
+  <h2><span class="n">6</span>Génération d'un site</h2>
+  <p>Le « prompt à trous » ne réécrit pas le code : il produit le fichier de configuration, les contenus et le catalogue, à partir des éléments fournis. Le code reste celui du core, ce qui garantit une qualité identique d'un site à l'autre.</p>
+  <h3>Entrées du brief</h3>
+  <ul>
+    <li>Nom de la boutique, domaine, coordonnées, horaires</li>
+    <li>Catalogue au format d'un gabarit CSV : nom, catégorie, prix TTC, taux de TVA, description, photo, ingrédients, allergènes, poids net, alcool oui/non</li>
+    <li>Charte graphique : logo, couleurs, typographies, ou à défaut des exemples visuels</li>
+    <li>Textes de présentation, ou l'URL de l'ancien site</li>
+    <li>Créneaux de retrait et délai de préparation</li>
+    <li>Choix des variantes de design et des fonctionnalités activées</li>
+  </ul>
+  <h3>Étapes</h3>
+  <ol class="flow">
+    <li>Création du repo client à partir du gabarit.</li>
+    <li>Si une URL est fournie : extraction des textes, horaires et visuels de l'ancien site, puis reformulation.</li>
+    <li>Génération du fichier de configuration et validation par le schéma.</li>
+    <li>Import du catalogue et des contenus dans le projet Sanity du client.</li>
+    <li>Déploiement sur un environnement de prévisualisation.</li>
+    <li>Relecture humaine : textes, photos, prix, allergènes, mentions légales.</li>
+    <li>Configuration du domaine, de Stripe et d'Apple Pay, puis mise en ligne (voir la checklist).</li>
+  </ol>
+  <div class="note alert">
+    <strong>Relecture obligatoire des données produit</strong>
+    <p>Prix, taux de TVA et allergènes ne doivent jamais être publiés sans validation humaine, même s'ils ont été extraits automatiquement. Une erreur d'allergène engage la responsabilité du commerçant.</p>
+  </div>
+</section>
+
+<section id="paiement">
+  <h2><span class="n">7</span>Paiement</h2>
+  <h3>Stripe Connect</h3>
+  <p>LaunchPad dispose d'un compte plateforme Stripe. Chaque épicerie ouvre son propre compte connecté, avec la vérification d'identité guidée par Stripe. L'argent des ventes va directement sur le compte du commerçant : LaunchPad n'encaisse jamais pour le compte de ses clients, ce qui évite d'entrer dans la réglementation des services de paiement.</p>
+  <p>Les comptes connectés sont de type « Standard » : le commerçant a l'accès complet à son tableau de bord Stripe (paiements, remboursements, virements) et reste autonome sur ces sujets, notamment pour les commandes non retirées.</p>
+  <h3>Stripe Checkout intégré</h3>
+  <p>Le formulaire de paiement Stripe s'affiche directement dans une page du site : le client ne quitte jamais la boutique. Il gère la saisie de l'email et du téléphone, la case de consentement, les moyens de paiement, la 3D Secure et le reçu.</p>
+  <ol class="flow">
+    <li>Le site crée une session de paiement avec le panier et le créneau choisi en métadonnées.</li>
+    <li>Le client paie dans le formulaire intégré.</li>
+    <li>Stripe notifie le site par webhook (paiement réussi).</li>
+    <li>Le site enregistre la commande dans la base centrale et envoie les emails au client et au commerçant.</li>
+  </ol>
+  <div class="note alert">
+    <strong>La commande n'existe qu'après le webhook</strong>
+    <p>Ne jamais créer la commande à partir du retour navigateur du client : il peut fermer la page avant. Seul le webhook fait foi. Prévoir aussi la gestion des webhooks reçus deux fois.</p>
+  </div>
+  <h3>Abstraction des PSP</h3>
+  <p>Le core expose une interface commune (créer une session, vérifier un paiement, rembourser). Stripe en est la première implémentation. Un autre PSP pourra être ajouté pour un client sans toucher au tunnel.</p>
+  <h3>Apple Pay et Google Pay</h3>
+  <p>Apple Pay exige que chaque domaine soit déclaré et vérifié dans Stripe, pour le compte connecté concerné. Cette étape figure dans la checklist de mise en ligne : sans elle, le bouton Apple Pay n'apparaît tout simplement pas, sans message d'erreur.</p>
+</section>
+
+<section id="bo">
+  <h2><span class="n">8</span>Back-office commerçant</h2>
+  <p>Un espace accessible sur le site du commerçant (par exemple <code>/admin</code>), avec connexion par email et mot de passe. Il est pensé d'abord pour le mobile : le commerçant le consultera au comptoir.</p>
+  <ul>
+    <li>Liste des commandes groupées par jour et par créneau, les plus proches en premier</li>
+    <li>Détail d'une commande : produits, quantités, montant, client, téléphone, créneau</li>
+    <li>Changement de statut : nouvelle, en préparation, prête, retirée</li>
+    <li>Passage à « prête » : envoi automatique d'un email au client</li>
+    <li>Recherche par nom ou numéro de commande</li>
+    <li>Page « Disponibilités » : la liste de tous les produits, chacun avec un interrupteur disponible / indisponible, et un bouton « Enregistrer ». Un produit indisponible reste visible sur le site mais ne peut plus être ajouté au panier</li>
+    <li>Email automatique au commerçant à chaque nouvelle commande, avec le récapitulatif</li>
+  </ul>
+  <p>Au moment du paiement, le site revérifie la disponibilité de chaque produit : un article passé indisponible entre-temps est signalé au client avant qu'il paie. Les remboursements et les commandes non retirées se gèrent en dehors du produit, par téléphone et depuis le tableau de bord Stripe du commerçant. Les comptes du back-office sont créés par LaunchPad ; prévoir la réinitialisation du mot de passe par email.</p>
+</section>
+
+<section id="hub">
+  <h2><span class="n">9</span>Dashboard hub LaunchPad</h2>
+  <p>Réservé à LaunchPad. Il agrège toutes les boutiques et permet de filtrer par boutique et par période.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Indicateur</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Chiffre d'affaires par boutique et par mois</strong>, avec évolution d'un mois sur l'autre</td><td>Base centrale</td></tr>
+      <tr><td>Nombre de commandes et panier moyen</td><td>Base centrale</td></tr>
+      <tr><td>Clients uniques et part de clients récurrents (regroupés par email haché)</td><td>Base centrale</td></tr>
+      <tr><td>Produits et catégories les plus commandés, par mois</td><td>Base centrale</td></tr>
+      <tr><td>Catégories et produits préférés par client</td><td>Base centrale</td></tr>
+      <tr><td>Pages et produits les plus vus</td><td>Outil de mesure d'audience</td></tr>
+      <tr><td>Taux de conversion (visites vers commandes)</td><td>Croisement des deux</td></tr>
+      <tr><td>Créneaux les plus demandés</td><td>Base centrale</td></tr>
+      <tr><td>Volume d'emails envoyés par jour (suivi du quota Brevo)</td><td>Base centrale</td></tr>
+      <tr><td>Classement des boutiques par CA et par croissance</td><td>Base centrale</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Exports commerçants</h3>
+  <p>Chaque mois, un export par boutique (PDF lisible et CSV) : chiffre d'affaires, commandes, panier moyen, top produits, top catégories, créneaux, évolution sur les derniers mois. Aucune donnée personnelle des clients n'y figure, seulement des agrégats.</p>
+</section>
+
+<section id="rgpd">
+  <h2><span class="n">10</span>Module RGPD</h2>
+  <p>Un module du core, activé sur tous les sites, qui traite l'ensemble des points ci-dessous. L'absence de compte client limite les données collectées, mais le suivi des commandes par email reste un traitement de données personnelles.</p>
+
+  <h3>Rôles</h3>
+  <ul>
+    <li>Le commerçant est responsable de traitement des données de ses clients.</li>
+    <li>LaunchPad est sous-traitant : un contrat de sous-traitance (article 28 du RGPD) est à annexer au contrat client.</li>
+    <li>Stripe traite les données de paiement sous sa propre responsabilité ; aucune donnée de carte ne transite par nos serveurs.</li>
+  </ul>
+
+  <h3>Consentement marketing</h3>
+  <ul>
+    <li>Case non pré-cochée, distincte de l'acceptation des CGV, facultative pour commander.</li>
+    <li>Enregistrement de la date, de la boutique et de la version exacte du texte affiché.</li>
+    <li>Lien de désinscription dans chaque email marketing futur.</li>
+    <li>Cette liste de consentements sera la base du futur programme de fidélité.</li>
+  </ul>
+
+  <h3>Hachage des emails pour les analytics</h3>
+  <p>L'email est normalisé (espaces retirés, minuscules) puis transformé par HMAC-SHA256 avec une clé secrète propre à chaque boutique, stockée en variable d'environnement. Le résultat sert d'identifiant client dans les analytics : toutes les commandes d'un même client sont bien regroupées, mais l'email n'apparaît pas en clair.</p>
+  <div class="note">
+    <strong>Pourquoi une clé et pas un simple SHA-256</strong>
+    <p>Un hachage simple peut être inversé en testant des listes d'emails connues. La clé secrète rend cette attaque impossible sans accès aux secrets du serveur. Une clé par boutique empêche aussi de croiser les clients entre boutiques, ce qui n'est pas un besoin.</p>
+  </div>
+  <p>L'email en clair reste stocké uniquement dans la commande elle-même, car il est nécessaire pour l'envoi des confirmations et le service client.</p>
+
+  <h3>Durées de conservation</h3>
+  <p>Le cadre de référence est le référentiel de la CNIL sur la gestion des activités commerciales. Un client est considéré comme « actif » tant qu'il a passé une commande dans les trois dernières années ; chaque nouvelle commande fait repartir le délai. La CNIL a déjà sanctionné des enseignes pour des durées trop longues (quatre ans chez Carrefour en 2020), donc on reste sur trois ans.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Donnée</th><th>Durée</th><th>Ensuite</th></tr></thead>
+    <tbody>
+      <tr><td>Coordonnées du client (email, téléphone) liées à ses commandes</td><td>Pendant la relation commerciale, puis 3 ans après la dernière commande</td><td>Anonymisation : email et téléphone effacés, la commande garde ses montants et produits</td></tr>
+      <tr><td>Consentement marketing (opt-in)</td><td>Jusqu'au retrait du consentement, ou 3 ans après la dernière commande sans nouvelle commande</td><td>Suppression de la liste de diffusion</td></tr>
+      <tr><td>Preuve du consentement (date, texte affiché)</td><td>Tant que le consentement est utilisé, puis 5 ans en archive</td><td>Suppression</td></tr>
+      <tr><td>Liste des personnes désinscrites</td><td>3 ans minimum après la désinscription</td><td>Suppression</td></tr>
+      <tr><td>Identifiant client haché</td><td>Même durée que les coordonnées : c'est une donnée pseudonyme, donc toujours personnelle</td><td>Suppression de l'identifiant, seuls les agrégats restent</td></tr>
+      <tr><td>Montants et détail des ventes</td><td>10 ans pour les pièces à valeur comptable</td><td>Conservés sans donnée personnelle après anonymisation</td></tr>
+      <tr><td>Statistiques agrégées (CA, top produits)</td><td>Sans limite</td><td>Ce ne sont plus des données personnelles</td></tr>
+    </tbody>
+  </table></div>
+  <p>Une tâche planifiée mensuelle applique automatiquement ces durées. Ces règles sont reprises dans la politique de confidentialité ; une relecture par un juriste reste recommandée avec les CGV.</p>
+
+  <h3>Droits des personnes</h3>
+  <ul>
+    <li>Une fonction d'administration qui, à partir d'un email, exporte ou efface (anonymise) toutes les données d'un client sur une boutique.</li>
+    <li>Une adresse de contact dédiée indiquée dans la politique de confidentialité.</li>
+  </ul>
+
+  <h3>Cookies</h3>
+  <p>Mesure d'audience sans cookies, aucun traceur publicitaire. Les cookies déposés par Stripe pour le paiement et la lutte contre la fraude sont en principe considérés comme nécessaires au service. Objectif : aucun bandeau de consentement, sous réserve de validation juridique.</p>
+
+  <h3>Livrables documentaires</h3>
+  <ul>
+    <li>Politique de confidentialité générique, paramétrée avec les informations de la boutique</li>
+    <li>Modèle de contrat de sous-traitance</li>
+    <li>Modèle de fiche pour le registre des traitements du commerçant</li>
+  </ul>
+</section>
+
+<section id="conformite">
+  <h2><span class="n">11</span>Conformité commerce</h2>
+  <h3>Informations produit (règlement INCO)</h3>
+  <p>Le modèle de données produit inclut dès la V1 : dénomination, liste des ingrédients, allergènes mis en évidence, quantité nette, conditions de conservation, nom et adresse du fabricant ou de l'importateur, et origine quand elle est obligatoire. La DLC/DDM, non connue à l'avance, sera communiquée à la remise.</p>
+  <h3>Vente d'alcool (option)</h3>
+  <ul>
+    <li>Case de déclaration de majorité dans le tunnel quand le panier contient de l'alcool.</li>
+    <li>Mention sanitaire obligatoire sur les pages concernées.</li>
+    <li>Communication sur l'alcool conforme à la loi Évin (pas de mise en scène festive ou incitative).</li>
+  </ul>
+  <h3>TVA</h3>
+  <p>Chaque produit porte son taux de TVA (taux réduit pour l'alimentaire, taux normal pour l'alcool). Les reçus détaillent la TVA par taux.</p>
+  <h3>CGV et rétractation</h3>
+  <p>CGV génériques couvrant le click &amp; collect, le retrait, les annulations, les commandes non retirées (gérées au cas par cas par le commerçant, avec remboursement éventuel), et l'exception au droit de rétractation pour les biens susceptibles de se détériorer rapidement. Mentions légales générées à partir de la configuration de la boutique.</p>
+</section>
+
+<section id="phasage">
+  <h2><span class="n">12</span>Phasage</h2>
+  <p>Durées données en ordre de grandeur, à affiner une fois la disponibilité de l'équipe connue.</p>
+  <div class="timeline">
+    <div class="phase">
+      <div class="num">0</div>
+      <h4>Fondations</h4>
+      <p class="dur">4 à 6 semaines</p>
+      <ul>
+        <li>Monorepo et core</li>
+        <li>Design system et 3 variantes par page</li>
+        <li>Schéma de configuration</li>
+        <li>Modèle de données produit</li>
+        <li>Base centrale et règles d'accès</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="num">1</div>
+      <h4>Pilote</h4>
+      <p class="dur">3 à 4 semaines</p>
+      <ul>
+        <li>Tunnel, créneaux, Stripe Connect</li>
+        <li>Emails transactionnels</li>
+        <li>Back-office commerçant</li>
+        <li>Module RGPD, SEO local</li>
+        <li>Mise en ligne du client pilote</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="num">2</div>
+      <h4>Industrialisation</h4>
+      <p class="dur">4 à 6 semaines</p>
+      <ul>
+        <li>Prompt de génération</li>
+        <li>Extraction depuis l'ancien site</li>
+        <li>Dashboard hub et exports</li>
+        <li>Checklist automatisée</li>
+        <li>Cinq boutiques en ligne</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="num">3</div>
+      <h4>Évolutions</h4>
+      <p class="dur">En continu</p>
+      <ul>
+        <li>Backlog par ordre de priorité</li>
+        <li>Une version du core par lot</li>
+        <li>Migration progressive des clients</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Critères de sortie</h3>
+  <details>
+    <summary>Phase 0 : Fondations</summary>
+    <ul>
+      <li>Un site de démonstration se construit uniquement à partir d'un fichier de configuration.</li>
+      <li>Changer une variante ou une couleur dans la configuration suffit à modifier le rendu.</li>
+      <li>Les pages passent les contrôles d'accessibilité de base et s'affichent correctement sur mobile.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Phase 1 : Pilote</summary>
+    <ul>
+      <li>Une vraie commande payée par carte, Apple Pay et Google Pay arrive sur le compte du commerçant.</li>
+      <li>Le commerçant reçoit l'email, traite la commande dans le back-office, le client reçoit « commande prête ».</li>
+      <li>Les CGV, mentions légales et la politique de confidentialité sont validées.</li>
+      <li>Retours du commerçant pilote collectés après un mois d'utilisation.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Phase 2 : Industrialisation</summary>
+    <ul>
+      <li>Un nouveau site passe du brief à la prévisualisation en moins d'une journée de travail.</li>
+      <li>Le dashboard affiche le CA mensuel de chaque boutique et génère les exports.</li>
+      <li>Cinq boutiques sont en production sur le même core.</li>
+    </ul>
+  </details>
+</section>
+
+<section id="backlog">
+  <h2><span class="n">13</span>Backlog priorisé</h2>
+  <p>Classement par valeur pour l'épicier, pondérée par la complexité de développement.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Fonctionnalité</th><th>Valeur</th><th>Complexité</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Codes promo</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-high">Faible</span></td><td>Natif dans Stripe Checkout.</td></tr>
+      <tr><td class="num">2</td><td>Fermetures exceptionnelles et mode vacances depuis le back-office</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-high">Faible</span></td><td>En V1, gérées par LaunchPad dans la configuration.</td></tr>
+      <tr><td class="num">3</td><td>QR code pour la vitrine et le comptoir</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-high">Faible</span></td><td>Généré automatiquement, avec un visuel prêt à imprimer.</td></tr>
+      <tr><td class="num">4</td><td>Message cadeau</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-high">Faible</span></td><td>Champ texte au paiement, visible dans le back-office. Emballage cadeau payant plus tard.</td></tr>
+      <tr><td class="num">5</td><td>Précommandes saisonnières</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-mid">Moyenne</span></td><td>Catalogue temporaire, date limite, quotas, créneaux spéciaux. Argument de vente majeur du produit.</td></tr>
+      <tr><td class="num">6</td><td>Export comptable mensuel</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-high">Faible</span></td><td>Ventes par taux de TVA, au format attendu par les comptables.</td></tr>
+      <tr><td class="num">7</td><td>Connecteurs de caisse et stock en temps réel</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-low">Forte</span></td><td>Un connecteur par logiciel, développé dans le core et réutilisable pour le client suivant.</td></tr>
+      <tr><td class="num">8</td><td>Intégration Traceo (anti-gaspi)</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-low">Forte</span></td><td>Promo automatique ou masquage des produits proches de leur DLC. Différenciant. À explorer.</td></tr>
+      <tr><td class="num">9</td><td>Variantes de produits</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-mid">Moyenne</span></td><td>Contenances, formats.</td></tr>
+      <tr><td class="num">10</td><td>Produits au poids</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-low">Forte</span></td><td>Pré-autorisation au paiement puis encaissement du montant réel après pesée.</td></tr>
+      <tr><td class="num">11</td><td>Dashboard accessible au commerçant</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-mid">Moyenne</span></td><td>Une fois les indicateurs réellement consultés identifiés grâce aux exports.</td></tr>
+      <tr><td class="num">12</td><td>Composition de coffrets</td><td><span class="tag t-high">Forte</span></td><td><span class="tag t-low">Forte</span></td><td>Très pertinent en épicerie fine, à rapprocher des précommandes.</td></tr>
+      <tr><td class="num">13</td><td>Programme de fidélité</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-low">Forte</span></td><td>S'appuiera sur les consentements et les identifiants clients collectés dès la V1.</td></tr>
+      <tr><td class="num">14</td><td>Livraison locale</td><td><span class="tag t-mid">Moyenne</span></td><td><span class="tag t-low">Forte</span></td><td>Zone, frais, créneaux de livraison.</td></tr>
+      <tr><td class="num">15</td><td>Comptes clients</td><td><span class="tag t-low">Faible</span></td><td><span class="tag t-low">Forte</span></td><td>Alourdit la conformité RGPD. Seulement si la fidélité l'exige.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="checklist">
+  <h2><span class="n">14</span>Checklist de mise en ligne</h2>
+  <p>À dérouler pour chaque nouveau site, puis à automatiser en phase 2.</p>
+  <ol class="flow">
+    <li>Compte Stripe connecté du commerçant créé et vérifié (identité, IBAN).</li>
+    <li>Domaine du client déclaré et vérifié dans Stripe pour Apple Pay.</li>
+    <li>Paiement de test réussi avec carte, Apple Pay (Safari, iPhone) et Google Pay (Chrome, Android).</li>
+    <li>Webhook Stripe configuré et testé sur l'environnement de production.</li>
+    <li>DNS du domaine pointé vers l'hébergeur, certificat HTTPS actif.</li>
+    <li>Domaine d'envoi des emails authentifié (SPF, DKIM), emails de test reçus hors spam.</li>
+    <li>Compte back-office du commerçant créé et transmis.</li>
+    <li>Prix, TVA et allergènes relus et validés par le commerçant.</li>
+    <li>CGV, mentions légales et politique de confidentialité paramétrées.</li>
+    <li>Créneaux, délai de préparation et adresse vérifiés.</li>
+    <li>Clé de hachage de la boutique générée et stockée en secret.</li>
+    <li>Mesure d'audience active, fiche Google Business liée, données structurées vérifiées.</li>
+    <li>Contrat de sous-traitance signé.</li>
+  </ol>
+</section>
+
+<section id="risques">
+  <h2><span class="n">15</span>Risques</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Risque</th><th>Impact</th><th>Parade</th></tr></thead>
+    <tbody>
+      <tr><td>Dérive des repos clients (code spécifique ajouté « juste pour un client »)</td><td>Évolutions impossibles à propager, retour au problème des forks</td><td>Règle stricte : tout passe par le core et les interrupteurs de configuration. Revue systématique.</td></tr>
+      <tr><td>Ruptures de stock non signalées</td><td>Commandes payées impossibles à honorer</td><td>Interrupteur de disponibilité dans le back-office et revérification au moment du paiement.</td></tr>
+      <tr><td>Erreur sur un allergène ou un prix</td><td>Risque sanitaire et juridique pour le commerçant</td><td>Relecture humaine obligatoire et validation écrite du commerçant.</td></tr>
+      <tr><td>Commandes perdues si le webhook échoue</td><td>Client payé sans commande enregistrée</td><td>Webhook seule source de vérité, gestion des doublons, alerte en cas d'échec.</td></tr>
+      <tr><td>Charge de maintenance de plusieurs versions du core</td><td>Temps de l'équipe absorbé par le support</td><td>Limiter le nombre de versions actives en parallèle et planifier les migrations.</td></tr>
+      <tr><td>Dépassement des plans gratuits (Sanity, Supabase, Brevo)</td><td>Coûts imprévus ou blocage (emails non envoyés au-delà du quota Brevo)</td><td>Suivi du volume dans le dashboard hub, vérification des limites avant la phase 2, coûts intégrés dans l'abonnement.</td></tr>
+      <tr><td>Équipe réduite</td><td>Délais qui glissent</td><td>Périmètre V1 strict, backlog figé pendant le pilote.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ouvert">
+  <h2><span class="n">16</span>Points ouverts</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Sujet</th><th>Options</th><th>À trancher avant</th></tr></thead>
+    <tbody>
+      <tr><td>Umami</td><td>Version cloud ou auto-hébergée</td><td>Phase 0</td></tr>
+      <tr><td>Relecture juridique</td><td>CGV, politique de confidentialité, contrat de sous-traitance</td><td>Fin de phase 1</td></tr>
+      <tr><td>Tarification</td><td>Montant des frais de mise en place et de l'abonnement, en intégrant les coûts d'infrastructure</td><td>Phase 2</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  <p>LaunchPadFactory, document de cadrage du hub click &amp; collect pour épiceries fines, version 1.1 du 2 octobre 2026.</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

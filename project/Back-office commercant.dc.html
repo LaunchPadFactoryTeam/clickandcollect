@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Back-office commerçant — suivi des commandes click & collect et disponibilité des produits, pensé pour le comptoir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; background:#EFF1F4; color:#16181D; font-family:"Geist","Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  a { color:#1F4B7A; text-underline-offset:3px; }
+  a:hover { color:#143454; }
+  :focus-visible { outline:2px solid #1F4B7A; outline-offset:2px; border-radius:6px; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#EFF1F4">
+
+  <div role="toolbar" aria-label="Navigation de maquette" style="position:sticky;top:0;z-index:60;background:#16181D;color:#FFFFFF;display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:9px 16px">
+    <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A919D;flex:none">Back-office commerçant</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <sc-for list="{{ screens }}" as="s" hint-placeholder-count="4">
+        <button type="button" onClick="{{ s.go }}" style="font:inherit;font-size:12.5px;padding:5px 11px;border:0;border-radius:999px;cursor:pointer;background:{{ s.bg }};color:{{ s.fg }}">{{ s.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:3px;margin-left:auto">
+      <button type="button" onClick="{{ setMobile }}" style="font:inherit;font-size:12.5px;padding:5px 11px;border:0;border-radius:999px;cursor:pointer;background:{{ mobBg }};color:{{ mobFg }}">Mobile 390</button>
+      <button type="button" onClick="{{ setDesktop }}" style="font:inherit;font-size:12.5px;padding:5px 11px;border:0;border-radius:999px;cursor:pointer;background:{{ deskBg }};color:{{ deskFg }}">Bureau</button>
+    </div>
+  </div>
+
+  <div style="padding:{{ framePad }};display:flex;justify-content:center">
+    <div style="width:100%;max-width:{{ frameWidth }};background:#FFFFFF;border:1px solid #D9DDE3;border-radius:{{ frameRadius }};overflow:hidden;box-shadow:0 1px 2px #16181D0F">
+
+      <sc-if value="{{ isLogin }}">
+        <div style="padding:clamp(32px,6vw,72px) clamp(24px,5vw,56px);display:flex;flex-direction:column;align-items:center;min-height:540px;justify-content:center">
+          <div style="width:100%;max-width:380px">
+            <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#5B6372">Back-office</p>
+            <h1 style="margin:0 0 10px;font-size:30px;font-weight:600;letter-spacing:-0.025em;line-height:1.1">Maison Ferrand</h1>
+            <p style="margin:0 0 32px;font-size:15px;color:#5B6372">Connectez-vous pour voir vos commandes du jour.</p>
+            <form onSubmit="{{ doLogin }}" style="display:flex;flex-direction:column;gap:18px">
+              <div>
+                <label for="bo-mail" style="display:block;font-size:14px;font-weight:500;margin-bottom:7px">Email</label>
+                <input id="bo-mail" type="email" autocomplete="username" value="commandes@maison-ferrand.fr" style="font:inherit;font-size:16px;width:100%;padding:14px 16px;min-height:52px;border:1px solid #C3C8D0;border-radius:8px;background:#FFFFFF;color:#16181D">
+              </div>
+              <div>
+                <label for="bo-pw" style="display:block;font-size:14px;font-weight:500;margin-bottom:7px">Mot de passe</label>
+                <input id="bo-pw" type="password" autocomplete="current-password" value="••••••••••" style="font:inherit;font-size:16px;width:100%;padding:14px 16px;min-height:52px;border:1px solid #C3C8D0;border-radius:8px;background:#FFFFFF;color:#16181D">
+              </div>
+              <button type="submit" style="font:inherit;font-size:16px;font-weight:600;min-height:54px;padding:15px;border:0;background:#1F4B7A;color:#FFFFFF;cursor:pointer;border-radius:8px" style-hover="background:#143454">Se connecter</button>
+              <a href="#" onClick="{{ noSubmit }}" style="font-size:14.5px;text-align:center">Mot de passe oublié</a>
+            </form>
+            <p style="margin:32px 0 0;font-size:13px;color:#5B6372;line-height:1.55;padding-top:20px;border-top:1px solid #E3E6EB">Votre compte est créé par LaunchPad. Pour ajouter un accès, écrivez à <a href="mailto:support@launchpadfactory.fr">support@launchpadfactory.fr</a>.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isApp }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;min-height:620px">
+
+          <header style="position:sticky;top:0;z-index:20;background:#FFFFFF;border-bottom:1px solid #E3E6EB;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+            <div style="min-width:0">
+              <p style="margin:0;font-size:16.5px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Maison Ferrand</p>
+              <p style="margin:1px 0 0;font-size:12.5px;color:#5B6372">Jeudi 2 octobre</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex:none">
+              <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:#E8EFF7;color:#174063;font-size:13.5px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:#1F4B7A"></span>{{ newCount }} nouvelle(s)</span>
+              <button type="button" onClick="{{ goLogin }}" aria-label="Se déconnecter" style="font:inherit;width:44px;height:44px;border:1px solid #E3E6EB;background:#FFFFFF;color:#5B6372;cursor:pointer;border-radius:8px;font-size:17px" style-hover="border-color:#16181D;color:#16181D">⏻</button>
+            </div>
+          </header>
+
+          <sc-if value="{{ isOrders }}">
+            <div style="flex:1;padding:18px 18px 96px;background:#F7F8FA">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px;margin-bottom:20px">
+                <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:14px 16px">
+                  <p style="margin:0 0 4px;font-size:30px;font-weight:600;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums">{{ todayCount }}</p>
+                  <p style="margin:0;font-size:13px;color:#5B6372">Commandes aujourd'hui</p>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:14px 16px">
+                  <p style="margin:0 0 4px;font-size:30px;font-weight:600;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums">{{ todayTotal }}</p>
+                  <p style="margin:0;font-size:13px;color:#5B6372">Encaissé aujourd'hui</p>
+                </div>
+                <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:14px 16px">
+                  <p style="margin:0 0 4px;font-size:30px;font-weight:600;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums">{{ nextSlotCount }}</p>
+                  <p style="margin:0;font-size:13px;color:#5B6372">Au prochain créneau</p>
+                </div>
+              </div>
+
+              <div role="group" aria-label="Filtrer par statut" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px">
+                <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+                  <button type="button" onClick="{{ f.go }}" aria-pressed="{{ f.active }}" style="flex:none;font:inherit;font-size:14px;font-weight:500;min-height:44px;padding:10px 16px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};cursor:pointer;border-radius:999px;white-space:nowrap">{{ f.label }}</button>
+                </sc-for>
+              </div>
+
+              <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+                <section style="margin-bottom:26px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px">
+                    <h2 style="margin:0;font-size:14px;font-weight:600;letter-spacing:-0.005em">{{ g.title }}</h2>
+                    <span style="font-family:'Geist Mono',monospace;font-size:12px;color:#5B6372">{{ g.count }}</span>
+                  </div>
+                  <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ g.orders }}" as="o" hint-placeholder-count="3">
+                      <li style="background:#FFFFFF;border:1px solid #E3E6EB;border-left:4px solid {{ o.dot }};border-radius:12px;padding:16px 18px">
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:12px">
+                          <div style="min-width:0">
+                            <p style="margin:0 0 3px;font-size:17px;font-weight:600;letter-spacing:-0.01em">{{ o.client }}</p>
+                            <p style="margin:0;font-family:'Geist Mono',monospace;font-size:12.5px;color:#5B6372">{{ o.ref }} · {{ o.itemsLabel }}</p>
+                          </div>
+                          <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:{{ o.badgeBg }};color:{{ o.badgeFg }};font-size:13px;font-weight:600;flex:none"><span style="width:7px;height:7px;border-radius:50%;background:{{ o.dot }}"></span>{{ o.statut }}</span>
+                        </div>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+                          <span style="font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ o.total }}</span>
+                          <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <button type="button" onClick="{{ o.open }}" style="font:inherit;font-size:14.5px;font-weight:500;min-height:46px;padding:12px 18px;border:1px solid #C3C8D0;background:#FFFFFF;color:#16181D;cursor:pointer;border-radius:8px" style-hover="border-color:#16181D">Détail</button>
+                            <sc-if value="{{ o.hasNext }}">
+                              <button type="button" onClick="{{ o.advance }}" style="font:inherit;font-size:14.5px;font-weight:600;min-height:46px;padding:12px 20px;border:0;background:#1F4B7A;color:#FFFFFF;cursor:pointer;border-radius:8px" style-hover="background:#143454">{{ o.nextLabel }}</button>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </li>
+                    </sc-for>
+                  </ul>
+                </section>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isDetail }}">
+            <div style="flex:1;padding:18px 18px 96px;background:#F7F8FA">
+              <button type="button" onClick="{{ goOrders }}" style="font:inherit;font-size:14.5px;font-weight:500;min-height:44px;padding:10px 0;border:0;background:none;color:#1F4B7A;cursor:pointer;margin-bottom:12px">← Toutes les commandes</button>
+
+              <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:20px;margin-bottom:12px">
+                <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+                  <div>
+                    <h1 style="margin:0 0 4px;font-size:24px;font-weight:600;letter-spacing:-0.025em">{{ detail.client }}</h1>
+                    <p style="margin:0;font-family:'Geist Mono',monospace;font-size:13px;color:#5B6372">{{ detail.ref }}</p>
+                  </div>
+                  <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;background:{{ detail.badgeBg }};color:{{ detail.badgeFg }};font-size:13.5px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:{{ detail.dot }}"></span>{{ detail.statut }}</span>
+                </div>
+                <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+                  <div><dt style="font-size:12.5px;color:#5B6372;margin-bottom:3px">Créneau de retrait</dt><dd style="margin:0;font-size:16px;font-weight:600">{{ detail.creneau }}</dd></div>
+                  <div><dt style="font-size:12.5px;color:#5B6372;margin-bottom:3px">Payée le</dt><dd style="margin:0;font-size:16px">{{ detail.payee }}</dd></div>
+                  <div><dt style="font-size:12.5px;color:#5B6372;margin-bottom:3px">Email</dt><dd style="margin:0;font-size:15.5px;word-break:break-all">{{ detail.email }}</dd></div>
+                  <div><dt style="font-size:12.5px;color:#5B6372;margin-bottom:3px">Téléphone</dt><dd style="margin:0;font-size:16px">{{ detail.tel }}</dd></div>
+                </dl>
+              </div>
+
+              <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:20px;margin-bottom:12px">
+                <h2 style="margin:0 0 16px;font-size:15px;font-weight:600">À préparer</h2>
+                <ul style="list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:0">
+                  <sc-for list="{{ detail.lignes }}" as="l" hint-placeholder-count="3">
+                    <li style="display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid #EFF1F4">
+                      <span style="width:38px;height:38px;flex:none;border-radius:8px;background:#E8EFF7;color:#174063;display:grid;place-items:center;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums">{{ l.qte }}</span>
+                      <div style="flex:1;min-width:0">
+                        <p style="margin:0;font-size:16px;font-weight:500">{{ l.nom }}</p>
+                        <p style="margin:1px 0 0;font-size:13px;color:#5B6372">{{ l.format }}</p>
+                      </div>
+                      <span style="font-size:15.5px;font-variant-numeric:tabular-nums;flex:none">{{ l.total }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+                <dl style="margin:0;display:grid;gap:9px;font-size:14.5px">
+                  <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:#5B6372">Dont TVA 5,5 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ detail.tva55 }}</dd></div>
+                  <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:#5B6372">Dont TVA 20 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ detail.tva20 }}</dd></div>
+                  <div style="display:flex;justify-content:space-between;gap:16px;padding-top:12px;border-top:1px solid #E3E6EB;align-items:baseline"><dt style="font-size:16px;font-weight:600;color:#16181D">Total payé</dt><dd style="margin:0;font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ detail.total }}</dd></div>
+                </dl>
+              </div>
+
+              <div style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:20px;margin-bottom:12px">
+                <h2 style="margin:0 0 14px;font-size:15px;font-weight:600">Avancement</h2>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ detail.steps }}" as="s" hint-placeholder-count="4">
+                    <button type="button" onClick="{{ s.set }}" aria-pressed="{{ s.active }}" style="font:inherit;display:flex;align-items:center;gap:13px;text-align:left;width:100%;min-height:56px;padding:14px 16px;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.fg }};cursor:pointer;border-radius:10px">
+                      <span style="width:24px;height:24px;flex:none;border-radius:50%;border:2px solid {{ s.ring }};background:{{ s.fill }};display:grid;place-items:center;font-size:13px;color:#FFFFFF;font-weight:700">{{ s.mark }}</span>
+                      <span style="flex:1;font-size:16px;font-weight:{{ s.weight }}">{{ s.label }}</span>
+                      <span style="font-size:13px;color:#5B6372">{{ s.note }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <p style="margin:14px 0 0;font-size:13px;color:#5B6372;line-height:1.55">Le passage à « Prête » envoie automatiquement un email au client. Les remboursements se font depuis votre tableau de bord Stripe.</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isProducts }}">
+            <div style="flex:1;padding:18px 18px 96px;background:#F7F8FA">
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;margin-bottom:16px">
+                <h1 style="margin:0;font-size:22px;font-weight:600;letter-spacing:-0.025em">Disponibilité</h1>
+                <span style="font-family:'Geist Mono',monospace;font-size:12.5px;color:#5B6372">{{ dispoCount }} / {{ totalCount }} en vente</span>
+              </div>
+              <p style="margin:0 0 18px;font-size:14.5px;color:#5B6372;line-height:1.55">Coupez un produit et il disparaît du site en moins d'une minute. Les prix et les textes restent gérés par LaunchPad.</p>
+
+              <label for="bo-search" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Rechercher un produit</label>
+              <input id="bo-search" type="search" placeholder="Rechercher un produit" style="font:inherit;font-size:16px;width:100%;padding:13px 16px;min-height:50px;border:1px solid #C3C8D0;border-radius:10px;background:#FFFFFF;color:#16181D;margin-bottom:16px">
+
+              <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+                  <li style="background:#FFFFFF;border:1px solid #E3E6EB;border-radius:12px;padding:14px 16px;display:flex;gap:14px;align-items:center">
+                    <div style="width:48px;height:60px;flex:none;border-radius:8px;background:#F1F4F8;background-image:repeating-linear-gradient(45deg,#00000008 0 7px,transparent 7px 14px)"></div>
+                    <div style="flex:1;min-width:0">
+                      <p style="margin:0 0 2px;font-size:16px;font-weight:500;letter-spacing:-0.005em">{{ p.nom }}</p>
+                      <p style="margin:0;font-size:13px;color:#5B6372">{{ p.format }} · <span style="font-variant-numeric:tabular-nums">{{ p.prix }}</span></p>
+                    </div>
+                    <button type="button" role="switch" aria-checked="{{ p.dispo }}" onClick="{{ p.toggle }}" style="flex:none;width:64px;height:44px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center">
+                      <span style="display:block;width:56px;height:32px;border-radius:999px;background:{{ p.track }};position:relative;transition:background .15s">
+                        <span style="position:absolute;top:3px;left:{{ p.knob }};width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px #00000033;transition:left .15s"></span>
+                      </span>
+                      <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">{{ p.srLabel }}</span>
+                    </button>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </sc-if>
+
+          <nav aria-label="Sections" style="position:sticky;bottom:0;background:#FFFFFF;border-top:1px solid #E3E6EB;display:grid;grid-template-columns:1fr 1fr;padding:8px 10px 14px;gap:6px">
+            <button type="button" onClick="{{ goOrders }}" aria-current="{{ ordersCurrent }}" style="font:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;padding:9px;border:0;background:{{ tabOrdersBg }};color:{{ tabOrdersFg }};cursor:pointer;border-radius:10px;font-size:13.5px;font-weight:600">
+              <span aria-hidden="true" style="font-size:19px;line-height:1">▤</span>Commandes
+            </button>
+            <button type="button" onClick="{{ goProducts }}" aria-current="{{ productsCurrent }}" style="font:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;padding:9px;border:0;background:{{ tabProductsBg }};color:{{ tabProductsFg }};cursor:pointer;border-radius:10px;font-size:13.5px;font-weight:600">
+              <span aria-hidden="true" style="font-size:19px;line-height:1">◧</span>Produits
+            </button>
+          </nav>
+
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240}}">
+const STATUTS = [
+  { id:"nouvelle", label:"Nouvelle", dot:"#1F4B7A", bg:"#E8EFF7", fg:"#174063", next:"Mettre en préparation" },
+  { id:"preparation", label:"En préparation", dot:"#9A7108", bg:"#FBF0D9", fg:"#6B4D07", next:"Marquer prête" },
+  { id:"prete", label:"Prête", dot:"#2A6B40", bg:"#E0F0E4", fg:"#1F5130", next:"Marquer retirée" },
+  { id:"retiree", label:"Retirée", dot:"#767D89", bg:"#EEF0F3", fg:"#454B55", next:null }
+];
+const ORDERS = [
+  { ref:"#2471", client:"Camille Besson", email:"camille.besson@exemple.fr", tel:"06 12 00 00 00", creneau:"Aujourd'hui 16:00 – 19:00", groupe:"Aujourd'hui · 16:00 – 19:00", payee:"2 oct. à 09:12", statut:"nouvelle",
+    lignes:[{ nom:"Tomme du Larzac affinée", format:"Portion 300 g", qte:1, pu:11.2, tva:5.5 },{ nom:"Miel de châtaignier", format:"Pot 250 g", qte:2, pu:12.5, tva:5.5 },{ nom:"Croquants aux amandes", format:"Sachet 200 g", qte:1, pu:8.5, tva:5.5 }] },
+  { ref:"#2470", client:"Yanis Moreau", email:"y.moreau@exemple.fr", tel:"—", creneau:"Aujourd'hui 16:00 – 19:00", groupe:"Aujourd'hui · 16:00 – 19:00", payee:"2 oct. à 08:47", statut:"preparation",
+    lignes:[{ nom:"Vin orange, Domaine Lasserre", format:"Bouteille 75 cl", qte:2, pu:22.0, tva:20 },{ nom:"Tapenade d'olives noires", format:"Bocal 110 g", qte:1, pu:6.4, tva:5.5 }] },
+  { ref:"#2469", client:"Hélène Daviau", email:"helene.daviau@exemple.fr", tel:"06 44 00 00 00", creneau:"Aujourd'hui 16:00 – 19:00", groupe:"Aujourd'hui · 16:00 – 19:00", payee:"1 oct. à 19:03", statut:"prete",
+    lignes:[{ nom:"Huile d'olive Lucques", format:"Bidon 500 ml", qte:1, pu:18.0, tva:5.5 },{ nom:"Confiture d'abricot", format:"Pot 370 g", qte:3, pu:7.9, tva:5.5 }] },
+  { ref:"#2468", client:"Marc Oliveira", email:"m.oliveira@exemple.fr", tel:"07 88 00 00 00", creneau:"Demain 10:00 – 12:00", groupe:"Demain · 10:00 – 12:00", payee:"2 oct. à 07:55", statut:"nouvelle",
+    lignes:[{ nom:"Terrine de canard aux figues", format:"Bocal 180 g", qte:2, pu:9.8, tva:5.5 },{ nom:"Miel de châtaignier", format:"Pot 250 g", qte:1, pu:12.5, tva:5.5 }] },
+  { ref:"#2467", client:"Sophie Rouvier", email:"sophie.rouvier@exemple.fr", tel:"—", creneau:"Demain 10:00 – 12:00", groupe:"Demain · 10:00 – 12:00", payee:"1 oct. à 21:34", statut:"nouvelle",
+    lignes:[{ nom:"Tomme du Larzac affinée", format:"Portion 300 g", qte:2, pu:11.2, tva:5.5 }] },
+  { ref:"#2466", client:"Antoine Fabre", email:"a.fabre@exemple.fr", tel:"06 03 00 00 00", creneau:"Hier 16:00 – 19:00", groupe:"Hier · 16:00 – 19:00", payee:"1 oct. à 10:22", statut:"retiree",
+    lignes:[{ nom:"Huile d'olive Lucques", format:"Bidon 500 ml", qte:1, pu:18.0, tva:5.5 }] }
+];
+const PRODUCTS = [
+  { id:"tomme", nom:"Tomme du Larzac affinée", format:"Portion 300 g", prix:"11,20 €", dispo:true },
+  { id:"miel", nom:"Miel de châtaignier", format:"Pot 250 g", prix:"12,50 €", dispo:true },
+  { id:"terrine", nom:"Terrine de canard aux figues", format:"Bocal 180 g", prix:"9,80 €", dispo:false },
+  { id:"huile", nom:"Huile d'olive Lucques", format:"Bidon 500 ml", prix:"18,00 €", dispo:true },
+  { id:"vin", nom:"Vin orange, Domaine Lasserre", format:"Bouteille 75 cl", prix:"22,00 €", dispo:true },
+  { id:"tapenade", nom:"Tapenade d'olives noires", format:"Bocal 110 g", prix:"6,40 €", dispo:true },
+  { id:"confiture", nom:"Confiture d'abricot du Roussillon", format:"Pot 370 g", prix:"7,90 €", dispo:true },
+  { id:"biscuit", nom:"Croquants aux amandes", format:"Sachet 200 g", prix:"8,50 €", dispo:false }
+];
+const eur = n => n.toFixed(2).replace(".", ",") + " €";
+const orderTotal = o => o.lignes.reduce((a, l) => a + l.pu * l.qte, 0);
+
+class Component extends DCLogic {
+  state = { screen:"orders", viewport:"mobile", filter:"Toutes", openRef:"#2471",
+    statuts:Object.fromEntries(ORDERS.map(o => [o.ref, o.statut])),
+    dispo:Object.fromEntries(PRODUCTS.map(p => [p.id, p.dispo])) };
+
+  go(screen) { return () => this.setState({ screen }); }
+
+  renderVals() {
+    const { screen, viewport, filter, openRef, statuts, dispo } = this.state;
+    const mobile = viewport === "mobile";
+    const withStatut = ORDERS.map(o => ({ ...o, statut:statuts[o.ref] }));
+    const filtered = filter === "Toutes" ? withStatut : withStatut.filter(o => STATUTS.find(s => s.id === o.statut).label === filter);
+    const groupNames = [...new Set(filtered.map(o => o.groupe))];
+    const detailOrder = withStatut.find(o => o.ref === openRef) || withStatut[0];
+    const dSt = STATUTS.find(s => s.id === detailOrder.statut);
+    const dTotal = orderTotal(detailOrder);
+    const d20 = detailOrder.lignes.filter(l => l.tva === 20).reduce((a, l) => a + l.pu * l.qte, 0);
+    const d55 = dTotal - d20;
+    const today = withStatut.filter(o => o.groupe.startsWith("Aujourd'hui"));
+    const tab = (on) => ({ bg: on ? "#E8EFF7" : "transparent", fg: on ? "#174063" : "#5B6372" });
+    const to = tab(screen === "orders" || screen === "detail"), tp = tab(screen === "products");
+
+    const advance = (ref, cur) => () => {
+      const i = STATUTS.findIndex(s => s.id === cur);
+      if (i < STATUTS.length - 1) this.setState(s => ({ statuts:{ ...s.statuts, [ref]:STATUTS[i + 1].id } }));
+    };
+
+    return {
+      screens: [["login","Connexion"],["orders","Commandes"],["detail","Détail commande"],["products","Produits"]]
+        .map(([id, label]) => ({ label, go:this.go(id),
+          bg: screen === id ? "#FFFFFF" : "#2A2E36", fg: screen === id ? "#16181D" : "#C7CCD4" })),
+      setMobile: () => this.setState({ viewport:"mobile" }),
+      setDesktop: () => this.setState({ viewport:"desktop" }),
+      mobBg: mobile ? "#FFFFFF" : "#2A2E36", mobFg: mobile ? "#16181D" : "#C7CCD4",
+      deskBg: mobile ? "#2A2E36" : "#FFFFFF", deskFg: mobile ? "#C7CCD4" : "#16181D",
+      framePad: mobile ? "28px 16px 56px" : "20px 16px 48px",
+      frameWidth: mobile ? "390px" : "1080px",
+      frameRadius: mobile ? "28px" : "14px",
+      isLogin: screen === "login", isApp: screen !== "login",
+      isOrders: screen === "orders", isDetail: screen === "detail", isProducts: screen === "products",
+      goLogin: this.go("login"), goOrders: this.go("orders"), goProducts: this.go("products"),
+      doLogin: e => { e.preventDefault(); this.setState({ screen:"orders" }); },
+      noSubmit: e => e.preventDefault(),
+
+      newCount: withStatut.filter(o => o.statut === "nouvelle").length,
+      todayCount: today.length,
+      todayTotal: eur(today.reduce((a, o) => a + orderTotal(o), 0)),
+      nextSlotCount: today.filter(o => o.statut !== "retiree").length,
+
+      filters: ["Toutes", ...STATUTS.map(s => s.label)].map(f => ({ label:f, active:f === filter,
+        go:() => this.setState({ filter:f }),
+        bg: f === filter ? "#16181D" : "#FFFFFF", fg: f === filter ? "#FFFFFF" : "#16181D",
+        border: f === filter ? "#16181D" : "#D9DDE3" })),
+
+      groups: groupNames.map(name => {
+        const list = filtered.filter(o => o.groupe === name);
+        return { title:name, count:list.length + (list.length > 1 ? " commandes" : " commande"),
+          orders: list.map(o => {
+            const st = STATUTS.find(s => s.id === o.statut);
+            return { ref:o.ref, client:o.client, statut:st.label, dot:st.dot, badgeBg:st.bg, badgeFg:st.fg,
+              itemsLabel: o.lignes.reduce((a, l) => a + l.qte, 0) + " article" + (o.lignes.reduce((a, l) => a + l.qte, 0) > 1 ? "s" : ""),
+              total: eur(orderTotal(o)), hasNext: !!st.next, nextLabel: st.next,
+              open:() => this.setState({ screen:"detail", openRef:o.ref }),
+              advance: advance(o.ref, o.statut) };
+          }) };
+      }),
+
+      detail: { ref:detailOrder.ref, client:detailOrder.client, email:detailOrder.email, tel:detailOrder.tel,
+        creneau:detailOrder.creneau, payee:detailOrder.payee, statut:dSt.label, dot:dSt.dot,
+        badgeBg:dSt.bg, badgeFg:dSt.fg, total:eur(dTotal), tva55:eur(d55 * 0.055 / 1.055), tva20:eur(d20 * 0.2 / 1.2),
+        lignes: detailOrder.lignes.map(l => ({ ...l, total:eur(l.pu * l.qte) })),
+        steps: STATUTS.map((s, i) => {
+          const curIdx = STATUTS.findIndex(x => x.id === detailOrder.statut);
+          const done = i < curIdx, active = i === curIdx;
+          return { label:s.label, active, mark: done || active ? "✓" : "",
+            note: active ? "statut actuel" : (done ? "fait" : ""),
+            weight: active ? "600" : "400",
+            bg: active ? "#E8EFF7" : "#FFFFFF", fg: done ? "#5B6372" : "#16181D",
+            border: active ? "#1F4B7A" : "#E3E6EB",
+            ring: done || active ? s.dot : "#C3C8D0", fill: done || active ? s.dot : "transparent",
+            set:() => this.setState(st => ({ statuts:{ ...st.statuts, [detailOrder.ref]:s.id } })) };
+        }) },
+
+      products: PRODUCTS.map(p => ({ nom:p.nom, format:p.format, prix:p.prix, dispo:dispo[p.id],
+        track: dispo[p.id] ? "#2A6B40" : "#C3C8D0", knob: dispo[p.id] ? "27px" : "3px",
+        srLabel: dispo[p.id] ? "En vente" : "Coupé",
+        toggle:() => this.setState(s => ({ dispo:{ ...s.dispo, [p.id]:!s.dispo[p.id] } })) })),
+      dispoCount: PRODUCTS.filter(p => dispo[p.id]).length, totalCount: PRODUCTS.length,
+
+      ordersCurrent: screen === "orders" || screen === "detail" ? "page" : "false",
+      productsCurrent: screen === "products" ? "page" : "false",
+      tabOrdersBg: to.bg, tabOrdersFg: to.fg, tabProductsBg: tp.bg, tabProductsFg: tp.fg
+    };
+  }
+}
+</script>
+</body>
+</html>

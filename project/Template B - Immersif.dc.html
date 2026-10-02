@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Template B — Immersif. Site vitrine click & collect pour épicerie fine, photographie plein cadre, agnostique de la charte graphique.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; }
+  body {
+    margin:0;
+    --c-bg:#121110; --c-surface:#1C1B19; --c-raise:#272522; --c-ink:#F2F0ED; --c-muted:#A09B93;
+    --c-line:#322F2B; --c-primary:#F2F0ED; --c-on-primary:#121110; --c-accent:#C2565C;
+    --c-danger:#E0767C; --r-sm:0px; --r-md:0px; --r-lg:0px;
+    --f-display:"Bodoni Moda",Didot,Georgia,serif; --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+    background:var(--c-bg); color:var(--c-ink); font-family:var(--f-body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:var(--c-ink); text-underline-offset:3px; }
+  a:hover { color:var(--c-accent); }
+  :focus-visible { outline:2px solid var(--c-accent); outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--c-bg)">
+
+  <div role="toolbar" aria-label="Navigation de maquette" style="position:sticky;top:0;z-index:60;background:#16181D;color:#FFFFFF;font-family:'Geist',sans-serif;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:9px 16px">
+    <span style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A919D;flex:none">Template B · Immersif</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <sc-for list="{{ pages }}" as="p" hint-placeholder-count="7">
+        <button type="button" onClick="{{ p.go }}" style="font:inherit;font-size:12.5px;padding:5px 11px;border:0;border-radius:999px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }}">{{ p.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <header style="border-bottom:1px solid var(--c-line);background:#121110F2;backdrop-filter:blur(12px);position:sticky;top:39px;z-index:50">
+    <div style="max-width:1560px;margin:0 auto;padding:0 clamp(20px,3.5vw,44px);display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px">
+      <p style="margin:0;font-family:var(--f-display);font-size:clamp(19px,2.2vw,24px);font-weight:400;letter-spacing:.06em;line-height:1;text-transform:uppercase">{{ brandName }}</p>
+      <nav aria-label="Principale" style="display:flex;align-items:center;gap:clamp(14px,2.2vw,28px);flex-wrap:wrap;justify-content:flex-end">
+        <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;padding:8px 0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">Catalogue</button>
+        <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;padding:8px 0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">Maison</button>
+        <button type="button" onClick="{{ goContact }}" style="font:inherit;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;padding:8px 0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">Contact</button>
+        <button type="button" onClick="{{ goPanier }}" style="font:inherit;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:44px;padding:11px 20px;border:1px solid var(--c-ink);background:transparent;color:var(--c-ink);cursor:pointer" style-hover="background:var(--c-ink);color:var(--c-on-primary)">Panier ({{ cartCount }})</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <section style="position:relative;min-height:min(78vh,760px);display:flex;align-items:flex-end;background:#0B0A09;background-image:repeating-linear-gradient(45deg,#FFFFFF0A 0 14px,transparent 14px 28px);border-bottom:1px solid var(--c-line)">
+        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:12px;color:#6E6A64;border:1px dashed #3A3733;padding:10px 16px">photographie plein cadre · ≥ 2800 px · sujet à droite</span>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,#121110F2 0%,#12111066 45%,transparent 75%)"></div>
+        <div style="position:relative;width:100%;max-width:1560px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(20px,3.5vw,44px)">
+          <p style="margin:0 0 22px;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)">Paris 11<sup>e</sup> — Retrait en boutique</p>
+          <h1 style="margin:0 0 26px;font-family:var(--f-display);font-weight:400;font-size:clamp(40px,8vw,104px);line-height:0.98;letter-spacing:-0.015em;max-width:13ch;text-wrap:balance">Une vitrine qui reste allumée.</h1>
+          <p style="margin:0 0 36px;font-size:18px;line-height:1.55;max-width:44ch;color:var(--c-ink)">Commandez ce soir, retirez demain matin. Dix-huit maisons, une sélection qui change chaque semaine.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:54px;padding:17px 34px;border:1px solid var(--c-ink);background:var(--c-ink);color:var(--c-on-primary);cursor:pointer" style-hover="background:var(--c-accent);border-color:var(--c-accent);color:#FFFFFF">Voir le catalogue</button>
+            <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:54px;padding:17px 34px;border:1px solid #FFFFFF55;background:transparent;color:var(--c-ink);cursor:pointer" style-hover="border-color:var(--c-ink)">La maison</button>
+          </div>
+        </div>
+      </section>
+
+      <section style="border-bottom:1px solid var(--c-line)">
+        <div style="max-width:1560px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(20px,3.5vw,44px)">
+          <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:baseline;margin-bottom:clamp(28px,4vw,40px)">
+            <h2 style="margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(26px,3.6vw,40px);letter-spacing:-0.01em;line-height:1.1">Arrivages de la semaine</h2>
+            <button type="button" onClick="{{ goBoutique }}" style="font:inherit;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;padding:8px 0;cursor:pointer;color:var(--c-accent)">Tout le catalogue →</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:clamp(14px,2vw,22px)">
+            <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+              <article style="position:relative;aspect-ratio:3/4;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 11px,transparent 11px 22px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+                <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;color:#6E6A64">photo · 3:4</span>
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,#0B0A09F0 0%,#0B0A0980 38%,transparent 62%)"></div>
+                <div style="position:relative;padding:22px">
+                  <p style="margin:0 0 7px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">{{ p.categorie }}</p>
+                  <h3 style="margin:0 0 5px;font-family:var(--f-display);font-size:23px;font-weight:400;line-height:1.15"><button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer">{{ p.nom }}</button></h3>
+                  <p style="margin:0 0 16px;font-size:13px;color:var(--c-muted)">{{ p.format }} · {{ p.prix }}</p>
+                  <button type="button" onClick="{{ p.add }}" style="font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;min-height:44px;padding:12px 20px;border:1px solid var(--c-ink);background:transparent;color:var(--c-ink);cursor:pointer" style-hover="background:var(--c-ink);color:var(--c-on-primary)">Ajouter</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="border-bottom:1px solid var(--c-line);background:var(--c-surface)">
+        <div style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+          <div style="aspect-ratio:1;background:#0B0A09;background-image:repeating-linear-gradient(45deg,#FFFFFF0A 0 12px,transparent 12px 24px);display:grid;place-items:center;min-height:300px">
+            <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#6E6A64;border:1px dashed #3A3733;padding:8px 14px">intérieur de boutique · carré</span>
+          </div>
+          <div style="display:flex;flex-direction:column;justify-content:center;padding:clamp(36px,5vw,80px)">
+            <p style="margin:0 0 22px;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)">La maison</p>
+            <blockquote style="margin:0 0 28px;font-family:var(--f-display);font-weight:400;font-style:italic;font-size:clamp(23px,3vw,34px);line-height:1.28;max-width:24ch;text-wrap:pretty">« Nous achetons peu, souvent, et seulement à des gens que nous avons rencontrés. »</blockquote>
+            <p style="margin:0 0 32px;font-size:16px;line-height:1.65;color:var(--c-muted);max-width:46ch">Noir &amp; Sel occupe depuis 2014 une ancienne charcuterie de la rue Saint-Maur. Dix-huit maisons référencées, aucune marque, aucun grossiste.</p>
+            <button type="button" onClick="{{ goHistoire }}" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:54px;padding:17px 34px;border:1px solid var(--c-ink);background:transparent;color:var(--c-ink);cursor:pointer;align-self:flex-start" style-hover="background:var(--c-ink);color:var(--c-on-primary)">Lire</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div style="max-width:1560px;margin:0 auto;padding:clamp(44px,6vw,80px) clamp(20px,3.5vw,44px)">
+          <h2 style="margin:0 0 clamp(28px,4vw,40px);font-family:var(--f-display);font-weight:400;font-size:clamp(24px,3.2vw,34px);letter-spacing:-0.01em">Retirer sa commande</h2>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--c-line);border:1px solid var(--c-line)">
+            <div style="background:var(--c-bg);padding:26px 24px"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px">Adresse</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">84 rue Saint-Maur<br>75011 Paris</dd></div>
+            <div style="background:var(--c-bg);padding:26px 24px"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px">Créneaux</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">Mardi au samedi<br>11:00–14:00 · 16:00–20:00</dd></div>
+            <div style="background:var(--c-bg);padding:26px 24px"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px">Préparation</dt><dd style="margin:0;font-size:16.5px;line-height:1.5">2 heures minimum<br>Payé en ligne</dd></div>
+            <div style="background:var(--c-bg);padding:26px 24px"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px">Téléphone</dt><dd style="margin:0;font-size:16.5px"><a href="tel:+33100000000">01 00 00 00 00</a></dd></div>
+          </dl>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isBoutique }}">
+    <section>
+      <div style="max-width:1560px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(20px,3.5vw,44px) clamp(48px,7vw,96px)">
+        <h1 style="margin:0 0 14px;font-family:var(--f-display);font-weight:400;font-size:clamp(34px,6vw,72px);line-height:1.02;letter-spacing:-0.015em">Catalogue</h1>
+        <p style="margin:0 0 clamp(28px,4vw,44px);font-size:17px;color:var(--c-muted);max-width:50ch">Vingt-quatre références en boutique aujourd'hui. Ce qui est affiché disponible part dès le prochain créneau.</p>
+
+        <div role="group" aria-label="Filtrer par catégorie" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(24px,3vw,36px)">
+          <sc-for list="{{ categories }}" as="c" hint-placeholder-count="5">
+            <button type="button" onClick="{{ c.go }}" aria-pressed="{{ c.active }}" style="font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;min-height:44px;padding:12px 18px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};cursor:pointer">{{ c.label }}</button>
+          </sc-for>
+        </div>
+
+        <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:clamp(14px,2vw,22px)">
+          <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="8">
+            <li style="position:relative;aspect-ratio:3/4;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 11px,transparent 11px 22px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;opacity:{{ p.opacity }}">
+              <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;color:#6E6A64">photo · 3:4</span>
+              <sc-if value="{{ p.badge }}">
+                <span style="position:absolute;top:0;left:0;background:var(--c-ink);color:var(--c-on-primary);font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;z-index:2">{{ p.badge }}</span>
+              </sc-if>
+              <div style="position:absolute;inset:0;background:linear-gradient(to top,#0B0A09F2 0%,#0B0A0988 36%,transparent 60%)"></div>
+              <div style="position:relative;padding:20px">
+                <p style="margin:0 0 7px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">{{ p.categorie }}</p>
+                <h2 style="margin:0 0 5px;font-family:var(--f-display);font-size:21px;font-weight:400;line-height:1.15"><button type="button" onClick="{{ p.open }}" style="all:unset;cursor:pointer">{{ p.nom }}</button></h2>
+                <p style="margin:0 0 15px;font-size:13px;color:var(--c-muted)">{{ p.format }} · <span style="font-variant-numeric:tabular-nums;color:var(--c-ink)">{{ p.prix }}</span></p>
+                <button type="button" onClick="{{ p.add }}" disabled="{{ p.disabled }}" style="font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;min-height:44px;padding:12px 18px;border:1px solid {{ p.btnBorder }};background:transparent;color:{{ p.btnColor }};cursor:{{ p.cursor }}">{{ p.btnLabel }}</button>
+              </div>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isFiche }}">
+    <article style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start">
+      <div style="position:sticky;top:116px;aspect-ratio:4/5;background:#0B0A09;background-image:repeating-linear-gradient(45deg,#FFFFFF0A 0 13px,transparent 13px 26px);display:grid;place-items:center;border-right:1px solid var(--c-line);min-height:360px">
+        <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#6E6A64;border:1px dashed #3A3733;padding:9px 15px">photo produit plein cadre · 4:5</span>
+      </div>
+
+      <div style="padding:clamp(32px,4.5vw,72px) clamp(20px,3.5vw,56px);max-width:62ch">
+        <nav aria-label="Fil d'Ariane" style="margin-bottom:28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)">
+          <button type="button" onClick="{{ goBoutique }}" style="font:inherit;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--c-accent)">Catalogue</button>
+          <span style="margin:0 9px">/</span><span>{{ current.categorie }}</span>
+        </nav>
+        <p style="margin:0 0 16px;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--c-accent)">{{ current.producteur }}</p>
+        <h1 style="margin:0 0 16px;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.6vw,54px);line-height:1.06;letter-spacing:-0.015em">{{ current.nom }}</h1>
+        <p style="margin:0 0 30px;font-size:17px;color:var(--c-muted)">{{ current.format }}</p>
+        <p style="margin:0 0 36px;font-size:17px;line-height:1.7;text-wrap:pretty">{{ current.description }}</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;padding:26px 0;border-top:1px solid var(--c-line);border-bottom:1px solid var(--c-line);margin-bottom:36px">
+          <span style="font-family:var(--f-display);font-size:34px;font-weight:400;font-variant-numeric:tabular-nums">{{ current.prix }}</span>
+          <span style="font-size:13px;color:var(--c-muted)">TVA {{ current.tva }} incluse</span>
+          <button type="button" onClick="{{ addCurrent }}" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:54px;padding:17px 32px;border:1px solid var(--c-ink);background:var(--c-ink);color:var(--c-on-primary);cursor:pointer;margin-left:auto" style-hover="background:var(--c-accent);border-color:var(--c-accent);color:#FFFFFF">Ajouter au panier</button>
+        </div>
+
+        <h2 style="margin:0 0 18px;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--c-accent)">Informations réglementaires</h2>
+        <dl style="margin:0 0 20px;display:grid;gap:0">
+          <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Dénomination</dt><dd style="margin:0;font-size:15px">{{ current.denomination }}</dd></div>
+          <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Ingrédients</dt><dd style="margin:0;font-size:15px;line-height:1.55">{{ current.ingredients }} <strong style="font-weight:600;color:var(--c-accent)">{{ current.allergenes }}</strong></dd></div>
+          <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Quantité nette</dt><dd style="margin:0;font-size:15px">{{ current.poids }}</dd></div>
+          <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Conservation</dt><dd style="margin:0;font-size:15px">{{ current.conservation }}</dd></div>
+          <div style="display:grid;grid-template-columns:minmax(118px,0.8fr) 2fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--c-line)"><dt style="font-size:13.5px;color:var(--c-muted)">Fabricant</dt><dd style="margin:0;font-size:15px">{{ current.fabricant }}</dd></div>
+        </dl>
+        <p style="margin:0;font-size:13.5px;color:var(--c-muted);line-height:1.6">La date limite de consommation dépend du lot et vous est communiquée au retrait en boutique.</p>
+      </div>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isHistoire }}">
+    <article>
+      <section style="position:relative;min-height:min(58vh,560px);display:flex;align-items:flex-end;background:#0B0A09;background-image:repeating-linear-gradient(45deg,#FFFFFF0A 0 14px,transparent 14px 28px);border-bottom:1px solid var(--c-line)">
+        <span style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11.5px;color:#6E6A64;border:1px dashed #3A3733;padding:9px 15px">devanture de nuit · plein cadre</span>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,#121110F5 0%,#12111055 50%,transparent 80%)"></div>
+        <div style="position:relative;width:100%;max-width:1560px;margin:0 auto;padding:clamp(36px,5vw,72px) clamp(20px,3.5vw,44px)">
+          <p style="margin:0 0 20px;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)">La maison</p>
+          <h1 style="margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(36px,7vw,86px);line-height:1;letter-spacing:-0.015em;max-width:15ch;text-wrap:balance">Une charcuterie de 1908, rue Saint-Maur</h1>
+        </div>
+      </section>
+
+      <div style="max-width:1560px;margin:0 auto;padding:clamp(44px,6vw,88px) clamp(20px,3.5vw,44px)">
+        <div style="max-width:66ch;font-size:18px;line-height:1.75;margin-bottom:clamp(40px,6vw,72px)">
+          <p style="margin:0 0 28px">Le carrelage, le comptoir de marbre et les crochets du plafond sont d'origine. Nous avons repris les murs en 2014 sans rien changer d'autre que ce qu'ils contiennent.</p>
+          <p style="margin:0 0 28px">Le principe est resté le même depuis : nous achetons peu, souvent, et seulement à des producteurs rencontrés sur place. Dix-huit maisons aujourd'hui, de la Corrèze à la Sicile. Aucune marque, aucun grossiste, aucun produit que nous ne saurions situer sur une carte.</p>
+          <p style="margin:0">Le click &amp; collect est arrivé en 2024, parce que la boutique est petite et que le samedi matin il n'y tient pas quinze personnes. Vous commandez quand vous voulez, nous préparons, vous passez prendre votre sac.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--c-line);border:1px solid var(--c-line);margin-bottom:clamp(40px,6vw,72px)">
+          <sc-for list="{{ chiffres }}" as="c" hint-placeholder-count="4">
+            <div style="background:var(--c-bg);padding:30px 24px">
+              <p style="margin:0 0 10px;font-family:var(--f-display);font-size:clamp(34px,4.2vw,50px);font-weight:400;line-height:1">{{ c.value }}</p>
+              <p style="margin:0;font-size:14px;color:var(--c-muted);line-height:1.5">{{ c.label }}</p>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(14px,2vw,22px)">
+          <div style="aspect-ratio:4/5;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 11px,transparent 11px 22px);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:#6E6A64">atelier · 4:5</span></div>
+          <div style="aspect-ratio:4/5;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 11px,transparent 11px 22px);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:#6E6A64">producteur · 4:5</span></div>
+          <div style="aspect-ratio:4/5;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 11px,transparent 11px 22px);display:grid;place-items:center"><span style="font-family:ui-monospace,monospace;font-size:11px;color:#6E6A64">comptoir · 4:5</span></div>
+        </div>
+      </div>
+    </article>
+  </sc-if>
+
+  <sc-if value="{{ isContact }}">
+    <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:stretch">
+      <div style="padding:clamp(36px,5vw,80px) clamp(20px,3.5vw,56px);border-right:1px solid var(--c-line)">
+        <h1 style="margin:0 0 14px;font-family:var(--f-display);font-weight:400;font-size:clamp(32px,5vw,58px);line-height:1.03;letter-spacing:-0.015em">Nous écrire</h1>
+        <p style="margin:0 0 clamp(32px,4vw,48px);font-size:17px;color:var(--c-muted);max-width:46ch">Une question sur un produit, une commande spéciale, un coffret. Réponse sous un jour ouvré.</p>
+        <form style="display:flex;flex-direction:column;gap:22px;max-width:46ch" onSubmit="{{ noSubmit }}">
+          <div>
+            <label for="b-nom" style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);margin-bottom:9px">Nom *</label>
+            <input id="b-nom" type="text" required="{{ true }}" autocomplete="name" style="font:inherit;font-size:16px;width:100%;padding:14px 16px;min-height:52px;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink)">
+          </div>
+          <div>
+            <label for="b-mail" style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);margin-bottom:9px">Email *</label>
+            <input id="b-mail" type="email" required="{{ true }}" autocomplete="email" style="font:inherit;font-size:16px;width:100%;padding:14px 16px;min-height:52px;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink)">
+          </div>
+          <div>
+            <label for="b-msg" style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);margin-bottom:9px">Message *</label>
+            <textarea id="b-msg" rows="6" required="{{ true }}" style="font:inherit;font-size:16px;width:100%;padding:14px 16px;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink);resize:vertical"></textarea>
+          </div>
+          <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;color:var(--c-muted)">
+            <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--c-accent)">
+            <span>J'accepte que mes coordonnées soient utilisées pour répondre à ce message, et à rien d'autre. Effacement sous trois ans. <a href="#" onClick="{{ noSubmit }}">Politique de confidentialité</a>.</span>
+          </label>
+          <button type="submit" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;min-height:54px;padding:17px 34px;border:1px solid var(--c-ink);background:var(--c-ink);color:var(--c-on-primary);cursor:pointer;align-self:flex-start" style-hover="background:var(--c-accent);border-color:var(--c-accent);color:#FFFFFF">Envoyer</button>
+        </form>
+      </div>
+
+      <div style="display:flex;flex-direction:column">
+        <div style="flex:1;min-height:280px;background:#0B0A09;background-image:repeating-linear-gradient(45deg,#FFFFFF0A 0 12px,transparent 12px 24px);display:grid;place-items:center">
+          <span style="font-family:ui-monospace,monospace;font-size:11.5px;color:#6E6A64;border:1px dashed #3A3733;padding:9px 15px">plan statique · fiche Google Business</span>
+        </div>
+        <dl style="margin:0;display:grid;gap:1px;background:var(--c-line);border-top:1px solid var(--c-line)">
+          <div style="background:var(--c-bg);padding:24px clamp(20px,3.5vw,56px)"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:9px">Adresse</dt><dd style="margin:0;font-size:16.5px">84 rue Saint-Maur, 75011 Paris</dd></div>
+          <div style="background:var(--c-bg);padding:24px clamp(20px,3.5vw,56px)"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:9px">Horaires</dt><dd style="margin:0;font-size:16.5px;line-height:1.6">Mardi – samedi · 11:00 – 14:00, 16:00 – 20:00<br>Dimanche · 10:00 – 14:00<br>Lundi · fermé</dd></div>
+          <div style="background:var(--c-bg);padding:24px clamp(20px,3.5vw,56px)"><dt style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:9px">Contact</dt><dd style="margin:0;font-size:16.5px;line-height:1.6"><a href="tel:+33100000000">01 00 00 00 00</a><br><a href="mailto:bonjour@noiretsel.fr">bonjour@noiretsel.fr</a></dd></div>
+        </dl>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isPanier }}">
+    <section style="max-width:1180px;margin:0 auto;padding:clamp(32px,4.5vw,64px) clamp(20px,3.5vw,44px) clamp(48px,7vw,96px)">
+      <ol style="list-style:none;margin:0 0 clamp(30px,4vw,48px);padding:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase">
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-ink)"><span style="width:24px;height:24px;background:var(--c-ink);color:var(--c-on-primary);display:grid;place-items:center;font-size:11px">1</span>Panier</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:24px;height:24px;border:1px solid var(--c-line);display:grid;place-items:center;font-size:11px">2</span>Paiement</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:24px;height:24px;border:1px solid var(--c-line);display:grid;place-items:center;font-size:11px">3</span>Confirmation</li>
+      </ol>
+
+      <h1 style="margin:0 0 clamp(26px,4vw,44px);font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.8vw,56px);line-height:1.03;letter-spacing:-0.015em">Votre panier</h1>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(26px,4vw,52px);align-items:start">
+        <div>
+          <ul style="list-style:none;margin:0 0 clamp(32px,4vw,48px);padding:0;border-top:1px solid var(--c-line)">
+            <sc-for list="{{ cart }}" as="l" hint-placeholder-count="3">
+              <li style="display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--c-line);align-items:flex-start">
+                <div style="width:68px;height:88px;flex:none;background:var(--c-surface);background-image:repeating-linear-gradient(45deg,#FFFFFF08 0 9px,transparent 9px 18px)"></div>
+                <div style="flex:1;min-width:0">
+                  <h2 style="margin:0 0 4px;font-family:var(--f-display);font-size:19px;font-weight:400">{{ l.nom }}</h2>
+                  <p style="margin:0 0 13px;font-size:13px;color:var(--c-muted)">{{ l.format }}</p>
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <button type="button" onClick="{{ l.dec }}" aria-label="Retirer une unité" style="font:inherit;width:40px;height:40px;border:1px solid var(--c-line);background:transparent;color:var(--c-ink);cursor:pointer;font-size:17px" style-hover="border-color:var(--c-ink)">−</button>
+                    <span style="min-width:26px;text-align:center;font-variant-numeric:tabular-nums;font-size:15px">{{ l.qte }}</span>
+                    <button type="button" onClick="{{ l.inc }}" aria-label="Ajouter une unité" style="font:inherit;width:40px;height:40px;border:1px solid var(--c-line);background:transparent;color:var(--c-ink);cursor:pointer;font-size:17px" style-hover="border-color:var(--c-ink)">+</button>
+                  </div>
+                </div>
+                <span style="font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;flex:none">{{ l.total }}</span>
+              </li>
+            </sc-for>
+          </ul>
+
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend style="padding:0;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px">Créneau de retrait</legend>
+            <p style="margin:0 0 20px;font-size:14.5px;color:var(--c-muted)">84 rue Saint-Maur, 75011 Paris. Préparation en 2 heures minimum.</p>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ slots }}" as="s" hint-placeholder-count="4">
+                <label style="display:flex;align-items:center;gap:13px;padding:16px 18px;min-height:56px;border:1px solid {{ s.border }};background:{{ s.bg }};cursor:{{ s.cursor }};font-size:15.5px;color:{{ s.fg }}">
+                  <input type="radio" name="slot-b" checked="{{ s.checked }}" disabled="{{ s.disabled }}" onChange="{{ s.pick }}" style="width:18px;height:18px;flex:none;accent-color:var(--c-accent)">
+                  <span style="flex:1">{{ s.label }}</span>
+                  <span style="font-size:13px;color:var(--c-muted)">{{ s.note }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+        </div>
+
+        <aside style="border:1px solid var(--c-line);background:var(--c-surface);padding:clamp(22px,3vw,30px);position:sticky;top:140px">
+          <h2 style="margin:0 0 22px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Récapitulatif</h2>
+          <dl style="margin:0 0 20px;display:grid;gap:12px;font-size:15px">
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Sous-total</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ subtotal }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Dont TVA 5,5 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ tva55 }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Dont TVA 20 %</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ tva20 }}</dd></div>
+            <div style="display:flex;justify-content:space-between;gap:16px"><dt style="color:var(--c-muted)">Retrait en boutique</dt><dd style="margin:0">Gratuit</dd></div>
+          </dl>
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding-top:18px;border-top:1px solid var(--c-line);margin-bottom:8px">
+            <span style="font-size:15px;font-weight:600">Total</span>
+            <span style="font-family:var(--f-display);font-size:30px;font-weight:400;font-variant-numeric:tabular-nums">{{ total }}</span>
+          </div>
+          <p style="margin:0 0 22px;font-size:13px;color:var(--c-muted)">Créneau retenu : {{ chosenSlot }}</p>
+          <button type="button" onClick="{{ goCheckout }}" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;width:100%;min-height:56px;padding:17px;border:1px solid var(--c-ink);background:var(--c-ink);color:var(--c-on-primary);cursor:pointer" style-hover="background:var(--c-accent);border-color:var(--c-accent);color:#FFFFFF">Passer au paiement</button>
+          <p style="margin:16px 0 0;font-size:12.5px;color:var(--c-muted);line-height:1.55">Paiement sécurisé par Stripe. Aucune donnée bancaire n'est conservée par la boutique.</p>
+        </aside>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}">
+    <section style="max-width:1180px;margin:0 auto;padding:clamp(32px,4.5vw,64px) clamp(20px,3.5vw,44px) clamp(48px,7vw,96px)">
+      <ol style="list-style:none;margin:0 0 clamp(30px,4vw,48px);padding:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase">
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:24px;height:24px;border:1px solid var(--c-accent);color:var(--c-accent);display:grid;place-items:center;font-size:11px">✓</span><button type="button" onClick="{{ goPanier }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-accent);letter-spacing:.14em;text-transform:uppercase">Panier</button></li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-ink)"><span style="width:24px;height:24px;background:var(--c-ink);color:var(--c-on-primary);display:grid;place-items:center;font-size:11px">2</span>Paiement</li>
+        <li aria-hidden="true" style="color:var(--c-line)">———</li>
+        <li style="display:flex;align-items:center;gap:9px;color:var(--c-muted)"><span style="width:24px;height:24px;border:1px solid var(--c-line);display:grid;place-items:center;font-size:11px">3</span>Confirmation</li>
+      </ol>
+
+      <h1 style="margin:0 0 10px;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,4.8vw,56px);line-height:1.03;letter-spacing:-0.015em">Paiement</h1>
+      <p style="margin:0 0 clamp(28px,4vw,44px);font-size:16.5px;color:var(--c-muted);max-width:50ch">Commande en invité, sans création de compte. Le formulaire est servi par Stripe à l'intérieur de cette page.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(26px,4vw,52px);align-items:start">
+        <form onSubmit="{{ noSubmit }}" style="background:#FFFFFF;color:#121110">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid #E5E2DE;background:#F6F4F1">
+            <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6B665F">Stripe Checkout intégré</span>
+            <span style="font-size:12.5px;color:#6B665F;display:flex;align-items:center;gap:7px"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#2A6B40"></span>Connexion chiffrée</span>
+          </div>
+
+          <div style="padding:clamp(22px,3vw,30px);display:flex;flex-direction:column;gap:24px">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button type="button" style="font:inherit;font-size:15px;font-weight:500;min-height:52px;border:0;background:#000000;color:#FFFFFF;cursor:pointer">Payer avec Apple&nbsp;Pay</button>
+              <button type="button" style="font:inherit;font-size:15px;font-weight:500;min-height:52px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110;cursor:pointer">Payer avec Google&nbsp;Pay</button>
+              <p style="margin:6px 0 0;font-size:12.5px;color:#6B665F">Apple&nbsp;Pay n'apparaît que si le domaine est vérifié dans Stripe pour ce compte connecté.</p>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:14px"><span style="flex:1;height:1px;background:#E5E2DE"></span><span style="font-size:13px;color:#6B665F">ou par carte</span><span style="flex:1;height:1px;background:#E5E2DE"></span></div>
+
+            <div>
+              <label for="b-co-mail" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Adresse email *</label>
+              <input id="b-co-mail" type="email" required="{{ true }}" autocomplete="email" inputmode="email" placeholder="vous@exemple.fr" aria-describedby="b-co-mail-h" style="font:inherit;font-size:16px;width:100%;padding:13px 15px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+              <p id="b-co-mail-h" style="margin:7px 0 0;font-size:13px;color:#6B665F">Pour recevoir la confirmation et l'avis « commande prête ».</p>
+            </div>
+
+            <div>
+              <label for="b-co-tel" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Téléphone <span style="color:#6B665F;font-weight:400">(facultatif)</span></label>
+              <input id="b-co-tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 00 00 00 00" aria-describedby="b-co-tel-h" style="font:inherit;font-size:16px;width:100%;padding:13px 15px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+              <p id="b-co-tel-h" style="margin:7px 0 0;font-size:13px;color:#6B665F">Utilisé uniquement si un problème survient sur votre commande.</p>
+            </div>
+
+            <div>
+              <label for="b-co-nom" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Nom sur la carte *</label>
+              <input id="b-co-nom" type="text" required="{{ true }}" autocomplete="cc-name" style="font:inherit;font-size:16px;width:100%;padding:13px 15px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+            </div>
+
+            <div>
+              <label for="b-co-card" style="display:block;font-size:14px;font-weight:600;margin-bottom:7px">Informations de carte *</label>
+              <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px">
+                <input id="b-co-card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 15px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+                <input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / AA" aria-label="Date d'expiration" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 10px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+                <input type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="CVC" aria-label="Cryptogramme" style="font:inherit;font-size:16px;width:100%;min-width:0;padding:13px 10px;min-height:50px;border:1px solid #D7D3CE;background:#FFFFFF;color:#121110">
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:14px;padding-top:4px">
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer">
+                <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:#8A2E2E">
+                <span>J'accepte les <a href="#" onClick="{{ noSubmit }}" style="color:#8A2E2E">conditions générales de vente</a>. Les denrées périssables ne sont pas soumises au droit de rétractation. *</span>
+              </label>
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;padding:14px 16px;border:1px solid #D7D3CE;background:#F6F4F1">
+                <input type="checkbox" required="{{ true }}" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:#8A2E2E">
+                <span><strong style="font-weight:600">Je déclare avoir 18 ans ou plus.</strong> Votre panier contient une boisson alcoolisée ; la vente aux mineurs de moins de 18 ans est interdite. *</span>
+              </label>
+              <label style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer">
+                <input type="checkbox" style="margin-top:3px;width:18px;height:18px;flex:none;accent-color:#8A2E2E">
+                <span>Je souhaite recevoir les arrivages de {{ brandName }} par email. Facultatif, sans incidence sur ma commande, désinscription en un clic.</span>
+              </label>
+            </div>
+
+            <button type="submit" style="font:inherit;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;width:100%;min-height:56px;padding:17px;border:0;background:#121110;color:#FFFFFF;cursor:pointer">Payer {{ total }}</button>
+            <p style="margin:0;font-size:12.5px;color:#6B665F;line-height:1.55;text-align:center">Paiement traité par Stripe. {{ brandName }} ne reçoit ni ne stocke vos données bancaires. Votre email est conservé pour le suivi de la commande, <a href="#" onClick="{{ noSubmit }}" style="color:#8A2E2E">politique de confidentialité</a>.</p>
+          </div>
+        </form>
+
+        <aside style="display:flex;flex-direction:column;gap:18px;position:sticky;top:140px">
+          <div style="border:1px solid var(--c-line);background:var(--c-surface);padding:clamp(22px,3vw,28px)">
+            <h2 style="margin:0 0 18px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Votre commande</h2>
+            <ul style="list-style:none;margin:0 0 18px;padding:0;display:grid;gap:11px;font-size:14.5px">
+              <sc-for list="{{ cart }}" as="l" hint-placeholder-count="3">
+                <li style="display:flex;justify-content:space-between;gap:14px"><span>{{ l.qte }} × {{ l.nom }}</span><span style="font-variant-numeric:tabular-nums;flex:none">{{ l.total }}</span></li>
+              </sc-for>
+            </ul>
+            <div style="display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding-top:16px;border-top:1px solid var(--c-line)">
+              <span style="font-size:15px;font-weight:600">Total TTC</span>
+              <span style="font-family:var(--f-display);font-size:26px;font-variant-numeric:tabular-nums">{{ total }}</span>
+            </div>
+          </div>
+          <div style="border:1px solid var(--c-line);padding:clamp(20px,3vw,26px)">
+            <p style="margin:0 0 8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Retrait</p>
+            <p style="margin:0 0 5px;font-size:16px;font-weight:500">{{ chosenSlot }}</p>
+            <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.5">84 rue Saint-Maur, 75011 Paris</p>
+          </div>
+          <p style="margin:0;font-size:13px;color:var(--c-muted);line-height:1.6;padding:16px 18px;border-left:2px solid var(--c-accent)">L'abus d'alcool est dangereux pour la santé. À consommer avec modération.</p>
+        </aside>
+      </div>
+    </section>
+  </sc-if>
+
+  </main>
+
+  <footer style="border-top:1px solid var(--c-line);margin-top:clamp(36px,5vw,72px)">
+    <div style="max-width:1560px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(20px,3.5vw,44px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(28px,4vw,48px);margin-bottom:clamp(32px,4vw,48px)">
+        <div>
+          <p style="margin:0 0 14px;font-family:var(--f-display);font-size:22px;letter-spacing:.06em;text-transform:uppercase">{{ brandName }}</p>
+          <p style="margin:0;font-size:14.5px;color:var(--c-muted);line-height:1.6">84 rue Saint-Maur<br>75011 Paris<br>01 00 00 00 00</p>
+        </div>
+        <div>
+          <p style="margin:0 0 15px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Boutique</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px">
+            <li><button type="button" onClick="{{ goBoutique }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">Catalogue</button></li>
+            <li><button type="button" onClick="{{ goHistoire }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">La maison</button></li>
+            <li><button type="button" onClick="{{ goContact }}" style="font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--c-ink)" style-hover="color:var(--c-accent)">Contact</button></li>
+          </ul>
+        </div>
+        <div>
+          <p style="margin:0 0 15px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Informations légales</p>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px">
+            <li><a href="#" onClick="{{ noSubmit }}">Politique de confidentialité</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}">Conditions générales de vente</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}">Mentions légales</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}">Gestion des cookies</a></li>
+            <li><a href="#" onClick="{{ noSubmit }}">Accessibilité : conformité partielle</a></li>
+          </ul>
+        </div>
+        <div>
+          <p style="margin:0 0 15px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)">Vos données</p>
+          <p style="margin:0 0 10px;font-size:14px;color:var(--c-muted);line-height:1.6">Aucun cookie publicitaire, aucun traceur. La mesure d'audience est anonyme.</p>
+          <a href="#" onClick="{{ noSubmit }}" style="font-size:14px;color:var(--c-accent)">Exercer mes droits</a>
+        </div>
+      </div>
+      <p style="margin:0;padding-top:24px;border-top:1px solid var(--c-line);font-size:12.5px;color:var(--c-muted)">L'abus d'alcool est dangereux pour la santé. À consommer avec modération. · © 2026 {{ brandName }} · Site réalisé par LaunchPadFactory</p>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280},&quot;brandName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Noir &amp; Sel&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Charte client&quot;}}">
+const CATALOG = [
+  { id:"anchois", nom:"Anchois de Collioure", categorie:"Conserves", producteur:"Salaison Desclaux", format:"Bocal 100 g", prix:14.5, tva:"5,5 %", dispo:true, badge:"",
+    description:"Salés en saumure pendant dix mois, dessalés à la main, rangés un par un dans l'huile d'olive. Rien à voir avec ce qui se vend en grande surface.",
+    denomination:"Filets d'anchois à l'huile d'olive", ingredients:"Anchois 72 %, huile d'olive vierge extra, sel.", allergenes:"Contient : poissons.", poids:"100 g égoutté 65 g",
+    conservation:"Au réfrigérateur après ouverture, 5 jours.", fabricant:"Salaison Desclaux, 66190 Collioure, France" },
+  { id:"comte", nom:"Comté 30 mois, sélection parcellaire", categorie:"Fromages", producteur:"Fort des Rousses", format:"Portion 250 g", prix:16.8, tva:"5,5 %", dispo:true, badge:"",
+    description:"Un lait d'été, une cave du Jura, trente mois. Cristallin, long, avec cette pointe de noix grillée qui n'arrive qu'après deux ans.",
+    denomination:"Comté AOP affiné 30 mois", ingredients:"Lait cru de vache, sel, ferments lactiques, présure.", allergenes:"Contient : lait.", poids:"250 g",
+    conservation:"Entre 4 et 8 °C, dans son papier. Sortir 1 heure avant.", fabricant:"Fort des Rousses, 39220 Les Rousses, France" },
+  { id:"colatura", nom:"Colatura di alici", categorie:"Condiments", producteur:"Cetara, Campanie", format:"Flacon 100 ml", prix:19.0, tva:"5,5 %", dispo:false, badge:"Indisponible",
+    description:"Le jus de maturation des anchois de Cetara, récolté goutte à goutte. Trois gouttes suffisent pour un plat de spaghettis.",
+    denomination:"Sauce d'anchois fermentés", ingredients:"Anchois, sel marin.", allergenes:"Contient : poissons.", poids:"100 ml",
+    conservation:"À l'abri de la lumière. Après ouverture, au réfrigérateur.", fabricant:"Delfino Battista, 84010 Cetara, Italie" },
+  { id:"vin", nom:"Jurançon sec, Clos Lapeyre", categorie:"Vins", producteur:"Clos Lapeyre", format:"Bouteille 75 cl · 13 % vol.", prix:24.0, tva:"20 %", dispo:true, badge:"Alcool · 18 ans",
+    description:"Gros manseng sur sols d'argile à galets. Tendu, salin, agrumes confits. Le vin qui tient tête au comté de trente mois.",
+    denomination:"Jurançon sec AOP", ingredients:"Raisin. Contient des sulfites.", allergenes:"Contient : sulfites.", poids:"75 cl",
+    conservation:"Couché, entre 12 et 14 °C.", fabricant:"Clos Lapeyre, 64110 La Chapelle-de-Rousse, France" },
+  { id:"chocolat", nom:"Tablette Chuao 72 %", categorie:"Épicerie sucrée", producteur:"Atelier Mounier", format:"Tablette 80 g", prix:11.5, tva:"5,5 %", dispo:true, badge:"",
+    description:"Fèves de Chuao, au Venezuela, torréfiées à Paris. Notes de fruits rouges et de tabac blond, texture très sèche en bouche.",
+    denomination:"Chocolat noir 72 % de cacao", ingredients:"Pâte de cacao, sucre de canne, beurre de cacao.", allergenes:"Peut contenir des traces de lait, fruits à coque.", poids:"80 g",
+    conservation:"Entre 16 et 18 °C, à l'abri de l'humidité.", fabricant:"Atelier Mounier, 75020 Paris, France" },
+  { id:"huile", nom:"Huile de noisette torréfiée", categorie:"Condiments", producteur:"Moulin Lapalisse", format:"Flacon 250 ml", prix:15.2, tva:"5,5 %", dispo:true, badge:"",
+    description:"Noisettes du Lot torréfiées puis pressées à la meule de pierre. À verser froide, jamais chauffée.",
+    denomination:"Huile vierge de noisette", ingredients:"Noisettes 100 %.", allergenes:"Contient : fruits à coque.", poids:"250 ml",
+    conservation:"Au réfrigérateur après ouverture, 3 mois.", fabricant:"Moulin Lapalisse, 46000 Cahors, France" },
+  { id:"miel", nom:"Miel de bruyère callune", categorie:"Miels & confitures", producteur:"Rucher de Belle-Île", format:"Pot 220 g", prix:16.0, tva:"5,5 %", dispo:true, badge:"",
+    description:"Une récolte unique en septembre, gélifiée naturellement. Amer, caramélisé, presque fumé. Le miel le plus rare du comptoir.",
+    denomination:"Miel de bruyère callune de France", ingredients:"Miel de bruyère callune 100 %.", allergenes:"", poids:"220 g",
+    conservation:"À l'abri de la lumière, entre 15 et 20 °C.", fabricant:"Rucher de Belle-Île, 56360 Le Palais, France" },
+  { id:"pate", nom:"Pâté en croûte Richelieu", categorie:"Conserves", producteur:"Maison Verot", format:"Part 180 g", prix:13.4, tva:"5,5 %", dispo:true, badge:"",
+    description:"Veau, ris de veau, foie gras, pistaches, gelée au porto. La pâte est montée au beurre et cuite le matin même.",
+    denomination:"Pâté en croûte de veau et foie gras", ingredients:"Farine de blé, beurre, veau 31 %, ris de veau, foie gras de canard 9 %, œufs, pistaches, porto, sel, poivre.", allergenes:"Contient : gluten, lait, œufs, fruits à coque.", poids:"180 g",
+    conservation:"Entre 0 et 4 °C. À consommer dans les 3 jours.", fabricant:"Maison Verot, 75015 Paris, France" }
+];
+const CATS = ["Tout", "Fromages", "Conserves", "Condiments", "Vins", "Miels & confitures", "Épicerie sucrée"];
+const SLOTS = [
+  { id:"s1", label:"Aujourd'hui · 16:00 – 20:00", note:"à partir de 17:30", full:false },
+  { id:"s2", label:"Demain · 11:00 – 14:00", note:"", full:false },
+  { id:"s3", label:"Demain · 16:00 – 20:00", note:"", full:false },
+  { id:"s4", label:"Dimanche · 10:00 – 14:00", note:"complet", full:true }
+];
+const eur = n => n.toFixed(2).replace(".", ",") + " €";
+
+class Component extends DCLogic {
+  state = { page:"accueil", cat:"Tout", productId:"comte", slot:"s2",
+    cart:[{ id:"comte", qte:1 }, { id:"anchois", qte:2 }, { id:"vin", qte:1 }] };
+
+  go(page) { return () => this.setState({ page }); }
+  openProduct(id) { return () => this.setState({ page:"fiche", productId:id }); }
+  add(id) { return () => this.setState(s => {
+    const found = s.cart.find(l => l.id === id);
+    return { cart: found ? s.cart.map(l => l.id === id ? { ...l, qte:l.qte + 1 } : l) : [...s.cart, { id, qte:1 }] };
+  }); }
+  bump(id, d) { return () => this.setState(s => ({
+    cart: s.cart.map(l => l.id === id ? { ...l, qte:Math.max(1, l.qte + d) } : l)
+  })); }
+
+  renderVals() {
+    const { page, cat, productId, slot, cart } = this.state;
+    const p = CATALOG.find(x => x.id === productId) || CATALOG[0];
+    const lines = cart.map(l => ({ ...l, prod:CATALOG.find(x => x.id === l.id) })).filter(l => l.prod);
+    const sub = lines.reduce((a, l) => a + l.prod.prix * l.qte, 0);
+    const t20 = lines.filter(l => l.prod.tva === "20 %").reduce((a, l) => a + l.prod.prix * l.qte, 0);
+    const t55 = sub - t20;
+    const chosen = SLOTS.find(s => s.id === slot) || SLOTS[0];
+    const tabs = [["accueil","Accueil"],["boutique","Catalogue"],["fiche","Fiche produit"],["histoire","Notre histoire"],["contact","Contact"],["panier","Panier & créneau"],["checkout","Paiement Stripe"]];
+
+    return {
+      brandName: this.props.brandName ?? "Noir & Sel",
+      pages: tabs.map(([id, label]) => ({ label, go:this.go(id),
+        bg: page === id ? "#FFFFFF" : "#2A2E36", fg: page === id ? "#16181D" : "#C7CCD4" })),
+      isAccueil: page === "accueil", isBoutique: page === "boutique", isFiche: page === "fiche",
+      isHistoire: page === "histoire", isContact: page === "contact", isPanier: page === "panier", isCheckout: page === "checkout",
+      goBoutique: this.go("boutique"), goHistoire: this.go("histoire"), goContact: this.go("contact"),
+      goPanier: this.go("panier"), goCheckout: this.go("checkout"),
+      noSubmit: e => e.preventDefault(),
+      cartCount: cart.reduce((a, l) => a + l.qte, 0),
+      featured: CATALOG.slice(0, 3).map(x => ({ ...x, prix:eur(x.prix), open:this.openProduct(x.id), add:this.add(x.id) })),
+      categories: CATS.map(c => ({ label:c, active:c === cat, go:() => this.setState({ cat:c }),
+        bg: c === cat ? "var(--c-ink)" : "transparent", fg: c === cat ? "var(--c-on-primary)" : "var(--c-ink)",
+        border: c === cat ? "var(--c-ink)" : "var(--c-line)" })),
+      visibleProducts: CATALOG.filter(x => cat === "Tout" || x.categorie === cat).map(x => ({
+        ...x, prix:eur(x.prix), opacity: x.dispo ? "1" : "0.55",
+        disabled: !x.dispo, btnLabel: x.dispo ? "Ajouter" : "Indisponible",
+        btnBorder: x.dispo ? "var(--c-ink)" : "#4A4642", btnColor: x.dispo ? "var(--c-ink)" : "var(--c-muted)",
+        cursor: x.dispo ? "pointer" : "not-allowed", open:this.openProduct(x.id), add:this.add(x.id) })),
+      current: { ...p, prix:eur(p.prix) },
+      addCurrent: this.add(p.id),
+      chiffres: [
+        { value:"1908", label:"Année de construction de la charcuterie d'origine" },
+        { value:"18", label:"Maisons référencées, de la Corrèze à la Sicile" },
+        { value:"24", label:"Références au comptoir, renouvelées chaque semaine" },
+        { value:"2 h", label:"Entre la commande et le retrait" }
+      ],
+      cart: lines.map(l => ({ nom:l.prod.nom, format:l.prod.format, qte:l.qte, total:eur(l.prod.prix * l.qte),
+        inc:this.bump(l.id, 1), dec:this.bump(l.id, -1) })),
+      slots: SLOTS.map(s => ({ label:s.label, note:s.note, checked:s.id === slot, disabled:s.full,
+        pick:() => this.setState({ slot:s.id }), cursor: s.full ? "not-allowed" : "pointer",
+        bg: s.id === slot ? "var(--c-raise)" : "transparent",
+        border: s.id === slot ? "var(--c-accent)" : "var(--c-line)",
+        fg: s.full ? "var(--c-muted)" : "var(--c-ink)" })),
+      subtotal: eur(sub), tva55: eur(t55 * 0.055 / 1.055), tva20: eur(t20 * 0.2 / 1.2),
+      total: eur(sub), chosenSlot: chosen.label
+    };
+  }
+}
+</script>
+</body>
+</html>
