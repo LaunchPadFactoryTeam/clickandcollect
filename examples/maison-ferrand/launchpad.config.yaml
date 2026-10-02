@@ -1,0 +1,29 @@
+# Template A — Éditorial (charte de la maquette Maison Ferrand)
+boutique:
+  nom: "Maison Ferrand"
+  domaine: "maison-ferrand.fr"
+  adresse: "12 rue des Halles, 34000 Montpellier"
+  telephone: "04 67 00 00 00"
+  email_notifications: "commandes@maison-ferrand.fr"
+design:
+  couleurs: { primaire: "#2F4A3A", secondaire: "#B08D57", fond: "#FAF8F4" }
+  typographies:
+    titres: { famille: "Newsreader", graisses: [400, 500], categorie: serif }
+    texte: { famille: "Work Sans", graisses: [400, 600] }
+  arrondis: "net"
+  logo: "./assets/logo.svg"
+  variantes: { accueil: A, boutique: A, fiche_produit: A, epicerie: A, contact: A }
+retrait:
+  delai_preparation_heures: 2
+  creneaux:
+    mardi:    ["10:00-12:00", "16:00-19:00"]
+    mercredi: ["10:00-12:00", "16:00-19:00"]
+    jeudi:    ["10:00-12:00", "16:00-19:00"]
+    vendredi: ["10:00-12:00", "16:00-19:00"]
+    samedi:   ["09:00-13:00", "15:00-19:00"]
+  fermetures: []
+paiement:
+  psp: "stripe"
+features:
+  alcool: true
+core_version: "1.0.0-alpha.1"

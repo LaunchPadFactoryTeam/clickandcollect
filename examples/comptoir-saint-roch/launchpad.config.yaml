@@ -1,0 +1,28 @@
+# Template C — Artisanal (charte de la maquette Comptoir Saint-Roch)
+boutique:
+  nom: "Comptoir Saint-Roch"
+  domaine: "comptoir-saint-roch.fr"
+  adresse: "8 place Saint-Roch, 34000 Montpellier"
+  telephone: "04 67 00 00 01"
+  email_notifications: "bonjour@comptoir-saint-roch.fr"
+design:
+  couleurs: { primaire: "#A8572C", secondaire: "#5C6B42", fond: "#FDF6EC" }
+  typographies:
+    titres: { famille: "Lora", graisses: [400, 500], categorie: serif }
+    texte: { famille: "Karla", graisses: [400, 600] }
+  arrondis: "rond"
+  logo: "./assets/logo.svg"
+  variantes: { accueil: C, boutique: C, fiche_produit: C, epicerie: C, contact: C }
+retrait:
+  delai_preparation_heures: 1
+  creneaux:
+    mardi:    ["09:00-12:30", "16:00-19:30"]
+    mercredi: ["09:00-12:30", "16:00-19:30"]
+    jeudi:    ["09:00-12:30", "16:00-19:30"]
+    vendredi: ["09:00-12:30", "16:00-19:30"]
+    samedi:   ["09:00-13:00"]
+paiement:
+  psp: "stripe"
+features:
+  alcool: false
+core_version: "1.0.0-alpha.1"
