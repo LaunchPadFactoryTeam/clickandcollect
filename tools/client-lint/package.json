@@ -1,5 +1,5 @@
 {
-  "name": "@lp/client-lint",
+  "name": "@launchpadfactoryteam/client-lint",
   "version": "1.0.0-alpha.1",
   "description": "Refuse tout code métier dans un repo client (règle d'or du cadrage)",
   "type": "module",

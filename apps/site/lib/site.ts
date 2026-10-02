@@ -1,4 +1,4 @@
-import type { ClientConfig } from "@lp/config";
+import type { ClientConfig } from "@launchpadfactoryteam/config";
 import site from "../generated/site.json";
 
 /**

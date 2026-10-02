@@ -1,5 +1,5 @@
 {
-  "name": "@lp/emails",
+  "name": "@launchpadfactoryteam/emails",
   "version": "1.0.0-alpha.1",
   "description": "Gabarits React Email, client Brevo, file d'envoi (lot 6)",
   "type": "module",

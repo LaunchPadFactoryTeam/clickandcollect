@@ -1,7 +1,7 @@
 # Site client LaunchPad
 
 Ce repo ne contient que la configuration (`launchpad.config.yaml`), les assets (logo SVG, polices WOFF2)
-et la configuration de déploiement (`wrangler.jsonc`). Le code vient de `@lp/site`, à la version épinglée
+et la configuration de déploiement (`wrangler.jsonc`). Le code vient de `@launchpadfactoryteam/site`, à la version épinglée
 dans `package.json` ; une montée de version du core se fait en changeant ce seul numéro.
 
 - `pnpm lint` : refuse tout fichier de code (`.ts`, `.tsx`, `.js`…) et toute surcharge CSS non documentée.

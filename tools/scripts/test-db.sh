@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Tests de base de données (pgTAP) de @lp/db.
+# Tests de base de données (pgTAP) de @launchpadfactoryteam/db.
 # - PGHOST défini (CI : `supabase db start`, avec PGPORT, PGUSER, PGPASSWORD, PGDATABASE) :
 #   la base existe déjà, les migrations ont été appliquées par Supabase.
 # - Sinon : un cluster Postgres jetable est créé, les migrations y sont appliquées, puis détruit.

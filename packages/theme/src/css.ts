@@ -1,4 +1,4 @@
-import type { ClientConfig, FontFile, Police } from "@lp/config";
+import type { ClientConfig, FontFile, Police } from "@launchpadfactoryteam/config";
 import { COLOR_TOKENS, type ColorTokens, type DerivedPalette } from "./derive.ts";
 import { FALLBACK_STACKS, RADII, SPACING, TYPE_SCALE } from "./scale.ts";
 
@@ -56,7 +56,7 @@ export function generateCss(
     .map(([k, v]) => `  ${k}: ${v};`)
     .join("\n");
   return [
-    `/* Généré par @lp/theme pour ${config.boutique.nom} — ne pas modifier à la main. */`,
+    `/* Généré par @launchpadfactoryteam/theme pour ${config.boutique.nom} — ne pas modifier à la main. */`,
     fontFaceCss(fonts, options.fontBaseUrl),
     `:root {\n${root}\n  color-scheme: ${palette.isDark ? "dark" : "light"};\n}`,
     "",

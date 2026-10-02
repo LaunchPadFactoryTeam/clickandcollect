@@ -9,7 +9,7 @@
     "deploy": "lp-site deploy ."
   },
   "dependencies": {
-    "@lp/client-lint": "1.0.0-alpha.1",
-    "@lp/site": "1.0.0-alpha.1"
+    "@launchpadfactoryteam/client-lint": "1.0.0-alpha.1",
+    "@launchpadfactoryteam/site": "1.0.0-alpha.1"
   }
 }

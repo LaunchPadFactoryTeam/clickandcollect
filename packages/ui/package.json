@@ -1,5 +1,5 @@
 {
-  "name": "@lp/ui",
+  "name": "@launchpadfactoryteam/ui",
   "version": "1.0.0-alpha.1",
   "description": "Composants partagés et variantes A, B, C des pages (lot 3)",
   "type": "module",

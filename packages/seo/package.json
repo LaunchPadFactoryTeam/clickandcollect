@@ -1,5 +1,5 @@
 {
-  "name": "@lp/seo",
+  "name": "@launchpadfactoryteam/seo",
   "version": "1.0.0-alpha.1",
   "description": "Métadonnées, JSON-LD, sitemap, robots.txt, llms.txt (lot 3)",
   "type": "module",

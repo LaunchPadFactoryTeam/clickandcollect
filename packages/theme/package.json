@@ -1,5 +1,5 @@
 {
-  "name": "@lp/theme",
+  "name": "@launchpadfactoryteam/theme",
   "version": "1.0.0-alpha.1",
   "type": "module",
   "exports": {
@@ -9,7 +9,7 @@
     "lp-theme": "./bin/lp-theme.mjs"
   },
   "dependencies": {
-    "@lp/config": "workspace:*",
+    "@launchpadfactoryteam/config": "workspace:*",
     "culori": "^4.0.2",
     "tsx": "^4.23.15"
   },

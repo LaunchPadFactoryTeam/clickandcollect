@@ -1,5 +1,5 @@
 {
-  "name": "@lp/config",
+  "name": "@launchpadfactoryteam/config",
   "version": "1.0.0-alpha.1",
   "type": "module",
   "exports": {

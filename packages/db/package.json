@@ -1,5 +1,5 @@
 {
-  "name": "@lp/db",
+  "name": "@launchpadfactoryteam/db",
   "version": "1.0.0-alpha.1",
   "description": "Migrations SQL, politiques RLS, types et clients Supabase (lot 2)",
   "type": "module",

@@ -43,10 +43,10 @@ importers:
 
   apps/site:
     dependencies:
-      '@lp/config':
+      '@launchpadfactoryteam/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@lp/theme':
+      '@launchpadfactoryteam/theme':
         specifier: workspace:*
         version: link:../../packages/theme
       next:
@@ -110,7 +110,7 @@ importers:
 
   packages/theme:
     dependencies:
-      '@lp/config':
+      '@launchpadfactoryteam/config':
         specifier: workspace:*
         version: link:../config
       culori:

@@ -1,5 +1,5 @@
 {
-  "name": "@lp/site",
+  "name": "@launchpadfactoryteam/site",
   "version": "1.0.0-alpha.1",
   "description": "Application Next.js des sites clients, pilotée par la configuration ; la démo est ce site construit sur examples/maison-ferrand",
   "type": "module",
@@ -15,8 +15,8 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@lp/config": "workspace:*",
-    "@lp/theme": "workspace:*",
+    "@launchpadfactoryteam/config": "workspace:*",
+    "@launchpadfactoryteam/theme": "workspace:*",
     "next": "^16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

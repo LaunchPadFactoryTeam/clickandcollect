@@ -14,3 +14,4 @@ test-results
 playwright-report
 packages/db/supabase/config.toml
 .turbo
+.claude

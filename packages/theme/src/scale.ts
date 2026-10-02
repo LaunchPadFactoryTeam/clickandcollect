@@ -1,6 +1,6 @@
 /** Jetons fixes du design system : identiques d'un site à l'autre. */
 
-import type { ClientConfig } from "@lp/config";
+import type { ClientConfig } from "@launchpadfactoryteam/config";
 
 export interface TypeStep {
   name: string;

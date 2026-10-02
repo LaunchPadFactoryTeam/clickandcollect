@@ -1,4 +1,4 @@
-import type { ClientConfig } from "@lp/config";
+import type { ClientConfig } from "@launchpadfactoryteam/config";
 import type { BuiltTheme } from "./build.ts";
 import { formatRatio } from "./contrast.ts";
 import { COLOR_TOKENS } from "./derive.ts";
@@ -78,7 +78,7 @@ export function previewHtml(config: ClientConfig, theme: BuiltTheme, cssHref = "
 </head>
 <body>
 <main>
-  <p class="muted"><code>@lp/theme · page de contrôle · fond ${palette.isDark ? "sombre" : "clair"} · arrondis ${config.design.arrondis} (${rs} / ${rm} / ${rl} px)</code></p>
+  <p class="muted"><code>@launchpadfactoryteam/theme · page de contrôle · fond ${palette.isDark ? "sombre" : "clair"} · arrondis ${config.design.arrondis} (${rs} / ${rm} / ${rl} px)</code></p>
   <h1><span class="accent">${name}</span></h1>
   <p class="muted">${esc(config.boutique.adresse)}</p>
 

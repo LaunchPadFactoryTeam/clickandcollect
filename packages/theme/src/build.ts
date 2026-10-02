@@ -1,4 +1,4 @@
-import type { ClientConfig, FontFile, LoadedConfig } from "@lp/config";
+import type { ClientConfig, FontFile, LoadedConfig } from "@launchpadfactoryteam/config";
 import { formatRatio } from "./contrast.ts";
 import { generateCss, rootVariables, type CssOptions } from "./css.ts";
 import { derivePalette, type ContrastCheck, type ColorToken, type DerivedPalette } from "./derive.ts";

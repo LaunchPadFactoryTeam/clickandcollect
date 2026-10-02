@@ -3,7 +3,7 @@
  * lp-site build [dossier-client] — construit le Worker du site à partir de la configuration du repo client.
  * lp-site deploy [dossier-client] — déploie ce Worker avec le wrangler.jsonc du repo client.
  *
- * Le repo client ne contient aucun code : l'application est celle de @lp/site, à la version épinglée
+ * Le repo client ne contient aucun code : l'application est celle de @launchpadfactoryteam/site, à la version épinglée
  * dans son package.json. Elle est construite ici avec LP_SITE_DIR = dossier client, puis le
  * résultat (.open-next) est copié dans le repo client.
  */

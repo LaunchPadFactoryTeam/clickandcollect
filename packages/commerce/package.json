@@ -1,5 +1,5 @@
 {
-  "name": "@lp/commerce",
+  "name": "@launchpadfactoryteam/commerce",
   "version": "1.0.0-alpha.1",
   "description": "Panier, montants et TVA, créneaux, règles alcool (lot 4)",
   "type": "module",

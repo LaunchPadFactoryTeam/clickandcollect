@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { differenceCiede2000 } from "culori";
 import { describe, expect, it } from "vitest";
-import { loadConfig, validateConfig } from "@lp/config";
+import { loadConfig, validateConfig } from "@launchpadfactoryteam/config";
 import {
   buildTheme,
   buildThemeFromLoaded,

@@ -27,7 +27,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm turbo run build:worker --filter=@lp/site
+      - run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
       - name: Version de prévisualisation (pull request)
         if: github.event_name == 'pull_request'
         working-directory: apps/site
