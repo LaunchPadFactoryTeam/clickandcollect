@@ -61,3 +61,42 @@ export function updateCart(shop: string, change: (cart: CartLine[]) => CartLine[
   }
   for (const listener of listeners) listener();
 }
+
+/** Choix de l'étape 1 (créneau, cases cochées), transmis à l'étape 2 le temps de l'onglet. */
+export interface OrderChoice {
+  slotId: string;
+  ageDeclared: boolean;
+  marketing: boolean;
+}
+
+const choiceKey = (shop: string) => `lp:commande:${shop}`;
+
+export function saveOrderChoice(shop: string, choice: OrderChoice): boolean {
+  try {
+    window.sessionStorage.setItem(choiceKey(shop), JSON.stringify(choice));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function readOrderChoice(shop: string): OrderChoice | null {
+  try {
+    const raw = JSON.parse(window.sessionStorage.getItem(choiceKey(shop)) ?? "null") as Partial<OrderChoice> | null;
+    return raw && typeof raw.slotId === "string"
+      ? { slotId: raw.slotId, ageDeclared: raw.ageDeclared === true, marketing: raw.marketing === true }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Commande payée : panier et choix effacés. */
+export function clearOrder(shop: string) {
+  try {
+    window.sessionStorage.removeItem(choiceKey(shop));
+  } catch {
+    // rien à effacer
+  }
+  updateCart(shop, () => []);
+}

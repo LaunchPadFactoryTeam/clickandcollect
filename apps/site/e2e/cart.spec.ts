@@ -104,10 +104,19 @@ test("case de majorité : due dès qu'une boisson alcoolisée est au panier, sin
   await expect(age).not.toBeChecked();
   await page.getByRole("button", { name: "Passer au paiement" }).click();
   expect(await age.evaluate((el: HTMLInputElement) => el.validity.valueMissing)).toBe(true);
-  await expect(page.locator(".cart__status")).toBeEmpty();
+  await expect(page).toHaveURL(/\/panier$/);
   await age.check();
   await page.getByRole("button", { name: "Passer au paiement" }).click();
-  await expect(page.locator(".cart__status")).not.toBeEmpty();
+  await expect(page).toHaveURL(/\/paiement$/);
+});
+
+test("étape 2 sans paiement configuré : message clair et retour au panier", async ({ page }) => {
+  test.skip(!!process.env.E2E_TUNNEL, "paiement configuré dans ce mode");
+  await seedCart(page, [{ productId: first.id, quantity: 1 }]);
+  await page.goto("/panier");
+  await page.getByRole("button", { name: "Passer au paiement" }).click();
+  await expect(page.locator(".pay__error")).toContainText("Le paiement en ligne n'est pas encore ouvert");
+  await expect(page.getByRole("link", { name: "Revenir au panier" })).toHaveAttribute("href", "/panier");
 });
 
 test("case marketing : facultative, décochée, avec le texte versionné de la boutique", async ({ page }) => {

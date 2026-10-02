@@ -1,6 +1,6 @@
 import type { ClientConfig } from "@launchpadfactoryteam/config";
 import type { CatalogProduct } from "@launchpadfactoryteam/content";
-import { CartA, CartB, CartC } from "./pages/cart.tsx";
+import { CartA, CartB, CartC, ConfirmationStep, PaymentStep } from "./pages/cart.tsx";
 import { ContactA, ContactB, ContactC } from "./pages/contact.tsx";
 import { HomeA, HomeB, HomeC } from "./pages/home.tsx";
 import { ProductA, ProductB, ProductC } from "./pages/product.tsx";
@@ -55,4 +55,13 @@ export function ContactPage({ site }: { site: Site }) {
 export function CartPage({ site }: { site: Site }) {
   const Page = PAGES.panier[variantOf(site.config, "panier")];
   return <Page site={site} />;
+}
+
+/** Paiement et confirmation suivent la variante du panier. */
+export function PaymentPage({ site }: { site: Site }) {
+  return <PaymentStep site={site} variant={variantOf(site.config, "panier")} />;
+}
+
+export function ConfirmationPage({ site }: { site: Site }) {
+  return <ConfirmationStep site={site} variant={variantOf(site.config, "panier")} />;
 }

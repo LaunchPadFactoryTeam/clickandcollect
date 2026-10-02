@@ -8,7 +8,17 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run",
     "lint": "eslint ."
-  }
+  },
+  "bin": {
+    "lp-psp": "./bin/lp-psp.mjs"
+  },
+  "dependencies": {
+    "tsx": "^4.23.15"
+  },
+  "files": [
+    "src",
+    "bin"
+  ]
 }

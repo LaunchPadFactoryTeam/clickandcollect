@@ -168,9 +168,10 @@
   color: var(--c-on-primary);
 }
 .site--b .b-btn--primary:hover:not(:disabled) {
-  background: var(--c-accent);
+  /* La maquette passe le fond à l'accent : texte à 4,3:1, sous le seuil AA. On teinte seulement le fond. */
+  background: color-mix(in srgb, var(--c-primary) 82%, var(--c-accent));
   border-color: var(--c-accent);
-  color: var(--c-ink);
+  color: var(--c-on-primary);
 }
 .site--b .b-btn--ghost {
   border: 1px solid color-mix(in srgb, var(--c-ink) 35%, transparent);

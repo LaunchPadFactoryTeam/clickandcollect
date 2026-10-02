@@ -11,6 +11,7 @@ export {
   setQuantity,
   type CartLine,
 } from "./cart.ts";
+export { buildCheckout, type CheckoutError, type CheckoutRequest, type ValidCheckout } from "./checkout.ts";
 export { computeTotals, vatFromTtc, type PricedLine, type Totals, type VatRate } from "./money.ts";
 export {
   requiresAgeDeclaration,

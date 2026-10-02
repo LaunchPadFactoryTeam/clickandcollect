@@ -630,6 +630,7 @@ export type Database = {
       pg_version: { Args: Record<PropertyKey, never>; Returns: string };
       pg_version_num: { Args: Record<PropertyKey, never>; Returns: number };
       pgtap_version: { Args: Record<PropertyKey, never>; Returns: number };
+      record_paid_checkout: { Args: { p: Json }; Returns: Json };
       runtests: { Args: Record<PropertyKey, never>; Returns: string[] } | { Args: { "": string }; Returns: string[] };
       skip: { Args: { "": string }; Returns: string } | { Args: { how_many: number; why: string }; Returns: string };
       throws_ok: { Args: { "": string }; Returns: string };
