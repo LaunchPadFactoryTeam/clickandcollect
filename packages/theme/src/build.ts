@@ -21,7 +21,10 @@ export class ThemeError extends Error {
   readonly failures: ContrastCheck[];
   constructor(failures: ContrastCheck[], palette: DerivedPalette, shop: string) {
     super(
-      [`Contrastes insuffisants pour ${shop} :`, ...failures.map((f) => `  - ${describeCheck(f, palette.tokens)}`)].join("\n"),
+      [
+        `Contrastes insuffisants pour ${shop} :`,
+        ...failures.map((f) => `  - ${describeCheck(f, palette.tokens)}`),
+      ].join("\n"),
     );
     this.name = "ThemeError";
     this.failures = failures;
@@ -38,11 +41,7 @@ export interface BuiltTheme {
 }
 
 /** Dérive et contrôle le thème d'une configuration validée ; lève ThemeError si un contraste échoue. */
-export function buildTheme(
-  config: ClientConfig,
-  fonts: readonly FontFile[],
-  options: CssOptions = {},
-): BuiltTheme {
+export function buildTheme(config: ClientConfig, fonts: readonly FontFile[], options: CssOptions = {}): BuiltTheme {
   const palette = derivePalette(config.design.couleurs);
   const failures = palette.checks.filter((c) => !c.ok);
   if (failures.length) throw new ThemeError(failures, palette, config.boutique.nom);

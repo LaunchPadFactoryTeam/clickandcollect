@@ -45,7 +45,8 @@ export function makeSite(
   const dir = mkdtempSync(join(tmpdir(), "lp-site-"));
   mkdirSync(join(dir, "assets/fonts"), { recursive: true });
   writeFileSync(join(dir, "launchpad.config.yaml"), stringify(config));
-  if (options.logo !== null) writeFileSync(join(dir, "assets/logo.svg"), options.logo ?? '<svg xmlns="http://www.w3.org/2000/svg"/>');
+  if (options.logo !== null)
+    writeFileSync(join(dir, "assets/logo.svg"), options.logo ?? '<svg xmlns="http://www.w3.org/2000/svg"/>');
   const fonts = options.fonts ?? ["playfair-display-400", "playfair-display-600", "work-sans-400", "work-sans-600"];
   for (const f of fonts) writeFileSync(join(dir, "assets/fonts", `${f}.woff2`), WOFF2);
   return dir;

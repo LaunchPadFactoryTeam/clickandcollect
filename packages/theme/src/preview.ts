@@ -11,7 +11,8 @@ export function previewHtml(config: ClientConfig, theme: BuiltTheme, cssHref = "
   const { palette } = theme;
   const name = esc(config.boutique.nom);
   const swatches = COLOR_TOKENS.map(
-    (t) => `<li><span class="sw" style="background:var(${t})"></span><code>${t}</code><code>${palette.tokens[t]}</code></li>`,
+    (t) =>
+      `<li><span class="sw" style="background:var(${t})"></span><code>${t}</code><code>${palette.tokens[t]}</code></li>`,
   ).join("");
   const checks = [...palette.checks, ...palette.warnings.map((w) => ({ ...w, warn: true }))]
     .map(
@@ -24,9 +25,15 @@ export function previewHtml(config: ClientConfig, theme: BuiltTheme, cssHref = "
     (s) =>
       `<div class="step"><span style="font-family:var(--f-${s.name.startsWith("display") || s.name === "heading" ? "display" : "body"});font-size:var(--fs-${s.name});line-height:var(--lh-${s.name});font-weight:${s.weight}${s.letterSpacing ? `;letter-spacing:${s.letterSpacing};text-transform:uppercase` : ""}">${s.name === "overline" ? "Surtitre" : "Miel de châtaignier"}</span><code>${s.name} · ${s.size}</code></div>`,
   ).join("");
-  const spacing = SPACING.map((px, i) => `<span class="sp" style="width:var(--space-${i + 1});height:var(--space-${i + 1})" title="${px}px"></span>`).join("");
+  const spacing = SPACING.map(
+    (px, i) =>
+      `<span class="sp" style="width:var(--space-${i + 1});height:var(--space-${i + 1})" title="${px}px"></span>`,
+  ).join("");
   const status = Object.values(STATUS_COLORS)
-    .map((s) => `<span class="pill" style="background:${s.bg};color:${s.fg}"><i style="background:${s.dot}"></i>${s.label}</span>`)
+    .map(
+      (s) =>
+        `<span class="pill" style="background:${s.bg};color:${s.fg}"><i style="background:${s.dot}"></i>${s.label}</span>`,
+    )
     .join("");
   const [rs, rm, rl] = RADII[config.design.arrondis];
 

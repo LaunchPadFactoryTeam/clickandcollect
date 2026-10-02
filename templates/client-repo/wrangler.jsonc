@@ -1,0 +1,11 @@
+{
+  "name": "site-maison-exemple",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "site-maison-exemple" }],
+  "r2_buckets": [{ "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "site-maison-exemple-opennext-cache" }],
+  // Domaine du client, à activer à la mise en ligne (checklist du cadrage) :
+  // "routes": [{ "pattern": "maison-exemple.fr", "custom_domain": true }]
+}

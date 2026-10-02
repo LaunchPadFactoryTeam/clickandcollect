@@ -36,13 +36,13 @@ export function parseSlot(slot: string): [number, number] {
   return [h1 * 60 + m1, h2 * 60 + m2];
 }
 
-const couleur = z
-  .string()
-  .regex(HEX, { error: "Couleur hexadécimale attendue (#RRGGBB)" })
-  .transform(normalizeHex);
+const couleur = z.string().regex(HEX, { error: "Couleur hexadécimale attendue (#RRGGBB)" }).transform(normalizeHex);
 
 const police = z.union([
-  z.string().min(1).transform((famille) => ({ famille, graisses: [400, 600] })),
+  z
+    .string()
+    .min(1)
+    .transform((famille) => ({ famille, graisses: [400, 600] })),
   z.strictObject({
     famille: z.string().min(1),
     graisses: z
@@ -56,21 +56,25 @@ const police = z.union([
 const creneau = z
   .string()
   .regex(SLOT, { error: "Format attendu HH:MM-HH:MM" })
-  .refine((s) => {
-    const [debut, fin] = parseSlot(s);
-    return debut < fin;
-  }, { error: "Le début du créneau doit précéder sa fin" });
+  .refine(
+    (s) => {
+      const [debut, fin] = parseSlot(s);
+      return debut < fin;
+    },
+    { error: "Le début du créneau doit précéder sa fin" },
+  );
 
-const joursCreneaux = z
-  .array(creneau)
-  .superRefine((slots, ctx) => {
-    const ranges = slots.filter((s) => SLOT.test(s)).map(parseSlot).sort((a, b) => a[0] - b[0]);
-    for (let i = 1; i < ranges.length; i++) {
-      if (ranges[i]![0] < ranges[i - 1]![1]) {
-        ctx.addIssue({ code: "custom", message: "Deux créneaux du même jour se chevauchent" });
-      }
+const joursCreneaux = z.array(creneau).superRefine((slots, ctx) => {
+  const ranges = slots
+    .filter((s) => SLOT.test(s))
+    .map(parseSlot)
+    .sort((a, b) => a[0] - b[0]);
+  for (let i = 1; i < ranges.length; i++) {
+    if (ranges[i]![0] < ranges[i - 1]![1]) {
+      ctx.addIssue({ code: "custom", message: "Deux créneaux du même jour se chevauchent" });
     }
-  });
+  }
+});
 
 export const configSchema = z.strictObject({
   boutique: z.strictObject({
@@ -107,7 +111,10 @@ export const configSchema = z.strictObject({
   }),
   paiement: z.strictObject({
     psp: z.literal("stripe"),
-    stripe_compte_connecte: z.string().regex(/^acct_\w+$/).optional(),
+    stripe_compte_connecte: z
+      .string()
+      .regex(/^acct_\w+$/)
+      .optional(),
   }),
   features: z
     .strictObject({

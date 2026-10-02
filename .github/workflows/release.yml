@@ -1,0 +1,32 @@
+name: Publication du core
+
+# Publie tous les paquets @lp/* à la version du core sur le registre npm privé (GitHub Packages)
+# quand une étiquette vX.Y.Z est poussée. Les repos clients épinglent cette version.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://npm.pkg.github.com
+          scope: "@lp"
+      - run: pnpm install --frozen-lockfile
+      - name: L'étiquette correspond à la version du core
+        run: test "v$(node -p "require('./package.json').version")" = "${GITHUB_REF_NAME}"
+      - run: pnpm versions:check
+      - run: pnpm lint && pnpm typecheck && pnpm test
+      - run: pnpm -r --filter "./packages/*" --filter "./apps/site" --filter "./tools/client-lint" publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

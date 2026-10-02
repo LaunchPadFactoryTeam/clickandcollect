@@ -1,0 +1,16 @@
+node_modules
+pnpm-lock.yaml
+dist
+.next
+.open-next
+.wrangler
+project
+chats
+README.md
+*.woff2
+generated
+public/theme
+test-results
+playwright-report
+packages/db/supabase/config.toml
+.turbo

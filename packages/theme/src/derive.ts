@@ -91,7 +91,9 @@ export function derivePalette(colors: BrandColors): DerivedPalette {
   const surface = dark ? hex(b.l + 0.04, b.c, b.h) : hex(b.l + 0.04, b.c * 0.5, b.h);
   const raise = dark ? hex(b.l + 0.08, b.c, b.h) : surface;
   const warmHue = b.c > 0.005 ? b.h : p.h;
-  const warm = dark ? hex(b.l + 0.06, Math.max(b.c * 1.8, 0.015), warmHue) : hex(b.l - 0.035, Math.max(b.c * 1.8, 0.015), warmHue);
+  const warm = dark
+    ? hex(b.l + 0.06, Math.max(b.c * 1.8, 0.015), warmHue)
+    : hex(b.l - 0.035, Math.max(b.c * 1.8, 0.015), warmHue);
   const backgrounds = [bg, surface, raise, warm];
 
   // Encre : teinte du fond (ou du primaire si le fond est neutre), presque neutre,
@@ -124,7 +126,9 @@ export function derivePalette(colors: BrandColors): DerivedPalette {
   const onPrimary =
     contrastRatio(best, primary) >= MIN_TEXT
       ? best
-      : contrastRatio(WHITE, primary) >= contrastRatio(BLACK, primary) ? WHITE : BLACK;
+      : contrastRatio(WHITE, primary) >= contrastRatio(BLACK, primary)
+        ? WHITE
+        : BLACK;
   const accent = colors.secondaire.toUpperCase();
   const danger = dark ? DANGER_DARK : DANGER_LIGHT;
 

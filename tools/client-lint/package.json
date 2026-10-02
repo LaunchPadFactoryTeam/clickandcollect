@@ -1,0 +1,20 @@
+{
+  "name": "@lp/client-lint",
+  "version": "1.0.0-alpha.1",
+  "description": "Refuse tout code métier dans un repo client (règle d'or du cadrage)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "lp-client-lint": "./bin/lp-client-lint.mjs"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "tsx": "^4.23.15"
+  }
+}

@@ -2,3 +2,9 @@ node_modules/
 dist/
 *.log
 .DS_Store
+.turbo/
+.wrangler/
+.open-next/
+.next/
+test-results/
+playwright-report/

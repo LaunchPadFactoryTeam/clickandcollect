@@ -1,0 +1,14 @@
+{
+  "name": "@lp/rgpd",
+  "version": "1.0.0-alpha.1",
+  "description": "Hachage HMAC, consentements, export, effacement, conservation (lot 8)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  }
+}

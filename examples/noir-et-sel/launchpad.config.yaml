@@ -17,9 +17,9 @@ retrait:
   delai_preparation_heures: 3
   creneaux:
     mercredi: ["11:00-13:00", "17:00-20:00"]
-    jeudi:    ["11:00-13:00", "17:00-20:00"]
+    jeudi: ["11:00-13:00", "17:00-20:00"]
     vendredi: ["11:00-13:00", "17:00-20:00"]
-    samedi:   ["10:00-13:00", "16:00-19:00"]
+    samedi: ["10:00-13:00", "16:00-19:00"]
 paiement:
   psp: "stripe"
 features:

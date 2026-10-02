@@ -1,0 +1,17 @@
+{
+  "name": "@lp/db",
+  "version": "1.0.0-alpha.1",
+  "description": "Migrations SQL, politiques RLS, types et clients Supabase (lot 2)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "supabase": "^2.119.0"
+  }
+}

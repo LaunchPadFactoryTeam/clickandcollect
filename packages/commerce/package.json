@@ -1,0 +1,14 @@
+{
+  "name": "@lp/commerce",
+  "version": "1.0.0-alpha.1",
+  "description": "Panier, montants et TVA, créneaux, règles alcool (lot 4)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  }
+}

@@ -9,5 +9,11 @@
     "libphonenumber-js": "^1.13.14",
     "yaml": "^2.9.1",
     "zod": "^4.6.5"
-  }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "description": "Sch\u00e9ma et chargement du fichier de configuration client (lot 1)"
 }

@@ -40,13 +40,21 @@ describe("schéma de configuration", () => {
   });
 
   it("T1.2 signale boutique.nom absent avec son chemin", () => {
-    const issues = issuesOf(() => validateConfig(withChange((c) => delete c.boutique.nom), { now: NOW }));
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => delete c.boutique.nom),
+        { now: NOW },
+      ),
+    );
     expect(issues.map((i) => i.path)).toContain("boutique.nom");
   });
 
   it("T1.3 refuse une variante « D »", () => {
     const issues = issuesOf(() =>
-      validateConfig(withChange((c) => (c.design.variantes.accueil = "D")), { now: NOW }),
+      validateConfig(
+        withChange((c) => (c.design.variantes.accueil = "D")),
+        { now: NOW },
+      ),
     );
     expect(issues).toHaveLength(1);
     expect(issues[0]!.path).toBe("design.variantes.accueil");
@@ -55,23 +63,39 @@ describe("schéma de configuration", () => {
 
   it("T1.4 refuse un créneau dont le début suit la fin", () => {
     const issues = issuesOf(() =>
-      validateConfig(withChange((c) => (c.retrait.creneaux.mardi = ["19:00-16:00"])), { now: NOW }),
+      validateConfig(
+        withChange((c) => (c.retrait.creneaux.mardi = ["19:00-16:00"])),
+        { now: NOW },
+      ),
     );
     expect(issues[0]!.path).toBe("retrait.creneaux.mardi.0");
     expect(issues[0]!.message).toContain("début");
   });
 
   it("T1.5 refuse arrondis « carré »", () => {
-    const issues = issuesOf(() => validateConfig(withChange((c) => (c.design.arrondis = "carré")), { now: NOW }));
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => (c.design.arrondis = "carré")),
+        { now: NOW },
+      ),
+    );
     expect(issues[0]!.path).toBe("design.arrondis");
     expect(issues[0]!.message).toMatch(/net.*doux.*rond/);
   });
 
   it("refuse une couleur non hexadécimale et normalise #abc", () => {
-    expect(issuesOf(() => validateConfig(withChange((c) => (c.design.couleurs.fond = "beige")), { now: NOW }))[0]!.path).toBe(
-      "design.couleurs.fond",
+    expect(
+      issuesOf(() =>
+        validateConfig(
+          withChange((c) => (c.design.couleurs.fond = "beige")),
+          { now: NOW },
+        ),
+      )[0]!.path,
+    ).toBe("design.couleurs.fond");
+    const config = validateConfig(
+      withChange((c) => (c.design.couleurs.fond = "#fa0")),
+      { now: NOW },
     );
-    const config = validateConfig(withChange((c) => (c.design.couleurs.fond = "#fa0")), { now: NOW });
     expect(config.design.couleurs.fond).toBe("#FFAA00");
   });
 
@@ -87,28 +111,44 @@ describe("schéma de configuration", () => {
 
   it("refuse deux créneaux qui se chevauchent le même jour", () => {
     const issues = issuesOf(() =>
-      validateConfig(withChange((c) => (c.retrait.creneaux.mardi = ["10:00-12:00", "11:30-13:00"])), { now: NOW }),
+      validateConfig(
+        withChange((c) => (c.retrait.creneaux.mardi = ["10:00-12:00", "11:30-13:00"])),
+        { now: NOW },
+      ),
     );
     expect(issues[0]!.path).toBe("retrait.creneaux.mardi");
   });
 
   it("refuse une clé inconnue (faute de frappe)", () => {
-    const issues = issuesOf(() => validateConfig(withChange((c) => (c.features.alcol = true)), { now: NOW }));
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => (c.features.alcol = true)),
+        { now: NOW },
+      ),
+    );
     expect(issues[0]!.path).toBe("features");
   });
 
   it("refuse un logo qui n'est pas un SVG", () => {
-    const issues = issuesOf(() => validateConfig(withChange((c) => (c.design.logo = "./logo.png")), { now: NOW }));
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => (c.design.logo = "./logo.png")),
+        { now: NOW },
+      ),
+    );
     expect(issues[0]!.path).toBe("design.logo");
   });
 
   it("regroupe toutes les erreurs dans un seul message lisible", () => {
     const error = (() => {
       try {
-        validateConfig(withChange((c) => {
-          delete c.boutique.nom;
-          c.design.arrondis = "carré";
-        }), { now: NOW, source: "launchpad.config.yaml" });
+        validateConfig(
+          withChange((c) => {
+            delete c.boutique.nom;
+            c.design.arrondis = "carré";
+          }),
+          { now: NOW, source: "launchpad.config.yaml" },
+        );
       } catch (e) {
         return e as ConfigError;
       }
@@ -123,22 +163,33 @@ describe("schéma de configuration", () => {
 describe("téléphone", () => {
   it("T1.13 normalise « 04 67 00 00 00 » en E.164", () => {
     expect(toE164("04 67 00 00 00")).toBe("+33467000000");
-    expect(validateConfig(withChange((c) => (c.boutique.telephone = "04 67 00 00 00")), { now: NOW }).boutique.telephone).toBe(
-      "+33467000000",
-    );
+    expect(
+      validateConfig(
+        withChange((c) => (c.boutique.telephone = "04 67 00 00 00")),
+        { now: NOW },
+      ).boutique.telephone,
+    ).toBe("+33467000000");
   });
 
   it("refuse un numéro non convertible", () => {
     expect(toE164("12")).toBeNull();
-    expect(issuesOf(() => validateConfig(withChange((c) => (c.boutique.telephone = "12")), { now: NOW }))[0]!.path).toBe(
-      "boutique.telephone",
-    );
+    expect(
+      issuesOf(() =>
+        validateConfig(
+          withChange((c) => (c.boutique.telephone = "12")),
+          { now: NOW },
+        ),
+      )[0]!.path,
+    ).toBe("boutique.telephone");
   });
 });
 
 describe("contrôles croisés", () => {
   it("T1.14 refuse un produit alcoolisé quand features.alcool est faux", () => {
-    const config = validateConfig(withChange((c) => (c.features.alcool = false)), { now: NOW });
+    const config = validateConfig(
+      withChange((c) => (c.features.alcool = false)),
+      { now: NOW },
+    );
     const issues = issuesOf(() =>
       checkAlcoholFeature(config, [
         { name: "Miel de châtaignier", isAlcohol: false },
@@ -163,7 +214,12 @@ describe("contrôles croisés", () => {
   it("exige au moins un créneau dans les 14 prochains jours", () => {
     const config = validateConfig(cadrageExample(), { now: NOW });
     expect(openDays(config, NOW)).toEqual([
-      "2026-10-03", "2026-10-06", "2026-10-07", "2026-10-10", "2026-10-13", "2026-10-14",
+      "2026-10-03",
+      "2026-10-06",
+      "2026-10-07",
+      "2026-10-10",
+      "2026-10-13",
+      "2026-10-14",
     ]);
     const allClosed = withChange((c) => (c.retrait.fermetures = openDays(config, NOW)));
     expect(issuesOf(() => validateConfig(allClosed, { now: NOW }))[0]!.path).toBe("retrait.creneaux");

@@ -1,0 +1,38 @@
+name: Prévisualisation
+
+# Déploie le site de démonstration sur un Worker de prévisualisation pour chaque pull request,
+# et en production de démo à chaque fusion sur main.
+# Secrets requis : CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID ; bucket R2 lp-demo-opennext-cache créé une fois.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo run build:worker --filter=@lp/site
+      - name: Version de prévisualisation (pull request)
+        if: github.event_name == 'pull_request'
+        working-directory: apps/site
+        run: pnpm exec opennextjs-cloudflare upload -- --preview-alias pr-${{ github.event.number }}
+      - name: Déploiement (main)
+        if: github.event_name == 'push'
+        working-directory: apps/site
+        run: pnpm exec opennextjs-cloudflare deploy

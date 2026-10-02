@@ -23,7 +23,7 @@ const deltaE = differenceCiede2000();
 function randomHex(seed: number): string {
   // Générateur déterministe : les tests restent reproductibles.
   let x = seed * 2654435761;
-  const next = () => ((x = (x * 1103515245 + 12345) >>> 0) & 0xff);
+  const next = () => (x = (x * 1103515245 + 12345) >>> 0) & 0xff;
   return `#${[next(), next(), next()].map((n) => n.toString(16).padStart(2, "0")).join("")}`.toUpperCase();
 }
 
@@ -59,9 +59,9 @@ describe("dérivation des jetons", () => {
   });
 
   it("T1.10 --c-on-primary : blanc sur #2F4A3A, sombre sur #F2F0ED", () => {
-    expect(derivePalette({ primaire: "#2F4A3A", secondaire: "#B08D57", fond: "#FAF8F4" }).tokens["--c-on-primary"]).toBe(
-      "#FFFFFF",
-    );
+    expect(
+      derivePalette({ primaire: "#2F4A3A", secondaire: "#B08D57", fond: "#FAF8F4" }).tokens["--c-on-primary"],
+    ).toBe("#FFFFFF");
     const dark = derivePalette({ primaire: "#F2F0ED", secondaire: "#C2565C", fond: "#121110" });
     expect(isDarkBackground(dark.tokens["--c-on-primary"])).toBe(true);
     expect(contrastRatio(dark.tokens["--c-on-primary"], "#F2F0ED")).toBeGreaterThanOrEqual(4.5);
@@ -69,10 +69,16 @@ describe("dérivation des jetons", () => {
 
   it("T1.11 --c-ink-muted ≥ 4,5 sur fond et surface pour 10 chartes aléatoires", () => {
     for (let seed = 1; seed <= 10; seed++) {
-      const colors: BrandColors = { fond: randomHex(seed), primaire: randomHex(seed + 100), secondaire: randomHex(seed + 200) };
+      const colors: BrandColors = {
+        fond: randomHex(seed),
+        primaire: randomHex(seed + 100),
+        secondaire: randomHex(seed + 200),
+      };
       const { tokens } = derivePalette(colors);
       for (const back of ["--c-bg", "--c-surface", "--c-raise", "--c-warm"] as const) {
-        expect(contrastRatio(tokens["--c-ink-muted"], tokens[back]), `${colors.fond} ${back}`).toBeGreaterThanOrEqual(4.5);
+        expect(contrastRatio(tokens["--c-ink-muted"], tokens[back]), `${colors.fond} ${back}`).toBeGreaterThanOrEqual(
+          4.5,
+        );
         expect(contrastRatio(tokens["--c-ink"], tokens[back]), `${colors.fond} ${back}`).toBeGreaterThanOrEqual(4.5);
       }
     }
@@ -93,11 +99,24 @@ describe("dérivation des jetons", () => {
       ],
       [
         { primaire: "#F2F0ED", secondaire: "#C2565C", fond: "#121110" },
-        { "--c-surface": "#1C1B19", "--c-raise": "#272522", "--c-ink": "#F2F0ED", "--c-ink-muted": "#A09B93", "--c-line": "#322F2B", "--c-on-primary": "#121110" },
+        {
+          "--c-surface": "#1C1B19",
+          "--c-raise": "#272522",
+          "--c-ink": "#F2F0ED",
+          "--c-ink-muted": "#A09B93",
+          "--c-line": "#322F2B",
+          "--c-on-primary": "#121110",
+        },
       ],
       [
         { primaire: "#A8572C", secondaire: "#5C6B42", fond: "#FDF6EC" },
-        { "--c-surface": "#FFFFFF", "--c-warm": "#F6EBDA", "--c-ink": "#33291F", "--c-ink-muted": "#73644F", "--c-line": "#E7D9C4" },
+        {
+          "--c-surface": "#FFFFFF",
+          "--c-warm": "#F6EBDA",
+          "--c-ink": "#33291F",
+          "--c-ink-muted": "#73644F",
+          "--c-line": "#E7D9C4",
+        },
       ],
     ];
     for (const [colors, expected] of cases) {

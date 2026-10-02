@@ -6,13 +6,20 @@
     ".": "./src/index.ts"
   },
   "bin": {
-    "lp-theme": "./src/cli.ts"
+    "lp-theme": "./bin/lp-theme.mjs"
   },
   "dependencies": {
     "@lp/config": "workspace:*",
-    "culori": "^4.0.2"
+    "culori": "^4.0.2",
+    "tsx": "^4.23.15"
   },
   "devDependencies": {
     "@types/culori": "^4.0.1"
-  }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "description": "Dérivation des jetons, contrôle des contrastes, génération du CSS (lot 1)"
 }

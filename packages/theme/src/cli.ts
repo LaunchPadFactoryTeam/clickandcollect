@@ -1,8 +1,9 @@
-#!/usr/bin/env -S npx tsx
 /**
- * lp-theme build <dossier-du-site> [--out <dossier>]
+ * lp-theme build <dossier-du-site> [--out <dossier>] [--config-out <fichier.json>]
  * Valide la configuration, dérive le thème et écrit theme.css, tokens.json,
  * preview.html et les polices dans <dossier-du-site>/dist/theme (par défaut).
+ * --config-out écrit la configuration validée en JSON : l'application l'importe au build,
+ * car un Worker Cloudflare n'a pas de système de fichiers à l'exécution.
  */
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -18,11 +19,13 @@ const pkg = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url))
 function main(argv: string[]): number {
   const [command, target, ...rest] = argv;
   if (command !== "build" || !target) {
-    console.error("Usage : lp-theme build <dossier-du-site> [--out <dossier>]");
+    console.error("Usage : lp-theme build <dossier-du-site> [--out <dossier>] [--config-out <fichier.json>]");
     return 2;
   }
   const outFlag = rest.indexOf("--out");
   const outDir = resolve(outFlag >= 0 && rest[outFlag + 1] ? rest[outFlag + 1]! : join(target, "dist/theme"));
+  const configFlag = rest.indexOf("--config-out");
+  const configOut = configFlag >= 0 && rest[configFlag + 1] ? resolve(rest[configFlag + 1]!) : undefined;
 
   try {
     const loaded = loadConfig(target, { coreVersion: pkg.version });
@@ -30,8 +33,15 @@ function main(argv: string[]): number {
     mkdirSync(join(outDir, "fonts"), { recursive: true });
     for (const font of loaded.fonts) copyFileSync(font.path, join(outDir, "fonts", font.fileName));
     writeFileSync(join(outDir, "theme.css"), theme.css);
-    writeFileSync(join(outDir, "tokens.json"), JSON.stringify({ isDark: theme.palette.isDark, variables: theme.variables }, null, 2));
+    writeFileSync(
+      join(outDir, "tokens.json"),
+      JSON.stringify({ isDark: theme.palette.isDark, variables: theme.variables }, null, 2),
+    );
     writeFileSync(join(outDir, "preview.html"), previewHtml(loaded.config, theme));
+    if (configOut) {
+      mkdirSync(dirname(configOut), { recursive: true });
+      writeFileSync(configOut, JSON.stringify(loaded.config, null, 2));
+    }
     for (const w of theme.palette.warnings) {
       console.warn(`Avertissement : ${w.fg} sur ${w.bg} sous ${w.min}:1 (accent jamais seul porteur de sens)`);
     }

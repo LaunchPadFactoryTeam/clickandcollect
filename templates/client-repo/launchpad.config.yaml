@@ -1,0 +1,30 @@
+# Fichier de configuration du site : tout ce qui distingue ce site des autres tient ici.
+# Les secrets (compte Stripe connecté, clé de hachage, clés d'API) sont des variables d'environnement du Worker.
+boutique:
+  nom: "Maison Exemple"
+  domaine: "maison-exemple.fr"
+  adresse: "12 rue des Halles, 34000 Montpellier"
+  telephone: "04 00 00 00 00"
+  email_notifications: "commandes@maison-exemple.fr"
+design:
+  couleurs: { primaire: "#2F4A3A", secondaire: "#C8A24A", fond: "#FAF8F3" }
+  # Fichiers attendus : assets/fonts/playfair-display-400.woff2, -600.woff2, work-sans-400.woff2, -600.woff2
+  typographies: { titres: "Playfair Display", texte: "Work Sans" }
+  arrondis: "doux"
+  logo: "./assets/logo.svg"
+  variantes: { accueil: B, boutique: A, fiche_produit: A, epicerie: C, contact: A }
+retrait:
+  delai_preparation_heures: 2
+  creneaux:
+    mardi: ["10:00-12:00", "16:00-19:00"]
+    mercredi: ["10:00-12:00", "16:00-19:00"]
+    samedi: ["09:00-13:00", "15:00-19:00"]
+  fermetures: []
+paiement:
+  psp: "stripe"
+features:
+  alcool: true
+  codes_promo: false
+  message_cadeau: false
+  precommandes: false
+core_version: "1.0.0-alpha.1"
