@@ -8,10 +8,16 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
-    "lint": "eslint ."
+    "test": "vitest run",
+    "lint": "eslint .",
+    "types": "supabase gen types typescript --local --schema public > src/database.types.ts && prettier --write src/database.types.ts"
   },
   "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "pg": "^8.23.1",
     "supabase": "^2.119.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.2"
   }
 }

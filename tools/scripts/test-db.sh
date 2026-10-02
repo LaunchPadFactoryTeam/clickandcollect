@@ -20,6 +20,8 @@ if [[ -z "${PGHOST:-}" ]]; then
   "${RUN[@]}" "$PGBIN/initdb" -D "$WORK/data" -U postgres --auth=trust >/dev/null
   "${RUN[@]}" "$PGBIN/pg_ctl" -D "$WORK/data" -o "-p $PORT -k $WORK -c listen_addresses=''" -w start >/dev/null
   export PGHOST="$WORK" PGPORT="$PORT" PGUSER=postgres PGDATABASE=postgres
+  # Postgres simple : rôles et schéma auth de Supabase reproduits avant les migrations.
+  psql -q -v ON_ERROR_STOP=1 -f "$TESTS/support/supabase-shim.psql"
   for f in $(ls "$MIGRATIONS"/*.sql 2>/dev/null | sort); do
     psql -q -v ON_ERROR_STOP=1 -f "$f"
   done
@@ -27,3 +29,5 @@ fi
 
 psql -q -v ON_ERROR_STOP=1 -c "create extension if not exists pgtap;"
 pg_prove --ext .sql -r "$TESTS"
+# Numérotation concurrente : plusieurs connexions simultanées, hors de portée de pgTAP.
+node "$ROOT/packages/db/test/concurrency.mjs"

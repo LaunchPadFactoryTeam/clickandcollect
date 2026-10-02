@@ -1,0 +1,14 @@
+{
+  "name": "@launchpadfactoryteam/content",
+  "version": "1.0.0-alpha.1",
+  "description": "Schémas Sanity du catalogue et des contenus, requête catalogue, règles de publication (lot 2)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  }
+}
