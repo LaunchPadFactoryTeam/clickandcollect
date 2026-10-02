@@ -49,7 +49,7 @@ export function ProductCard({
           <p className="card__format">
             {product.format} · <span className="price">{formatPrice(product.priceTtcCents)}</span>
           </p>
-          <AddButton product={product} className="card__add" />
+          <AddButton product={product} shop={site.config.boutique.domaine} className="card__add" />
         </div>
       </article>
     );
@@ -63,7 +63,7 @@ export function ProductCard({
         <p className="card__format">{product.format}</p>
         <div className="card__buy">
           <span className="price card__price">{formatPrice(product.priceTtcCents)}</span>
-          <AddButton product={product} className="card__add" />
+          <AddButton product={product} shop={site.config.boutique.domaine} className="card__add" />
         </div>
       </div>
     </article>

@@ -1,4 +1,4 @@
-/** @launchpadfactoryteam/ui — composants partagés et variantes A, B, C des pages (lot 3). Styles : styles/*.css. */
+/** @launchpadfactoryteam/ui — composants partagés, variantes A, B, C des pages et îlots panier (lots 3 et 4). Styles : styles/*.css. */
 export {
   AddButton,
   CategoryFilter,
@@ -23,7 +23,10 @@ export {
 export { Footer, Header, LEGAL_LINKS, navLabel, PageShell, type Section } from "./chrome.tsx";
 export { ProductCard, ProductList } from "./pages/cards.tsx";
 export { ContactFacts, PickupFacts } from "./pages/facts.tsx";
+export { cartProducts, Steps } from "./pages/cart.tsx";
+export { CartView, type CartProduct, type CartTexts } from "./client/CartView.tsx";
 export {
+  CartPage,
   ContactPage,
   HomePage,
   PAGES,

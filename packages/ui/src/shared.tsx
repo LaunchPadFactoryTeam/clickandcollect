@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { ClientConfig } from "@launchpadfactoryteam/config";
 import type { CatalogProduct, ContentSnapshot } from "@launchpadfactoryteam/content";
 import { jsonLdScript } from "@launchpadfactoryteam/seo";
+import { AddToCart } from "./client/AddToCart.tsx";
 
 export type Variant = "A" | "B" | "C";
 
@@ -11,15 +12,7 @@ export interface Site {
   content: ContentSnapshot;
 }
 
-/** 1250 → « 12,50 € » (espace insécable avant l'euro). */
-export function formatPrice(cents: number): string {
-  return `${(cents / 100).toFixed(2).replace(".", ",")}\u00a0€`;
-}
-
-/** 5.5 → « 5,5 % ». */
-export function formatVat(rate: number): string {
-  return `${String(rate).replace(".", ",")}\u00a0%`;
-}
+export { formatPrice, formatVat } from "./format.ts";
 
 export const productHref = (p: Pick<CatalogProduct, "slug">) => `/produits/${p.slug}`;
 export const categoryHref = (slug?: string) => (slug ? `/boutique/${slug}` : "/boutique");
@@ -84,26 +77,28 @@ export function Placeholder({ ratio, className }: { ratio?: string; className?: 
   );
 }
 
-/** Bouton d'ajout au panier ; désactivé et libellé « Indisponible » pour un produit coupé. Le panier arrive au lot 4. */
+/** Bouton d'ajout au panier (îlot client) ; désactivé et libellé « Indisponible » pour un produit coupé. */
 export function AddButton({
   product,
+  shop,
   className,
   label = "Ajouter",
 }: {
   product: CatalogProduct;
+  /** Domaine de la boutique : le panier est rangé sous une clé qui lui est propre. */
+  shop: string;
   className: string;
   label?: string;
 }) {
   return (
-    <button
-      type="button"
-      className={`btn ${className}`}
-      data-add-to-cart={product.id}
-      disabled={!product.available}
-      aria-label={product.available ? `${label} : ${product.name}` : `${product.name} indisponible`}
-    >
-      {product.available ? label : "Indisponible"}
-    </button>
+    <AddToCart
+      shop={shop}
+      productId={product.id}
+      productName={product.name}
+      available={product.available}
+      className={className}
+      label={label}
+    />
   );
 }
 

@@ -18,6 +18,7 @@
     "test:visual": "node scripts/captures.mjs"
   },
   "dependencies": {
+    "@launchpadfactoryteam/commerce": "workspace:*",
     "@launchpadfactoryteam/config": "workspace:*",
     "@launchpadfactoryteam/content": "workspace:*",
     "@launchpadfactoryteam/seo": "workspace:*",

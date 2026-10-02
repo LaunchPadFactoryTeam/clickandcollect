@@ -102,6 +102,8 @@ export const configSchema = z.strictObject({
       fiche_produit: z.enum(VARIANTES),
       epicerie: z.enum(VARIANTES),
       contact: z.enum(VARIANTES),
+      // Facultatif : à défaut, le panier prend la variante de la boutique.
+      panier: z.enum(VARIANTES).optional(),
     }),
   }),
   retrait: z.strictObject({

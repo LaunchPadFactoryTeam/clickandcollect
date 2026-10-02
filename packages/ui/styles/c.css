@@ -672,3 +672,118 @@
 .ftr--c .ftr__list a {
   color: var(--c-ink);
 }
+
+/* Panier (lot 4) */
+.hdr--c .hdr__cart {
+  padding: 11px 20px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--c-on-primary);
+  background: var(--c-primary);
+  border: 0;
+  border-radius: 999px;
+}
+.hdr--c .hdr__cart:hover,
+.hdr--c .hdr__cart[aria-current="page"] {
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+.cart-page--c {
+  max-width: 1040px;
+  padding-top: clamp(24px, 4vw, 48px);
+}
+.steps--c .steps__n {
+  width: 26px;
+  height: 26px;
+  font-size: 12.5px;
+}
+.site--c .c-cart-title {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(30px, 4.4vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.cart--c {
+  gap: 14px;
+}
+.cart--c .cart__lines {
+  margin-bottom: 14px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.cart--c .cart__line {
+  padding: 18px;
+}
+.cart--c .cart__line:last-child {
+  border-bottom: 0;
+}
+.cart--c .cart__thumb {
+  width: 68px;
+  border: 0;
+  border-radius: var(--radius-sm);
+}
+.cart--c .cart__thumb .ph {
+  background-color: var(--c-warm);
+}
+.cart--c .cart__name {
+  font-size: 17.5px;
+  font-weight: 600;
+}
+.cart--c .cart__qty {
+  gap: 8px;
+  padding: 3px;
+  background: var(--c-warm);
+  border-radius: 999px;
+}
+.cart--c .cart__step {
+  width: 40px;
+  height: 40px;
+  background: var(--c-surface);
+  border: 0;
+  border-radius: 50%;
+}
+.cart--c .cart__count {
+  font-weight: 600;
+}
+.cart--c .cart__slots,
+.cart--c .cart__summary {
+  padding: clamp(20px, 3vw, 28px);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+}
+.cart--c .cart__legend {
+  float: left;
+  width: 100%;
+  font-family: var(--f-display);
+  font-size: 20px;
+  font-weight: 600;
+}
+.cart--c .cart__where {
+  clear: both;
+  margin-top: 6px;
+}
+.cart--c .cart__summary-title {
+  font-family: var(--f-display);
+  font-size: 20px;
+  font-weight: 600;
+}
+.cart--c .cart__summary {
+  top: 150px;
+}
+.cart--c .cart__slot,
+.cart--c .cart__check--age {
+  border-radius: var(--radius-md);
+}
+.cart--c .cart__pay {
+  border-radius: 999px;
+}
+@media (max-width: 719px) {
+  /* Sur deux lignes (marque et panier, puis navigation), la pilule devient un bloc arrondi. */
+  .hdr--c .hdr__in::before {
+    border-radius: var(--radius-lg);
+  }
+}
