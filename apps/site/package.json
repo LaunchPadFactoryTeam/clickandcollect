@@ -4,29 +4,38 @@
   "description": "Application Next.js des sites clients, pilotée par la configuration ; la démo est ce site construit sur examples/maison-ferrand",
   "type": "module",
   "scripts": {
-    "theme": "lp-theme build ${LP_SITE_DIR:-../../examples/maison-ferrand} --out public/theme --config-out generated/site.json",
-    "dev": "pnpm theme && next dev",
-    "build": "pnpm theme && next build",
-    "build:worker": "opennextjs-cloudflare build",
+    "dev": "pnpm prepare:site && next dev",
+    "build": "pnpm prepare:site && next build",
+    "build:worker": "opennextjs-cloudflare build --skipNextBuild",
     "preview": "opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare deploy",
-    "typecheck": "pnpm -s theme > /dev/null && tsc --noEmit",
+    "typecheck": "pnpm -s prepare:site > /dev/null && tsc --noEmit",
     "lint": "eslint .",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prepare:site": "lp-theme build ${LP_SITE_DIR:-../../examples/maison-ferrand} --out public/theme --config-out generated/site.json && lp-content snapshot ${LP_SITE_DIR:-../../examples/maison-ferrand} --out generated/content.json",
+    "test": "vitest run",
+    "test:perf": "lhci autorun --config=lighthouserc.cjs",
+    "test:visual": "node scripts/captures.mjs"
   },
   "dependencies": {
     "@launchpadfactoryteam/config": "workspace:*",
+    "@launchpadfactoryteam/content": "workspace:*",
+    "@launchpadfactoryteam/seo": "workspace:*",
     "@launchpadfactoryteam/theme": "workspace:*",
+    "@launchpadfactoryteam/ui": "workspace:*",
     "next": "^16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tsx": "^4.23.15"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "^0.15.1",
     "@opennextjs/cloudflare": "^1.20.7",
     "@playwright/test": "^1.63.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "vitest": "^5.0.3",
     "wrangler": "^4.146.0"
   },
   "bin": {

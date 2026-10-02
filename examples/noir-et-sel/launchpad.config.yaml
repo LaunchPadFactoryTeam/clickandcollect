@@ -2,7 +2,7 @@
 boutique:
   nom: "Noir & Sel"
   domaine: "noiretsel.fr"
-  adresse: "41 rue Saint-Maur, 75011 Paris"
+  adresse: "84 rue Saint-Maur, 75011 Paris"
   telephone: "01 43 00 00 00"
   email_notifications: "commandes@noiretsel.fr"
 design:
@@ -14,12 +14,13 @@ design:
   logo: "./assets/logo.svg"
   variantes: { accueil: B, boutique: B, fiche_produit: B, epicerie: B, contact: B }
 retrait:
-  delai_preparation_heures: 3
+  delai_preparation_heures: 2
   creneaux:
-    mercredi: ["11:00-13:00", "17:00-20:00"]
-    jeudi: ["11:00-13:00", "17:00-20:00"]
-    vendredi: ["11:00-13:00", "17:00-20:00"]
-    samedi: ["10:00-13:00", "16:00-19:00"]
+    mardi: ["11:00-14:00", "16:00-20:00"]
+    mercredi: ["11:00-14:00", "16:00-20:00"]
+    jeudi: ["11:00-14:00", "16:00-20:00"]
+    vendredi: ["11:00-14:00", "16:00-20:00"]
+    samedi: ["11:00-14:00", "16:00-20:00"]
 paiement:
   psp: "stripe"
 features:

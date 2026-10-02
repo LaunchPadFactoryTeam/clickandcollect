@@ -5,7 +5,7 @@
  * --config-out écrit la configuration validée en JSON : l'application l'importe au build,
  * car un Worker Cloudflare n'a pas de système de fichiers à l'exécution.
  */
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ConfigError, loadConfig } from "@launchpadfactoryteam/config";
@@ -30,12 +30,22 @@ function main(argv: string[]): number {
   try {
     const loaded = loadConfig(target, { coreVersion: pkg.version });
     const theme = buildThemeFromLoaded(loaded, { fontBaseUrl: "fonts/" });
+    // Repartir d'un dossier vide : aucune police d'un autre site ne doit partir dans les assets.
+    rmSync(join(outDir, "fonts"), { recursive: true, force: true });
     mkdirSync(join(outDir, "fonts"), { recursive: true });
     for (const font of loaded.fonts) copyFileSync(font.path, join(outDir, "fonts", font.fileName));
     writeFileSync(join(outDir, "theme.css"), theme.css);
     writeFileSync(
       join(outDir, "tokens.json"),
-      JSON.stringify({ isDark: theme.palette.isDark, variables: theme.variables }, null, 2),
+      JSON.stringify(
+        {
+          isDark: theme.palette.isDark,
+          variables: theme.variables,
+          preload: theme.preload.map((f) => `fonts/${f.fileName}`),
+        },
+        null,
+        2,
+      ),
     );
     writeFileSync(join(outDir, "preview.html"), previewHtml(loaded.config, theme));
     if (configOut) {

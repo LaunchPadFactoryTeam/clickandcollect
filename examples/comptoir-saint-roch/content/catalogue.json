@@ -1,0 +1,212 @@
+[
+  {
+    "id": "miel",
+    "slug": "miel-de-chataignier",
+    "name": "Miel de châtaignier",
+    "category": {
+      "name": "Miels & confitures",
+      "slug": "miels-confitures"
+    },
+    "producer": "Rucher des Cévennes",
+    "format": "Pot 250 g",
+    "priceTtcCents": 1250,
+    "vatRate": 5.5,
+    "description": "Récolté en lisière de forêt à 700 mètres d'altitude, dans l'Hérault. Un miel sombre, franchement tannique, qui tient tête à un fromage à pâte persillée.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Miel de châtaignier de France",
+      "ingredients": "Miel de châtaignier 100 %.",
+      "allergens": [],
+      "netQuantity": "250 g",
+      "storage": "À l'abri de la lumière, entre 15 et 20 °C.",
+      "manufacturer": "Rucher des Cévennes, 34190 Ganges, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "terrine",
+    "slug": "terrine-de-canard-aux-figues",
+    "name": "Terrine de canard aux figues",
+    "category": {
+      "name": "Conserves",
+      "slug": "conserves"
+    },
+    "producer": "Ferme de Lacaune",
+    "format": "Bocal 180 g",
+    "priceTtcCents": 980,
+    "vatRate": 5.5,
+    "description": "Canards élevés en plein air dans le Tarn, figues sèches de la vallée. Préparée en petites séries, à tartiner épais sur du pain grillé.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Terrine de canard aux figues",
+      "ingredients": "Viande de canard 68 %, gorge de porc, figues sèches 7 %, œufs, sel, poivre, armagnac.",
+      "allergens": ["œufs"],
+      "netQuantity": "180 g",
+      "storage": "Avant ouverture : température ambiante. Après ouverture : 3 jours au réfrigérateur.",
+      "manufacturer": "Ferme de Lacaune, 81230 Lacaune, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "huile",
+    "slug": "huile-d-olive-lucques",
+    "name": "Huile d'olive Lucques",
+    "category": {
+      "name": "Huiles & vinaigres",
+      "slug": "huiles-vinaigres"
+    },
+    "producer": "Moulin de Saint-Jean",
+    "format": "Bidon 500 ml",
+    "priceTtcCents": 1800,
+    "vatRate": 5.5,
+    "description": "Première pression à froid d'olives Lucques récoltées vertes. Végétale, presque herbacée, elle se termine sur une amertume nette.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Huile d'olive vierge extra",
+      "ingredients": "Huile d'olive vierge extra 100 %, variété Lucques.",
+      "allergens": [],
+      "netQuantity": "500 ml",
+      "storage": "À l'abri de la lumière et de la chaleur. À consommer dans les 6 mois après ouverture.",
+      "manufacturer": "Moulin de Saint-Jean, 34725 Saint-Jean-de-Fos, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "vin",
+    "slug": "vin-orange-domaine-lasserre",
+    "name": "Vin orange, Domaine Lasserre",
+    "category": {
+      "name": "Vins",
+      "slug": "vins"
+    },
+    "producer": "Domaine Lasserre",
+    "format": "Bouteille 75 cl",
+    "priceTtcCents": 2200,
+    "vatRate": 20,
+    "description": "Macération de quinze jours sur grenache blanc. Un vin tannique et sec, à servir frais sur une charcuterie ou un fromage affiné.",
+    "isAlcohol": true,
+    "abv": 12.5,
+    "inco": {
+      "denomination": "Vin de France blanc de macération",
+      "ingredients": "Raisin. Contient des sulfites.",
+      "allergens": ["sulfites"],
+      "netQuantity": "75 cl",
+      "storage": "Couché, à l'abri de la lumière, entre 12 et 16 °C.",
+      "manufacturer": "Domaine Lasserre, 34800 Clermont-l'Hérault, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "tomme",
+    "slug": "tomme-du-larzac-affinee",
+    "name": "Tomme du Larzac affinée",
+    "category": {
+      "name": "Fromages",
+      "slug": "fromages"
+    },
+    "producer": "Bergerie du Caylar",
+    "format": "Portion 300 g",
+    "priceTtcCents": 1120,
+    "vatRate": 5.5,
+    "description": "Lait cru de brebis, affinage de quatre mois en cave naturelle. Une pâte souple, un goût de noisette qui s'allonge.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Tomme de brebis au lait cru",
+      "ingredients": "Lait cru de brebis, sel, ferments lactiques, présure.",
+      "allergens": ["lait"],
+      "netQuantity": "300 g",
+      "storage": "Entre 4 et 8 °C. Sortir 30 minutes avant dégustation.",
+      "manufacturer": "Bergerie du Caylar, 34520 Le Caylar, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "tapenade",
+    "slug": "tapenade-d-olives-noires",
+    "name": "Tapenade d'olives noires",
+    "category": {
+      "name": "Conserves",
+      "slug": "conserves"
+    },
+    "producer": "Moulin de Saint-Jean",
+    "format": "Bocal 110 g",
+    "priceTtcCents": 640,
+    "vatRate": 5.5,
+    "description": "Olives noires de Nyons, câpres, anchois, un filet d'huile. Rien d'autre, et surtout pas de conservateur.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Tapenade d'olives noires",
+      "ingredients": "Olives noires 72 %, huile d'olive vierge extra, câpres, anchois, ail.",
+      "allergens": ["poissons"],
+      "netQuantity": "110 g",
+      "storage": "Après ouverture : 10 jours au réfrigérateur.",
+      "manufacturer": "Moulin de Saint-Jean, 34725 Saint-Jean-de-Fos, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "confiture",
+    "slug": "confiture-d-abricot-du-roussillon",
+    "name": "Confiture d'abricot du Roussillon",
+    "category": {
+      "name": "Miels & confitures",
+      "slug": "miels-confitures"
+    },
+    "producer": "Vergers de Bélesta",
+    "format": "Pot 370 g",
+    "priceTtcCents": 790,
+    "vatRate": 5.5,
+    "description": "Abricots rouges du Roussillon cuits au chaudron, 60 % de fruits. Peu sucrée, légèrement acidulée.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Confiture extra d'abricot",
+      "ingredients": "Abricots 60 %, sucre de canne, jus de citron, pectine de fruits.",
+      "allergens": [],
+      "netQuantity": "370 g",
+      "storage": "Après ouverture : au réfrigérateur, 3 semaines.",
+      "manufacturer": "Vergers de Bélesta, 66720 Bélesta, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  },
+  {
+    "id": "biscuit",
+    "slug": "croquants-aux-amandes",
+    "name": "Croquants aux amandes",
+    "category": {
+      "name": "Épicerie sucrée",
+      "slug": "epicerie-sucree"
+    },
+    "producer": "Biscuiterie Vialla",
+    "format": "Sachet 200 g",
+    "priceTtcCents": 850,
+    "vatRate": 5.5,
+    "description": "La recette de la maison Vialla depuis 1948 : amandes entières, blanc d'œuf, deux cuissons. Très secs, faits pour le café.",
+    "isAlcohol": false,
+    "inco": {
+      "denomination": "Biscuits secs aux amandes",
+      "ingredients": "Farine de blé, sucre, amandes 28 %, blancs d'œufs, miel.",
+      "allergens": ["gluten", "fruits à coque", "œufs"],
+      "mayContain": "noisettes",
+      "netQuantity": "200 g",
+      "storage": "À l'abri de l'humidité. À consommer dans le mois suivant l'ouverture.",
+      "manufacturer": "Biscuiterie Vialla, 34400 Lunel, France",
+      "origin": "France"
+    },
+    "reviewedAt": "2026-10-02T09:00:00Z",
+    "reviewedBy": "Claire Ferrand"
+  }
+]

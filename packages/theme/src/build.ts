@@ -1,6 +1,7 @@
 import type { ClientConfig, FontFile, LoadedConfig } from "@launchpadfactoryteam/config";
 import { formatRatio } from "./contrast.ts";
 import { generateCss, rootVariables, type CssOptions } from "./css.ts";
+import { readFontMetrics } from "./metrics.ts";
 import { derivePalette, type ContrastCheck, type ColorToken, type DerivedPalette } from "./derive.ts";
 
 /** Clé de configuration à l'origine de chaque jeton, pour orienter la correction. */
@@ -36,7 +37,7 @@ export interface BuiltTheme {
   css: string;
   /** Toutes les variables CSS, pour les emails et les tests. */
   variables: Record<string, string>;
-  /** Polices de titre à précharger (seule police visible au-dessus de la ligne de flottaison). */
+  /** Polices visibles au-dessus de la ligne de flottaison, à précharger : titre et texte courant, première graisse de chacun. */
   preload: FontFile[];
 }
 
@@ -45,15 +46,26 @@ export function buildTheme(config: ClientConfig, fonts: readonly FontFile[], opt
   const palette = derivePalette(config.design.couleurs);
   const failures = palette.checks.filter((c) => !c.ok);
   if (failures.length) throw new ThemeError(failures, palette, config.boutique.nom);
-  const headingWeight = config.design.typographies.titres.graisses[0];
+  const { titres, texte } = config.design.typographies;
   return {
     palette,
     css: generateCss(config, palette, fonts, options),
     variables: rootVariables(config, palette.tokens),
-    preload: fonts.filter((f) => f.role === "titres" && f.graisse === headingWeight),
+    preload: fonts.filter(
+      (f) =>
+        (f.role === "titres" && f.graisse === titres.graisses[0]) ||
+        (f.role === "texte" && f.graisse === texte.graisses[0]),
+    ),
   };
 }
 
 export function buildThemeFromLoaded(loaded: LoadedConfig, options: CssOptions = {}): BuiltTheme {
-  return buildTheme(loaded.config, loaded.fonts, options);
+  const metrics: CssOptions["metrics"] = {};
+  for (const role of ["titres", "texte"] as const) {
+    const first = loaded.config.design.typographies[role].graisses[0];
+    const file = loaded.fonts.find((f) => f.role === role && f.graisse === first);
+    const m = file && readFontMetrics(file.path);
+    if (m) metrics[role] = m;
+  }
+  return buildTheme(loaded.config, loaded.fonts, { metrics, ...options });
 }

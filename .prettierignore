@@ -15,3 +15,5 @@ README.md
 packages/db/supabase/config.toml
 .turbo
 .claude
+**/.lighthouseci*
+**/captures

@@ -15,5 +15,5 @@
     "test": "vitest run",
     "lint": "eslint ."
   },
-  "description": "Sch\u00e9ma et chargement du fichier de configuration client (lot 1)"
+  "description": "Schéma et chargement du fichier de configuration client (lot 1)"
 }

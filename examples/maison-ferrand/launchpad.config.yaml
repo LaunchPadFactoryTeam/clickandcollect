@@ -8,7 +8,7 @@ boutique:
 design:
   couleurs: { primaire: "#2F4A3A", secondaire: "#B08D57", fond: "#FAF8F4" }
   typographies:
-    titres: { famille: "Newsreader", graisses: [400, 500], categorie: serif }
+    titres: { famille: "Newsreader", graisses: [300, 400], categorie: serif }
     texte: { famille: "Work Sans", graisses: [400, 600] }
   arrondis: "net"
   logo: "./assets/logo.svg"

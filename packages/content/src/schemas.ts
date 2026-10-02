@@ -104,78 +104,81 @@ export const product = {
   ],
 } as const;
 
-export const page = {
-  name: "page",
-  title: "Page éditoriale",
+const field = (name: string, title: string, type = "string", extra: Record<string, unknown> = {}) => ({
+  name,
+  title,
+  type,
+  ...extra,
+});
+const figures = (name: string, title: string) =>
+  field(name, title, "array", {
+    of: [{ type: "object", fields: [field("value", "Valeur"), field("label", "Libellé")] }],
+  });
+
+/**
+ * Contenus éditoriaux : un document unique par site, de même forme que content/pages.json
+ * (voir siteContentSchema). Les trois templates lisent exactement ces champs.
+ */
+export const siteContent = {
+  name: "siteContent",
+  title: "Contenus du site",
   type: "document",
   fields: [
-    {
-      name: "key",
-      title: "Page",
-      type: "string",
-      options: { list: ["accueil", "epicerie", "contact"] },
-      validation: required,
-    },
-    { name: "title", title: "Titre", type: "string", validation: required },
-    { name: "lead", title: "Chapô", type: "text" },
-    { name: "body", title: "Texte", type: "array", of: [{ type: "block" }] },
-    {
-      name: "quote",
-      title: "Citation",
-      type: "object",
+    field("settings", "Réglages", "object", {
       fields: [
-        { name: "text", type: "text" },
-        { name: "author", type: "string" },
-      ],
-    },
-    {
-      name: "figures",
-      title: "Chiffres clés",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "value", type: "string" },
-            { name: "label", type: "string" },
+        field("tagline", "Accroche sous le nom"),
+        field("email", "Email de contact"),
+        field("openingHours", "Horaires d'ouverture", "array", {
+          of: [
+            {
+              type: "object",
+              fields: [
+                field("jours", "Jours", "array", { of: [{ type: "string" }] }),
+                field("plages", "Plages (HH:MM-HH:MM)", "array", { of: [{ type: "string" }] }),
+              ],
+            },
           ],
-        },
+        }),
+        field("googleBusinessUrl", "Fiche Google Business", "url"),
+        field("marketingConsentText", "Texte de la case marketing", "text"),
+        field("marketingConsentVersion", "Version du texte marketing"),
       ],
-    },
-    {
-      name: "images",
-      title: "Images",
-      type: "array",
-      of: [{ type: "image", fields: [{ name: "alt", type: "string" }] }],
-    },
+    }),
+    field("home", "Accueil", "object", {
+      fields: [
+        field("eyebrow", "Surtitre"),
+        field("title", "Titre"),
+        field("lead", "Chapô", "text"),
+        field("ctaShop", "Bouton vers la boutique"),
+        field("ctaStory", "Bouton vers l'histoire"),
+        field("featuredTitle", "Titre de la sélection"),
+        field("featuredProductIds", "Produits mis en avant", "array", { of: [{ type: "string" }] }),
+        figures("highlights", "Chiffres d'accroche (template C)"),
+        field("story", "Extrait de l'histoire", "object", {
+          fields: [
+            field("eyebrow", "Surtitre"),
+            field("quote", "Citation", "text"),
+            field("author", "Auteur"),
+            field("text", "Texte", "text"),
+            field("cta", "Bouton"),
+          ],
+        }),
+        field("pickupTitle", "Titre du bloc retrait"),
+      ],
+    }),
+    field("shop", "Boutique", "object", { fields: [field("title", "Titre"), field("lead", "Chapô", "text")] }),
+    field("story", "Notre histoire", "object", {
+      fields: [
+        field("eyebrow", "Surtitre"),
+        field("title", "Titre"),
+        field("paragraphs", "Paragraphes", "array", { of: [{ type: "text" }] }),
+        field("caption", "Légende de la photo"),
+        field("quote", "Citation", "object", { fields: [field("text", "Texte", "text"), field("author", "Auteur")] }),
+        figures("figures", "Chiffres clés"),
+      ],
+    }),
+    field("contact", "Contact", "object", { fields: [field("title", "Titre"), field("lead", "Chapô", "text")] }),
   ],
 } as const;
 
-export const settings = {
-  name: "settings",
-  title: "Réglages de la boutique",
-  type: "document",
-  fields: [
-    {
-      name: "openingHours",
-      title: "Horaires d'ouverture",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "days", type: "string" },
-            { name: "hours", type: "string" },
-          ],
-        },
-      ],
-    },
-    { name: "googleBusinessUrl", title: "Fiche Google Business", type: "url" },
-    { name: "legalName", title: "Raison sociale", type: "string" },
-    { name: "siret", title: "SIRET", type: "string" },
-    { name: "marketingConsentText", title: "Texte de la case marketing", type: "text", validation: required },
-    { name: "marketingConsentVersion", title: "Version du texte marketing", type: "string", validation: required },
-  ],
-} as const;
-
-export const schemaTypes = [category, product, page, settings];
+export const schemaTypes = [category, product, siteContent];
