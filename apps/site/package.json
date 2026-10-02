@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "test:e2e": "playwright test",
     "prepare:site": "lp-theme build ${LP_SITE_DIR:-../../examples/maison-ferrand} --out public/theme --config-out generated/site.json && lp-content snapshot ${LP_SITE_DIR:-../../examples/maison-ferrand} --out generated/content.json",
-    "test": "vitest run",
+    "test": "pnpm -s prepare:site > /dev/null && vitest run",
     "test:perf": "lhci autorun --config=lighthouserc.cjs",
     "test:visual": "node scripts/captures.mjs"
   },
@@ -21,6 +21,7 @@
     "@launchpadfactoryteam/commerce": "workspace:*",
     "@launchpadfactoryteam/config": "workspace:*",
     "@launchpadfactoryteam/content": "workspace:*",
+    "@launchpadfactoryteam/psp": "workspace:*",
     "@launchpadfactoryteam/seo": "workspace:*",
     "@launchpadfactoryteam/theme": "workspace:*",
     "@launchpadfactoryteam/ui": "workspace:*",

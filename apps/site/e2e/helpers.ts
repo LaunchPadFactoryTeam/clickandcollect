@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import type { Page } from "@playwright/test";
+import type { PickupConfig } from "@launchpadfactoryteam/commerce";
 import { readFileSync } from "node:fs";
 
 /** Configuration et contenus figés du site construit : les tests suivent l'exemple testé (A, B ou C). */
@@ -23,6 +24,7 @@ export const site = json("site.json") as {
   boutique: { nom: string; domaine: string };
   design: { variantes: { accueil: string } };
   features: { alcool: boolean };
+  retrait: PickupConfig;
 };
 
 export async function seriousViolations(page: Page) {

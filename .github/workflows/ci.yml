@@ -111,3 +111,36 @@ jobs:
             apps/site/.lighthouseci
             apps/site/captures
           if-no-files-found: ignore
+
+  tunnel:
+    name: tunnel de paiement
+    runs-on: ubuntu-latest
+    env:
+      E2E_TUNNEL: "1"
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      # Base locale avec la boutique de démonstration (seed) ; le site s'y connecte avec un jeton de site.
+      - run: supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
+        working-directory: packages/db
+      - name: Variables du Worker (faux fournisseur de paiement, base locale)
+        run: node tools/scripts/dev-vars.mjs
+      - name: Build du site de démonstration et du Worker
+        run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
+      - run: pnpm --filter @launchpadfactoryteam/site exec playwright install --with-deps chromium
+      - name: Tunnel complet de bout en bout (panier, paiement, webhook, confirmation)
+        run: pnpm --filter @launchpadfactoryteam/site test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: tunnel-playwright-report
+          path: apps/site/playwright-report

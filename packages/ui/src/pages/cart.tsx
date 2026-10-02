@@ -1,6 +1,8 @@
 import { splitAddress } from "@launchpadfactoryteam/seo";
 import { PageShell } from "../chrome.tsx";
 import { CartView, type CartProduct, type CartTexts } from "../client/CartView.tsx";
+import { CheckoutView } from "../client/CheckoutView.tsx";
+import { ConfirmationView } from "../client/ConfirmationView.tsx";
 import type { Site, Variant } from "../shared.tsx";
 
 /** Le strict nécessaire de chaque produit pour l'îlot panier (le reste du catalogue ne part pas au navigateur). */
@@ -82,3 +84,36 @@ function Cart({ site, variant }: { site: Site; variant: Variant }) {
 export const CartA = ({ site }: { site: Site }) => <Cart site={site} variant="A" />;
 export const CartB = ({ site }: { site: Site }) => <Cart site={site} variant="B" />;
 export const CartC = ({ site }: { site: Site }) => <Cart site={site} variant="C" />;
+
+/** Étape 2 : paiement (Stripe Checkout intégré, ou formulaire de test du faux fournisseur). */
+export function PaymentStep({ site, variant }: { site: Site; variant: Variant }) {
+  const v = variant.toLowerCase();
+  return (
+    <PageShell site={site} variant={variant} current="panier">
+      <section className={`cart-page cart-page--${v}`}>
+        <Steps variant={variant} current={2} />
+        <h1 className={`cart-page__title ${v}-cart-title`}>Paiement</h1>
+        <CheckoutView shop={site.config.boutique.domaine} variant={variant} products={cartProducts(site)} />
+      </section>
+    </PageShell>
+  );
+}
+
+/** Étape 3 : confirmation, une fois la commande enregistrée par le webhook. */
+export function ConfirmationStep({ site, variant }: { site: Site; variant: Variant }) {
+  const v = variant.toLowerCase();
+  const a = splitAddress(site.config.boutique.adresse);
+  return (
+    <PageShell site={site} variant={variant} current="panier">
+      <section className={`cart-page cart-page--${v}`}>
+        <Steps variant={variant} current={3} />
+        <h1 className={`cart-page__title ${v}-cart-title`}>Confirmation</h1>
+        <ConfirmationView
+          shop={site.config.boutique.domaine}
+          variant={variant}
+          where={`${site.config.boutique.nom}, ${a.street}, ${a.postalCode} ${a.city}`}
+        />
+      </section>
+    </PageShell>
+  );
+}

@@ -12,7 +12,7 @@ import {
   type PickupSlot,
 } from "@launchpadfactoryteam/commerce";
 import { formatPrice, formatVat } from "../format.ts";
-import { updateCart, useCart } from "./cart-store.ts";
+import { saveOrderChoice, updateCart, useCart } from "./cart-store.ts";
 
 /** Ce que la page panier reçoit de chaque produit : de quoi afficher une ligne et calculer les montants. */
 export interface CartProduct {
@@ -100,21 +100,15 @@ export function CartView({
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Étape 2 (paiement Stripe) : lot 5. Le choix est gardé pour la session de paiement.
+    // Le choix du créneau et des cases accompagne le panier vers l'étape 2 ; le serveur revérifie tout.
     const form = new FormData(e.currentTarget);
-    try {
-      window.sessionStorage.setItem(
-        `lp:commande:${shop}`,
-        JSON.stringify({
-          slotId: chosen?.id,
-          ageDeclared: form.get("majorite") === "on",
-          marketing: { accepted: form.get("marketing") === "on", version: marketing.version },
-        }),
-      );
-    } catch {
-      // Sans stockage de session, le choix sera simplement redemandé.
-    }
-    setMessage("Le paiement en ligne n'est pas encore ouvert : votre panier et votre créneau sont conservés.");
+    const saved = saveOrderChoice(shop, {
+      slotId: chosen!.id,
+      ageDeclared: form.get("majorite") === "on",
+      marketing: form.get("marketing") === "on",
+    });
+    if (saved) window.location.assign("/paiement");
+    else setMessage("Votre navigateur bloque le stockage local : impossible de poursuivre la commande sur ce site.");
   }
 
   return (

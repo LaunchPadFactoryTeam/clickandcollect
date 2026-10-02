@@ -8,3 +8,4 @@ playwright-report/
 generated/
 .lighthouseci*/
 captures/
+.dev.vars

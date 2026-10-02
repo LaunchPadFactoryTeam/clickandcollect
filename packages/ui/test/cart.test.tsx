@@ -164,7 +164,8 @@ describe("page panier", () => {
         v,
       ).toEqual([]);
     }
-  });
+    // Trois rendus passés à axe : plus que les 5 s par défaut quand toute la suite tourne en parallèle.
+  }, 30_000);
 });
 
 describe("variante du panier", () => {

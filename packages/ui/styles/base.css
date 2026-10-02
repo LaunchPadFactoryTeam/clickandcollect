@@ -729,3 +729,108 @@ a:hover {
   line-height: 1.55;
   color: var(--c-ink-muted);
 }
+
+/* Paiement et confirmation (lot 5) */
+.pay__frame {
+  min-height: 560px;
+}
+.pay__status {
+  min-height: 200px;
+  font-size: 15.5px;
+  color: var(--c-ink-muted);
+}
+.pay__error {
+  padding: 22px;
+  border: 1px solid var(--c-danger);
+  background: var(--c-surface);
+}
+.pay__error p {
+  margin: 0 0 12px;
+}
+.pay__error-title {
+  font-weight: 600;
+}
+.pay__lines {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+}
+.pay__lines li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pay__edit {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--c-ink);
+}
+.pay__fake {
+  display: grid;
+  gap: 10px;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px dashed var(--c-line);
+  background: var(--c-surface);
+}
+.pay__fake input[type="email"],
+.pay__fake input[type="tel"] {
+  min-height: 48px;
+  padding: 10px 14px;
+  font: inherit;
+  color: var(--c-ink);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+}
+.pay__fake label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.pay__fake .cart__check {
+  margin: 8px 0;
+  font-weight: 400;
+}
+.pay__badge {
+  justify-self: start;
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  font-size: 12.5px;
+  color: var(--c-bg);
+  background: var(--c-ink);
+}
+.confirm {
+  max-width: 640px;
+  min-height: 40vh;
+}
+.confirm__lead {
+  margin: 0 0 24px;
+  font-size: 19px;
+  line-height: 1.5;
+}
+.confirm__facts {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 24px;
+  padding: 22px;
+  border: 1px solid var(--c-line);
+  background: var(--c-surface);
+}
+.confirm__facts dt {
+  font-size: 13px;
+  color: var(--c-ink-muted);
+}
+.confirm__facts dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+}
+.confirm__note {
+  margin: 0 0 28px;
+  color: var(--c-ink-muted);
+}
+.cart--c .pay__fake,
+.confirm--c .confirm__facts {
+  border-radius: var(--radius-lg);
+}
