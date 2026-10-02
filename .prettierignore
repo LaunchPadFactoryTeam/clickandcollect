@@ -8,10 +8,10 @@ project
 chats
 README.md
 *.woff2
-generated
-public/theme
-test-results
-playwright-report
+**/generated
+**/public/theme
+**/test-results
+**/playwright-report
 packages/db/supabase/config.toml
 .turbo
 .claude
