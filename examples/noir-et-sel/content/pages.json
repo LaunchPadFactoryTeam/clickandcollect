@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "tagline": "Épicerie fine",
+    "email": "bonjour@noiretsel.fr",
+    "openingHours": [
+      { "jours": ["mardi", "mercredi", "jeudi", "vendredi", "samedi"], "plages": ["11:00-14:00", "16:00-20:00"] },
+      { "jours": ["dimanche"], "plages": ["10:00-14:00"] },
+      { "jours": ["lundi"], "plages": [] }
+    ],
+    "marketingConsentText": "Je souhaite recevoir les arrivages de Noir & Sel par email. Facultatif, sans incidence sur ma commande, désinscription en un clic.",
+    "marketingConsentVersion": "2026-10-02"
+  },
+  "home": {
+    "eyebrow": "Paris 11e — Retrait en boutique",
+    "title": "Une vitrine qui reste allumée.",
+    "lead": "Commandez ce soir, retirez demain matin. Dix-huit maisons, une sélection qui change chaque semaine.",
+    "ctaShop": "Voir le catalogue",
+    "ctaStory": "La maison",
+    "featuredTitle": "Arrivages de la semaine",
+    "featuredProductIds": ["tomme", "vin", "tapenade"],
+    "story": {
+      "eyebrow": "La maison",
+      "quote": "Nous achetons peu, souvent, et seulement à des gens que nous avons rencontrés.",
+      "author": "Noir & Sel",
+      "text": "Noir & Sel occupe depuis 2014 une ancienne charcuterie de la rue Saint-Maur. Dix-huit maisons référencées, aucune marque, aucun grossiste.",
+      "cta": "Lire"
+    },
+    "pickupTitle": "Retirer sa commande"
+  },
+  "shop": {
+    "title": "Catalogue",
+    "lead": "Vingt-quatre références en boutique aujourd'hui. Ce qui est affiché disponible part dès le prochain créneau."
+  },
+  "story": {
+    "eyebrow": "La maison",
+    "title": "Une charcuterie de 1908, rue Saint-Maur",
+    "paragraphs": [
+      "Le carrelage, le comptoir de marbre et les crochets du plafond sont d'origine. Nous avons repris les murs en 2014 sans rien changer d'autre que ce qu'ils contiennent.",
+      "Le principe est resté le même depuis : nous achetons peu, souvent, et seulement à des producteurs rencontrés sur place. Dix-huit maisons aujourd'hui, de la Corrèze à la Sicile. Aucune marque, aucun grossiste, aucun produit que nous ne saurions situer sur une carte.",
+      "Le click & collect est arrivé en 2024, parce que la boutique est petite et que le samedi matin il n'y tient pas quinze personnes. Vous commandez quand vous voulez, nous préparons, vous passez prendre votre sac."
+    ],
+    "figures": [
+      { "value": "1908", "label": "Année de construction de la charcuterie d'origine" },
+      { "value": "18", "label": "Maisons référencées, de la Corrèze à la Sicile" },
+      { "value": "24", "label": "Références au comptoir, renouvelées chaque semaine" },
+      { "value": "2 h", "label": "Entre la commande et le retrait" }
+    ]
+  },
+  "contact": {
+    "title": "Nous écrire",
+    "lead": "Une question sur un produit, une commande spéciale, un coffret. Réponse sous un jour ouvré."
+  }
+}

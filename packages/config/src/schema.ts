@@ -124,6 +124,19 @@ export const configSchema = z.strictObject({
       precommandes: z.boolean().default(false),
     })
     .default({ alcool: false, codes_promo: false, message_cadeau: false, precommandes: false }),
+  seo: z
+    .strictObject({
+      // Autorise les robots d'IA (GPTBot, ClaudeBot…) dans robots.txt et publie llms.txt. Choix client par client.
+      robots_ia: z.boolean().default(true),
+    })
+    .default({ robots_ia: true }),
+  audience: z
+    .strictObject({
+      // Mesure d'audience sans cookies (Umami) : identifiant du site Umami de la boutique.
+      umami_website_id: z.uuid().optional(),
+      umami_src: z.url().default("https://cloud.umami.is/script.js"),
+    })
+    .default({ umami_src: "https://cloud.umami.is/script.js" }),
   core_version: z.string().regex(SEMVER, { error: "Version sémantique attendue (ex. 1.0.0)" }),
 });
 

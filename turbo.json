@@ -4,7 +4,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "../../examples/**"],
-      "outputs": [".next/**", "!.next/cache/**", ".open-next/**"],
+      "outputs": [".next/**", "!.next/cache/**", ".open-next/**", "generated/**", "public/theme/**"],
       "env": ["LP_SITE_DIR"]
     },
     "typecheck": {

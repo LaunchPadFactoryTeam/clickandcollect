@@ -68,8 +68,15 @@ jobs:
         run: pnpm --filter @launchpadfactoryteam/db types && git diff --exit-code packages/db/src/database.types.ts
 
   site:
-    name: site
+    name: site (${{ matrix.exemple }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Un exemple par template : A éditorial, B immersif, C chaleureux.
+        exemple: [maison-ferrand, noir-et-sel, comptoir-saint-roch]
+    env:
+      LP_SITE_DIR: ../../examples/${{ matrix.exemple }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -78,17 +85,29 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Build du site de démonstration et du Worker
+      - name: Build du site et du Worker
         run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
       - name: Taille du Worker
         run: pnpm worker:size
       - run: pnpm --filter @launchpadfactoryteam/site exec playwright install --with-deps chromium
-      - name: Tests de bout en bout sur le Worker (runtime Cloudflare local)
+      - name: Tests de bout en bout et accessibilité sur le Worker (runtime Cloudflare local)
         run: pnpm --filter @launchpadfactoryteam/site test:e2e
         env:
           CI: "true"
+      - name: Budgets de performance (Lighthouse)
+        run: pnpm --filter @launchpadfactoryteam/site test:perf
+      - name: Captures de référence (revue visuelle)
+        if: always()
+        run: |
+          pnpm --filter @launchpadfactoryteam/site exec opennextjs-cloudflare preview --port 3100 > /tmp/preview.log 2>&1 &
+          npx --yes wait-on -t 180000 http://localhost:3100/
+          pnpm --filter @launchpadfactoryteam/site test:visual http://localhost:3100 captures
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
-          name: playwright-report
-          path: apps/site/playwright-report
+          name: site-${{ matrix.exemple }}
+          path: |
+            apps/site/playwright-report
+            apps/site/.lighthouseci
+            apps/site/captures
+          if-no-files-found: ignore

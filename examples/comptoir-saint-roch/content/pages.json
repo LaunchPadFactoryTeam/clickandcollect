@@ -1,0 +1,58 @@
+{
+  "settings": {
+    "tagline": "Épicerie de quartier",
+    "email": "bonjour@comptoir-saint-roch.fr",
+    "openingHours": [
+      { "jours": ["mardi", "mercredi", "jeudi", "vendredi", "samedi"], "plages": ["10:00-13:00", "16:00-19:30"] },
+      { "jours": ["dimanche"], "plages": ["09:00-13:00"] },
+      { "jours": ["lundi"], "plages": [] }
+    ],
+    "marketingConsentText": "Je veux bien recevoir les nouveautés du Comptoir Saint-Roch par email. Facultatif, sans incidence sur ma commande, désinscription en un clic.",
+    "marketingConsentVersion": "2026-10-02"
+  },
+  "home": {
+    "eyebrow": "Montpellier · Quartier Saint-Roch",
+    "title": "Votre panier vous attend au comptoir.",
+    "lead": "Choisissez vos produits, réglez en ligne, passez quand vous voulez. On vous prépare tout, et on vous garde la conversation pour quand vous arrivez.",
+    "ctaShop": "Voir nos produits",
+    "ctaStory": "Qui sommes-nous",
+    "featuredTitle": "Ce qu'on aime en ce moment",
+    "featuredProductIds": ["confiture", "biscuit", "miel"],
+    "highlights": [
+      { "value": "2 h", "label": "De préparation, et c'est prêt" },
+      { "value": "8", "label": "Produits au comptoir cette semaine" },
+      { "value": "0 €", "label": "De frais, le retrait est gratuit" },
+      { "value": "6j/7", "label": "Du mardi au dimanche matin" }
+    ],
+    "story": {
+      "eyebrow": "Notre histoire",
+      "quote": "On tient la boutique à deux. Si vous avez une question sur un produit, c'est l'un de nous qui vous répond.",
+      "author": "Inès et Thomas, depuis 2019",
+      "cta": "Lire la suite"
+    },
+    "pickupTitle": "Passer au comptoir"
+  },
+  "shop": {
+    "title": "Nos produits",
+    "lead": "Huit références au comptoir cette semaine. Ce qui est marqué disponible est prêt à partir dès le prochain créneau."
+  },
+  "story": {
+    "eyebrow": "Notre histoire",
+    "title": "On a ouvert pour vendre ce qu'on aimait manger",
+    "paragraphs": [
+      "Nous sommes Inès et Thomas. Avant, nous travaillions tous les deux en cuisine, et nous passions nos jours de congé à chercher de quoi remplir nos placards. En 2019 nous avons repris une ancienne mercerie place Saint-Roch, et nous y avons mis exactement ce que nous cherchions.",
+      "Pas de catalogue de cent références. Trente, trente-cinq produits, renouvelés quand la saison change ou quand un producteur nous convainc. Nous les goûtons tous. Si nous ne savons pas vous dire d'où ça vient et comment c'est fait, ça ne rentre pas en boutique.",
+      "Le click & collect est venu d'une demande des habitués : beaucoup travaillent et arrivent après la fermeture. Maintenant vous commandez le matin, nous préparons dans la journée, et vous passez récupérer votre sac entre deux rendez-vous."
+    ],
+    "figures": [
+      { "value": "2019", "label": "Reprise de l'ancienne mercerie place Saint-Roch" },
+      { "value": "8", "label": "Références au comptoir cette semaine" },
+      { "value": "2", "label": "Personnes en boutique, Inès et Thomas" },
+      { "value": "80 km", "label": "Distance maximale de nos producteurs" }
+    ]
+  },
+  "contact": {
+    "title": "Une question ?",
+    "lead": "Écrivez-nous, passez nous voir, ou appelez pendant les heures d'ouverture. C'est l'un de nous deux qui répond."
+  }
+}

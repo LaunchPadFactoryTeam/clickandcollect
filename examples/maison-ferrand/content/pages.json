@@ -1,0 +1,54 @@
+{
+  "settings": {
+    "tagline": "Épicerie fine",
+    "email": "bonjour@maison-ferrand.fr",
+    "openingHours": [
+      { "jours": ["mardi", "mercredi", "jeudi", "vendredi"], "plages": ["09:00-13:00", "15:30-19:30"] },
+      { "jours": ["samedi"], "plages": ["09:00-19:00"] },
+      { "jours": ["dimanche", "lundi"], "plages": [] }
+    ],
+    "marketingConsentText": "Je souhaite recevoir les nouveautés et les arrivages de Maison Ferrand par email. Facultatif, sans incidence sur ma commande, désinscription en un clic.",
+    "marketingConsentVersion": "2026-10-02"
+  },
+  "home": {
+    "eyebrow": "Montpellier · Depuis 1964 · Retrait en boutique",
+    "title": "Le goût d'une maison, prêt en deux heures.",
+    "lead": "Vingt-quatre produits choisis chez des producteurs que nous connaissons par leur nom. Vous commandez en ligne, nous préparons, vous passez au comptoir quand cela vous arrange.",
+    "ctaShop": "Voir les produits",
+    "ctaStory": "Notre histoire",
+    "featuredTitle": "La sélection du mois",
+    "featuredProductIds": ["miel", "terrine", "huile"],
+    "story": {
+      "eyebrow": "Notre histoire",
+      "quote": "Mon grand-père vendait trois fromages et du vin de la vallée. Nous en vendons vingt-quatre, et nous connaissons toujours chaque producteur.",
+      "author": "Claire Ferrand, troisième génération",
+      "cta": "Lire la suite"
+    },
+    "pickupTitle": "Venir chercher sa commande"
+  },
+  "shop": {
+    "title": "La boutique",
+    "lead": "Vingt-quatre références en stock aujourd'hui. Tout ce qui est affiché comme disponible peut être retiré dès le prochain créneau."
+  },
+  "story": {
+    "eyebrow": "Notre histoire",
+    "title": "Trois générations rue des Halles",
+    "paragraphs": [
+      "En 1964, Marcel Ferrand ouvre une crèmerie de douze mètres carrés à deux pas du marché. Il vend trois fromages, du vin de la vallée de l'Hérault et ce que les producteurs du Larzac veulent bien lui confier. L'enseigne n'a jamais déménagé.",
+      "Sa fille Hélène reprend la boutique en 1991 et élargit la gamme aux conserves, aux huiles et aux miels. Elle instaure une règle que nous n'avons jamais abandonnée : ne référencer que des produits dont nous pouvons nommer le producteur et décrire la méthode.",
+      "Claire Ferrand dirige la maison depuis 2018. Elle a ajouté le click & collect, parce que les habitués du quartier travaillent et que le marché ferme à treize heures. Le reste n'a pas changé : les mêmes producteurs, les mêmes quantités raisonnables, la même règle sur l'origine."
+    ],
+    "caption": "La devanture rue des Halles, inchangée depuis la rénovation de 1991.",
+    "quote": { "text": "Nous ne référençons rien que nous ne saurions pas expliquer à quelqu'un qui pose la question.", "author": "Claire Ferrand" },
+    "figures": [
+      { "value": "1964", "label": "Ouverture de la crèmerie par Marcel Ferrand" },
+      { "value": "24", "label": "Références au catalogue, renouvelées chaque saison" },
+      { "value": "11", "label": "Producteurs, tous à moins de 100 km" },
+      { "value": "2 h", "label": "Entre la commande et le retrait au comptoir" }
+    ]
+  },
+  "contact": {
+    "title": "Nous écrire",
+    "lead": "Une question sur un produit, une commande spéciale, un panier d'entreprise. Nous répondons sous un jour ouvré."
+  }
+}

@@ -10,5 +10,12 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint ."
+  },
+  "dependencies": {
+    "tsx": "^4.23.15",
+    "zod": "^4.6.5"
+  },
+  "bin": {
+    "lp-content": "./bin/lp-content.mjs"
   }
 }

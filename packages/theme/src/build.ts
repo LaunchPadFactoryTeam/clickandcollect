@@ -36,7 +36,7 @@ export interface BuiltTheme {
   css: string;
   /** Toutes les variables CSS, pour les emails et les tests. */
   variables: Record<string, string>;
-  /** Polices de titre à précharger (seule police visible au-dessus de la ligne de flottaison). */
+  /** Polices visibles au-dessus de la ligne de flottaison, à précharger : titre et texte courant, première graisse de chacun. */
   preload: FontFile[];
 }
 
@@ -45,12 +45,14 @@ export function buildTheme(config: ClientConfig, fonts: readonly FontFile[], opt
   const palette = derivePalette(config.design.couleurs);
   const failures = palette.checks.filter((c) => !c.ok);
   if (failures.length) throw new ThemeError(failures, palette, config.boutique.nom);
-  const headingWeight = config.design.typographies.titres.graisses[0];
+  const { titres, texte } = config.design.typographies;
   return {
     palette,
     css: generateCss(config, palette, fonts, options),
     variables: rootVariables(config, palette.tokens),
-    preload: fonts.filter((f) => f.role === "titres" && f.graisse === headingWeight),
+    preload: fonts.filter(
+      (f) => (f.role === "titres" && f.graisse === titres.graisses[0]) || (f.role === "texte" && f.graisse === texte.graisses[0]),
+    ),
   };
 }
 

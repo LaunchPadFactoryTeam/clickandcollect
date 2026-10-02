@@ -19,6 +19,7 @@ export const COLOR_TOKENS = [
   "--c-primary",
   "--c-on-primary",
   "--c-accent",
+  "--c-accent-text",
   "--c-danger",
 ] as const;
 export type ColorToken = (typeof COLOR_TOKENS)[number];
@@ -50,6 +51,8 @@ const DANGER_DARK = "#E0767C";
 /** Ratio visé pour le texte courant et pour le texte secondaire (marge au-dessus de 4,5). */
 const INK_TARGET = 7;
 const MUTED_TARGET = 5;
+/** Petite marge au-dessus de 4,5 pour l'accent en texte, qui reste aussi proche que possible de la charte. */
+const ACCENT_TEXT_TARGET = 4.6;
 /** Part de l'encre dans la couleur des filets (« ink à 12 % »). */
 const LINE_INK_SHARE = 0.12;
 
@@ -130,6 +133,14 @@ export function derivePalette(colors: BrandColors): DerivedPalette {
         ? WHITE
         : BLACK;
   const accent = colors.secondaire.toUpperCase();
+  // Accent utilisable pour du texte (surtitres, liens) : même teinte, clarté poussée jusqu'au ratio de texte.
+  const a = lch(accent);
+  let accentL = a.l;
+  let accentText = accent;
+  while (minContrast(accentText, backgrounds) < ACCENT_TEXT_TARGET && accentL > 0 && accentL < 1) {
+    accentL += dir * 0.01;
+    accentText = hex(accentL, a.c, a.h);
+  }
   const danger = dark ? DANGER_DARK : DANGER_LIGHT;
 
   const tokens: ColorTokens = {
@@ -143,6 +154,7 @@ export function derivePalette(colors: BrandColors): DerivedPalette {
     "--c-primary": primary,
     "--c-on-primary": onPrimary,
     "--c-accent": accent,
+    "--c-accent-text": accentText,
     "--c-danger": danger,
   };
 
@@ -156,6 +168,7 @@ export function derivePalette(colors: BrandColors): DerivedPalette {
     check("--c-primary", "--c-bg", MIN_TEXT),
     check("--c-primary", "--c-surface", MIN_TEXT),
     check("--c-on-primary", "--c-primary", MIN_TEXT),
+    ...surfaces.map((back) => check("--c-accent-text", back, MIN_TEXT)),
     check("--c-danger", "--c-bg", MIN_TEXT),
     check("--c-danger", "--c-surface", MIN_TEXT),
   ];
