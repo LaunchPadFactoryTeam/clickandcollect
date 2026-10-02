@@ -17,7 +17,10 @@ const env = process.env;
 async function availabilityFromSupabase(): Promise<Availability[]> {
   if (!env.SUPABASE_URL || !env.SUPABASE_SHOP_JWT) return [];
   const res = await fetch(`${env.SUPABASE_URL}/rest/v1/product_availability?select=product_id,available`, {
-    headers: { apikey: env.SUPABASE_ANON_KEY ?? env.SUPABASE_SHOP_JWT, Authorization: `Bearer ${env.SUPABASE_SHOP_JWT}` },
+    headers: {
+      apikey: env.SUPABASE_ANON_KEY ?? env.SUPABASE_SHOP_JWT,
+      Authorization: `Bearer ${env.SUPABASE_SHOP_JWT}`,
+    },
     next: { tags: ["catalogue"] },
   });
   if (!res.ok) throw new Error(`Supabase a répondu ${res.status} pour les disponibilités`);

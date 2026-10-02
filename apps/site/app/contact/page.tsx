@@ -7,7 +7,11 @@ export const dynamic = "force-static";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { content } = await getSite();
-  return { title: pageTitle("Contact", config), description: content.pages.contact.lead, alternates: { canonical: "/contact" } };
+  return {
+    title: pageTitle("Contact", config),
+    description: content.pages.contact.lead,
+    alternates: { canonical: "/contact" },
+  };
 }
 
 export default async function Contact() {

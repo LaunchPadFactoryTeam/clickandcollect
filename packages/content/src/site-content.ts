@@ -71,5 +71,7 @@ export function formatRange(plage: string): string {
 
 /** Lignes d'horaires affichées, ex. « Mardi – vendredi · 9:00 – 13:00, 15:30 – 19:30 », « Lundi · fermé ». */
 export function formatOpeningHours(hours: readonly OpeningHours[]): string[] {
-  return hours.map((h) => `${formatDays(h.jours)} · ${h.plages.length ? h.plages.map(formatRange).join(", ") : "fermé"}`);
+  return hours.map(
+    (h) => `${formatDays(h.jours)} · ${h.plages.length ? h.plages.map(formatRange).join(", ") : "fermé"}`,
+  );
 }

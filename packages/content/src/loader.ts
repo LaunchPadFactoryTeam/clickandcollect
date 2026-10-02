@@ -1,6 +1,13 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { buildCatalog, CATALOG_QUERY, publicationBlockers, reviewWarnings, type CatalogProduct, type Product } from "./catalog.ts";
+import {
+  buildCatalog,
+  CATALOG_QUERY,
+  publicationBlockers,
+  reviewWarnings,
+  type CatalogProduct,
+  type Product,
+} from "./catalog.ts";
 import { siteContentSchema, type SiteContent } from "./site-content.ts";
 
 /** Contenus figés au build : ce que les pages du site importent. */
@@ -53,7 +60,9 @@ export function buildSnapshot(rawPages: unknown, products: Product[], availabili
     pages,
     catalog,
     report: {
-      excluded: products.filter((p) => !published.has(p.id)).map((p) => ({ id: p.id, reasons: publicationBlockers(p) })),
+      excluded: products
+        .filter((p) => !published.has(p.id))
+        .map((p) => ({ id: p.id, reasons: publicationBlockers(p) })),
       warnings: catalog.map((p) => ({ id: p.id, messages: reviewWarnings(p) })).filter((w) => w.messages.length),
     },
   };

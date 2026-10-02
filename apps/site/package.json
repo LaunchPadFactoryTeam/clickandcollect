@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm prepare:site && next dev",
     "build": "pnpm prepare:site && next build",
-    "build:worker": "opennextjs-cloudflare build",
+    "build:worker": "opennextjs-cloudflare build --skipNextBuild",
     "preview": "opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare deploy",
     "typecheck": "pnpm -s prepare:site > /dev/null && tsc --noEmit",

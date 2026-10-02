@@ -44,3 +44,12 @@ export const FALLBACK_STACKS = {
   serif: 'Georgia, "Times New Roman", serif',
   "sans-serif": 'system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',
 } as const;
+
+/**
+ * Polices système sur lesquelles on cale le repli (size-adjust), avec leur chasse moyenne sur WIDTH_SAMPLE.
+ * Valeurs mesurées sur Liberation Sans et Liberation Serif, métriquement identiques à Arial et Times New Roman.
+ */
+export const FALLBACK_FACES = {
+  "sans-serif": { local: ["Arial", "Liberation Sans", "Arimo", "Helvetica"], avgWidth: 0.43253 },
+  serif: { local: ["Times New Roman", "Liberation Serif", "Tinos", "Times"], avgWidth: 0.38763 },
+} as const;

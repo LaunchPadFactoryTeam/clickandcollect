@@ -90,7 +90,11 @@ export function productJsonLd(product: CatalogProduct, config: ClientConfig) {
     additionalProperty: [
       { "@type": "PropertyValue", name: "Quantité nette", value: product.inco.netQuantity },
       { "@type": "PropertyValue", name: "Ingrédients", value: product.inco.ingredients },
-      { "@type": "PropertyValue", name: "Allergènes", value: allergens.length ? allergens.join(", ") : "Aucun déclaré" },
+      {
+        "@type": "PropertyValue",
+        name: "Allergènes",
+        value: allergens.length ? allergens.join(", ") : "Aucun déclaré",
+      },
       ...(product.inco.origin ? [{ "@type": "PropertyValue", name: "Origine", value: product.inco.origin }] : []),
     ],
     offers: {

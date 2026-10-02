@@ -11,10 +11,12 @@
   "dependencies": {
     "@launchpadfactoryteam/config": "workspace:*",
     "culori": "^4.0.2",
+    "fontkit": "^2.0.4",
     "tsx": "^4.23.15"
   },
   "devDependencies": {
-    "@types/culori": "^4.0.1"
+    "@types/culori": "^4.0.1",
+    "@types/fontkit": "^2.0.9"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

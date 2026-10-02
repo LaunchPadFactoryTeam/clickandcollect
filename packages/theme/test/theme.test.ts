@@ -197,9 +197,26 @@ describe("build du thème", () => {
     expect(theme.css.match(/@font-face/g)).toHaveLength(4);
     expect(theme.css).toContain('src: url("/fonts/work-sans-600.woff2") format("woff2");');
     expect(theme.css).toContain("font-display: swap;");
-    expect(theme.variables["--f-display"]).toBe('"Playfair Display", Georgia, "Times New Roman", serif');
-    expect(theme.variables["--f-body"]).toMatch(/^"Work Sans", system-ui/);
+    expect(theme.variables["--f-display"]).toBe(
+      '"Playfair Display", "Playfair Display Fallback", Georgia, "Times New Roman", serif',
+    );
+    expect(theme.variables["--f-body"]).toMatch(/^"Work Sans", "Work Sans Fallback", system-ui/);
     expect(theme.preload.map((f) => f.fileName)).toEqual(["playfair-display-400.woff2", "work-sans-400.woff2"]);
+    // Fichiers factices, métriques illisibles : pas de repli ajusté, mais le build passe.
+    expect(theme.css).not.toContain('Fallback";\n  src: local');
+  });
+
+  it("cale un repli local sur les métriques de chaque police de la marque (aucun décalage au chargement)", () => {
+    const loaded = loadConfig(join(__dirname, "../../../examples/comptoir-saint-roch"), { now: NOW });
+    const { css } = buildThemeFromLoaded(loaded);
+    const face = (family: string) => css.slice(css.indexOf(`font-family: "${family} Fallback"`)).split("}")[0]!;
+    // Karla (texte) sur Arial : chasse 0,4426 / 0,4325 → 102,33 %.
+    expect(face("Karla")).toContain('src: local("Arial"), local("Liberation Sans")');
+    expect(face("Karla")).toContain("size-adjust: 102.33%;");
+    // Lora (titres) sur Times New Roman, hauteurs divisées par le même facteur.
+    expect(face("Lora")).toContain('local("Times New Roman")');
+    const adjust = Number(/size-adjust: ([0-9.]+)%/.exec(face("Lora"))![1]) / 100;
+    expect(Number(/ascent-override: ([0-9.]+)%/.exec(face("Lora"))![1]) / 100).toBeCloseTo(1.006 / adjust, 3);
   });
 
   it("pose l'échelle typographique fixe et la trame de 4 px", () => {

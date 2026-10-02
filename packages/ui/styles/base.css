@@ -221,6 +221,18 @@ a:hover {
   list-style: none;
 }
 
+/* Sur mobile, une seule rangée qui défile : sa hauteur ne dépend pas de la police chargée (pas de CLS). */
+@media (max-width: 719px) {
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filters > li {
+    flex: none;
+  }
+}
+
 .filters a {
   display: inline-flex;
   align-items: center;
@@ -365,4 +377,8 @@ a:hover {
 }
 .products--featured.products--c {
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+}
+
+.hdr__nav > li {
+  flex: none;
 }

@@ -47,7 +47,10 @@
   display: flex;
   align-items: center;
   gap: clamp(14px, 2.4vw, 30px);
-  flex-wrap: wrap;
+  /* Une seule ligne quelle que soit la police (repli ou web) : pas de décalage au chargement. */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
   margin: 0;
   padding: 0;
   list-style: none;

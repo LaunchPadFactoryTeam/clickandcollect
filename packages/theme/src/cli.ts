@@ -38,7 +38,11 @@ function main(argv: string[]): number {
     writeFileSync(
       join(outDir, "tokens.json"),
       JSON.stringify(
-        { isDark: theme.palette.isDark, variables: theme.variables, preload: theme.preload.map((f) => `fonts/${f.fileName}`) },
+        {
+          isDark: theme.palette.isDark,
+          variables: theme.variables,
+          preload: theme.preload.map((f) => `fonts/${f.fileName}`),
+        },
         null,
         2,
       ),

@@ -39,7 +39,10 @@
       "Claire Ferrand dirige la maison depuis 2018. Elle a ajouté le click & collect, parce que les habitués du quartier travaillent et que le marché ferme à treize heures. Le reste n'a pas changé : les mêmes producteurs, les mêmes quantités raisonnables, la même règle sur l'origine."
     ],
     "caption": "La devanture rue des Halles, inchangée depuis la rénovation de 1991.",
-    "quote": { "text": "Nous ne référençons rien que nous ne saurions pas expliquer à quelqu'un qui pose la question.", "author": "Claire Ferrand" },
+    "quote": {
+      "text": "Nous ne référençons rien que nous ne saurions pas expliquer à quelqu'un qui pose la question.",
+      "author": "Claire Ferrand"
+    },
     "figures": [
       { "value": "1964", "label": "Ouverture de la crèmerie par Marcel Ferrand" },
       { "value": "24", "label": "Références au catalogue, renouvelées chaque saison" },

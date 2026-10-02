@@ -119,8 +119,12 @@ describe("robots, llms.txt, sitemap", () => {
     expect(txt).toContain("# Maison Ferrand");
     expect(txt).toContain("- Adresse : 12 rue des Halles, 34000 Montpellier");
     expect(txt).toContain("- Préparation : 2 heures minimum");
-    expect(txt).toContain("[Miel de châtaignier](https://maison-ferrand.fr/produits/miel-de-chataignier) : Pot 250 g, 12,50 €");
-    expect(txt).toContain("Terrine de canard aux figues](https://maison-ferrand.fr/produits/terrine-de-canard-aux-figues) : Bocal 180 g, 9,80 € (indisponible)");
+    expect(txt).toContain(
+      "[Miel de châtaignier](https://maison-ferrand.fr/produits/miel-de-chataignier) : Pot 250 g, 12,50 €",
+    );
+    expect(txt).toContain(
+      "Terrine de canard aux figues](https://maison-ferrand.fr/produits/terrine-de-canard-aux-figues) : Bocal 180 g, 9,80 € (indisponible)",
+    );
   });
 
   it("le sitemap liste les pages, les catégories et les fiches", () => {

@@ -25,7 +25,9 @@ const category = product.category.slug;
 const PAGES = ["/", "/boutique", `/boutique/${category}`, `/produits/${product.slug}`, "/epicerie", "/contact"];
 
 async function seriousViolations(page: Page) {
-  const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+    .analyze();
   return violations
     .filter((v) => v.impact === "serious" || v.impact === "critical")
     .map((v) => `${v.id} (${v.nodes.length}) : ${v.nodes[0]?.html}`);
@@ -57,7 +59,10 @@ test("le lien d'évitement mène au contenu principal", async ({ page }) => {
 
 test("le filtre de catégorie est un lien vers une page statique de la catégorie", async ({ page }) => {
   await page.goto("/boutique");
-  await page.getByRole("navigation", { name: "Filtrer par catégorie" }).getByRole("link", { name: product.category.name }).click();
+  await page
+    .getByRole("navigation", { name: "Filtrer par catégorie" })
+    .getByRole("link", { name: product.category.name })
+    .click();
   await expect(page).toHaveURL(new RegExp(`/boutique/${category}$`));
   const names = await page.locator(".card__name").allTextContents();
   const expected = content.catalog.filter((p) => p.category.slug === category).map((p) => p.name);

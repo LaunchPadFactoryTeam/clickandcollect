@@ -53,7 +53,7 @@ async function axeViolations(element: React.ReactElement) {
 
 describe("composants", () => {
   it("T3.1 format de prix : 1250 → « 12,50 € » en chiffres tabulaires", () => {
-    expect(formatPrice(1250)).toBe("12,50 €");
+    expect(formatPrice(1250)).toBe("12,50\u00a0€");
     const card = dom(<ProductCard product={product("miel")} site={base} variant="A" />);
     expect(card.querySelector(".price")!.textContent).toBe("12,50 €");
   });

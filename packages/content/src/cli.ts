@@ -6,7 +6,13 @@
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { ContentError, fetchSanityContent, loadLocalContent, type Availability, type ContentSnapshot } from "./loader.ts";
+import {
+  ContentError,
+  fetchSanityContent,
+  loadLocalContent,
+  type Availability,
+  type ContentSnapshot,
+} from "./loader.ts";
 
 async function supabaseAvailability(url: string, token: string, anonKey?: string): Promise<Availability[]> {
   const res = await fetch(`${url}/rest/v1/product_availability?select=product_id,available`, {

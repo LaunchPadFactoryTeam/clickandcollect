@@ -630,8 +630,8 @@ class Component extends DCLogic {
         { value: "≤ 1,8 s", label: "LCP mobile", note: "4G simulée, appareil milieu de gamme" },
         { value: "≤ 0,05", label: "CLS", note: "Dimensions déclarées sur toute image" },
         { value: "≤ 200 ms", label: "INP", note: "Mesuré sur l'ajout au panier" },
-        { value: "≤ 90 ko", label: "JS initial", note: "Hors panneau Stripe, chargé à la demande" },
-        { value: "≤ 180 ko", label: "Poids de l'accueil", note: "Hors images, compressé" },
+        { value: "≤ 180 ko", label: "JS initial", note: "Compressé, runtime Next.js et React compris ; hors panneau Stripe, chargé à la demande" },
+        { value: "≤ 280 ko", label: "Poids de l'accueil", note: "Hors images, compressé : JS, HTML, CSS et polices" },
         { value: "0", label: "Script tiers", note: "Hors Stripe et mesure d'audience" }
       ],
       configMap: [

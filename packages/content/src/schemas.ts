@@ -155,7 +155,13 @@ export const siteContent = {
         field("featuredProductIds", "Produits mis en avant", "array", { of: [{ type: "string" }] }),
         figures("highlights", "Chiffres d'accroche (template C)"),
         field("story", "Extrait de l'histoire", "object", {
-          fields: [field("eyebrow", "Surtitre"), field("quote", "Citation", "text"), field("author", "Auteur"), field("text", "Texte", "text"), field("cta", "Bouton")],
+          fields: [
+            field("eyebrow", "Surtitre"),
+            field("quote", "Citation", "text"),
+            field("author", "Auteur"),
+            field("text", "Texte", "text"),
+            field("cta", "Bouton"),
+          ],
         }),
         field("pickupTitle", "Titre du bloc retrait"),
       ],
