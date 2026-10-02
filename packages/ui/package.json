@@ -1,0 +1,14 @@
+{
+  "name": "@launchpadfactoryteam/ui",
+  "version": "1.0.0-alpha.1",
+  "description": "Composants partagés et variantes A, B, C des pages (lot 3)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  }
+}

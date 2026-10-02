@@ -1,0 +1,44 @@
+{
+  "name": "@launchpadfactoryteam/site",
+  "version": "1.0.0-alpha.1",
+  "description": "Application Next.js des sites clients, pilotée par la configuration ; la démo est ce site construit sur examples/maison-ferrand",
+  "type": "module",
+  "scripts": {
+    "theme": "lp-theme build ${LP_SITE_DIR:-../../examples/maison-ferrand} --out public/theme --config-out generated/site.json",
+    "dev": "pnpm theme && next dev",
+    "build": "pnpm theme && next build",
+    "build:worker": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare deploy",
+    "typecheck": "pnpm -s theme > /dev/null && tsc --noEmit",
+    "lint": "eslint .",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@launchpadfactoryteam/config": "workspace:*",
+    "@launchpadfactoryteam/theme": "workspace:*",
+    "next": "^16.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.7",
+    "@playwright/test": "^1.63.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "wrangler": "^4.146.0"
+  },
+  "bin": {
+    "lp-site": "./bin/lp-site.mjs"
+  },
+  "files": [
+    "app",
+    "lib",
+    "bin",
+    "next.config.ts",
+    "open-next.config.ts",
+    "tsconfig.json",
+    "wrangler.jsonc"
+  ]
+}

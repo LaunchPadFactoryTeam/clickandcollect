@@ -1,0 +1,33 @@
+{
+  "name": "launchpad-core",
+  "private": true,
+  "version": "1.0.0-alpha.1",
+  "packageManager": "pnpm@10.28.0",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "turbo run lint && pnpm lint:root",
+    "lint:root": "eslint eslint.config.js tools/scripts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:e2e": "turbo run test:e2e",
+    "test:db": "bash tools/scripts/test-db.sh",
+    "worker:size": "node tools/scripts/worker-size.mjs apps/site",
+    "themes": "tsx packages/theme/src/cli.ts build examples/maison-ferrand && tsx packages/theme/src/cli.ts build examples/noir-et-sel && tsx packages/theme/src/cli.ts build examples/comptoir-saint-roch",
+    "versions:check": "node tools/scripts/check-versions.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.4",
+    "eslint": "^10.11.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3"
+  }
+}

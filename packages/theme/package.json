@@ -1,0 +1,25 @@
+{
+  "name": "@launchpadfactoryteam/theme",
+  "version": "1.0.0-alpha.1",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "lp-theme": "./bin/lp-theme.mjs"
+  },
+  "dependencies": {
+    "@launchpadfactoryteam/config": "workspace:*",
+    "culori": "^4.0.2",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@types/culori": "^4.0.1"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "description": "Dérivation des jetons, contrôle des contrastes, génération du CSS (lot 1)"
+}

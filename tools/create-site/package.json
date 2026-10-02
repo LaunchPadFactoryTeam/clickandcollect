@@ -1,0 +1,7 @@
+{
+  "name": "@launchpadfactoryteam/create-site",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "description": "Génération d'un repo client et import du catalogue CSV (lot 10) — réservé, vide au lot 0",
+  "type": "module"
+}

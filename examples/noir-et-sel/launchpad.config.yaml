@@ -1,0 +1,27 @@
+# Template B — Immersif (charte sombre de la maquette Noir & Sel)
+boutique:
+  nom: "Noir & Sel"
+  domaine: "noiretsel.fr"
+  adresse: "41 rue Saint-Maur, 75011 Paris"
+  telephone: "01 43 00 00 00"
+  email_notifications: "commandes@noiretsel.fr"
+design:
+  couleurs: { primaire: "#F2F0ED", secondaire: "#C2565C", fond: "#121110" }
+  typographies:
+    titres: { famille: "Bodoni Moda", graisses: [400, 500], categorie: serif }
+    texte: { famille: "Archivo", graisses: [400, 600] }
+  arrondis: "net"
+  logo: "./assets/logo.svg"
+  variantes: { accueil: B, boutique: B, fiche_produit: B, epicerie: B, contact: B }
+retrait:
+  delai_preparation_heures: 3
+  creneaux:
+    mercredi: ["11:00-13:00", "17:00-20:00"]
+    jeudi: ["11:00-13:00", "17:00-20:00"]
+    vendredi: ["11:00-13:00", "17:00-20:00"]
+    samedi: ["10:00-13:00", "16:00-19:00"]
+paiement:
+  psp: "stripe"
+features:
+  alcool: true
+core_version: "1.0.0-alpha.1"

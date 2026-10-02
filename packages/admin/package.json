@@ -1,0 +1,14 @@
+{
+  "name": "@launchpadfactoryteam/admin",
+  "version": "1.0.0-alpha.1",
+  "description": "Écrans et actions du back-office commerçant (lot 7)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  }
+}

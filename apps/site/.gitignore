@@ -1,0 +1,8 @@
+.next/
+.open-next/
+.wrangler/
+public/theme/
+next-env.d.ts
+test-results/
+playwright-report/
+generated/

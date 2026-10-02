@@ -1,0 +1,53 @@
+name: Prévisualisation
+
+# Déploie le site de démonstration sur un Worker de prévisualisation pour chaque pull request,
+# et en production de démo à chaque fusion sur main.
+# Secrets requis : CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID ; bucket R2 lp-demo-opennext-cache créé une fois.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      # Sans secrets Cloudflare (dépôt pas encore configuré, ou PR d'un fork), on n'échoue pas : on le signale.
+      - name: Secrets Cloudflare présents ?
+        id: secrets
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning title=Déploiement ignoré::Secrets CLOUDFLARE_API_TOKEN et CLOUDFLARE_ACCOUNT_ID absents : aucune prévisualisation publiée."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ok == 'true'
+      - uses: pnpm/action-setup@v4
+        if: steps.secrets.outputs.ok == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.secrets.outputs.ok == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.secrets.outputs.ok == 'true'
+      - run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
+        if: steps.secrets.outputs.ok == 'true'
+      - name: Version de prévisualisation (pull request)
+        if: steps.secrets.outputs.ok == 'true' && github.event_name == 'pull_request'
+        working-directory: apps/site
+        run: pnpm exec opennextjs-cloudflare upload -- --preview-alias pr-${{ github.event.number }}
+      - name: Déploiement (main)
+        if: steps.secrets.outputs.ok == 'true' && github.event_name == 'push'
+        working-directory: apps/site
+        run: pnpm exec opennextjs-cloudflare deploy

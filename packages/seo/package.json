@@ -1,0 +1,14 @@
+{
+  "name": "@launchpadfactoryteam/seo",
+  "version": "1.0.0-alpha.1",
+  "description": "Métadonnées, JSON-LD, sitemap, robots.txt, llms.txt (lot 3)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint ."
+  }
+}
