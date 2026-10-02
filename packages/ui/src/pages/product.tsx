@@ -33,7 +33,7 @@ function Breadcrumb({ product, variant }: { product: CatalogProduct; variant: Va
   );
 }
 
-function BuyRow({ product, variant }: { product: CatalogProduct; variant: Variant }) {
+function BuyRow({ product, variant, shop }: { product: CatalogProduct; variant: Variant; shop: string }) {
   const v = variant.toLowerCase();
   const price = <span className={`price ${v}-buy__price`}>{formatPrice(product.priceTtcCents)}</span>;
   const vat = <span className={`${v}-buy__vat`}>TVA {formatVat(product.vatRate)} incluse</span>;
@@ -50,7 +50,12 @@ function BuyRow({ product, variant }: { product: CatalogProduct; variant: Varian
           {vat}
         </>
       )}
-      <AddButton product={product} label="Ajouter au panier" className={`${v}-btn ${v}-btn--primary ${v}-buy__add`} />
+      <AddButton
+        product={product}
+        shop={shop}
+        label="Ajouter au panier"
+        className={`${v}-btn ${v}-btn--primary ${v}-buy__add`}
+      />
     </div>
   );
 }
@@ -100,7 +105,7 @@ export function ProductA({ site, product }: Props) {
           </div>
           <div className="a-product__text">
             <Header product={product} variant="A" />
-            <BuyRow product={product} variant="A" />
+            <BuyRow product={product} variant="A" shop={site.config.boutique.domaine} />
             <Regulatory site={site} product={product} variant="A" />
           </div>
         </div>
@@ -118,7 +123,7 @@ export function ProductB({ site, product }: Props) {
         <div className="b-product__text">
           <Breadcrumb product={product} variant="B" />
           <Header product={product} variant="B" />
-          <BuyRow product={product} variant="B" />
+          <BuyRow product={product} variant="B" shop={site.config.boutique.domaine} />
           <Regulatory site={site} product={product} variant="B" />
         </div>
       </article>
@@ -143,7 +148,7 @@ export function ProductC({ site, product }: Props) {
           </div>
           <div className="c-product__text">
             <Header product={product} variant="C" />
-            <BuyRow product={product} variant="C" />
+            <BuyRow product={product} variant="C" shop={site.config.boutique.domaine} />
             <Regulatory site={site} product={product} variant="C" />
           </div>
         </div>

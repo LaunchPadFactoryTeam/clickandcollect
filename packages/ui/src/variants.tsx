@@ -1,5 +1,6 @@
 import type { ClientConfig } from "@launchpadfactoryteam/config";
 import type { CatalogProduct } from "@launchpadfactoryteam/content";
+import { CartA, CartB, CartC } from "./pages/cart.tsx";
 import { ContactA, ContactB, ContactC } from "./pages/contact.tsx";
 import { HomeA, HomeB, HomeC } from "./pages/home.tsx";
 import { ProductA, ProductB, ProductC } from "./pages/product.tsx";
@@ -14,12 +15,15 @@ export const PAGES = {
   fiche_produit: { A: ProductA, B: ProductB, C: ProductC },
   epicerie: { A: StoryA, B: StoryB, C: StoryC },
   contact: { A: ContactA, B: ContactB, C: ContactC },
+  panier: { A: CartA, B: CartB, C: CartC },
 } as const;
 
 export type PageKey = keyof typeof PAGES;
 
+/** La variante du panier suit celle de la boutique si la configuration ne la précise pas. */
 export function variantOf(config: ClientConfig, page: PageKey): Variant {
-  return config.design.variantes[page];
+  const { variantes } = config.design;
+  return page === "panier" ? (variantes.panier ?? variantes.boutique) : variantes[page];
 }
 
 /** Rend la variante configurée de la page. Changer de variante ne change pas le contenu, seulement sa mise en page. */
@@ -45,5 +49,10 @@ export function StoryPage({ site }: { site: Site }) {
 
 export function ContactPage({ site }: { site: Site }) {
   const Page = PAGES.contact[variantOf(site.config, "contact")];
+  return <Page site={site} />;
+}
+
+export function CartPage({ site }: { site: Site }) {
+  const Page = PAGES.panier[variantOf(site.config, "panier")];
   return <Page site={site} />;
 }

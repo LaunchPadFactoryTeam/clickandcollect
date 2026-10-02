@@ -1,7 +1,7 @@
 {
   "name": "@launchpadfactoryteam/ui",
   "version": "1.0.0-alpha.1",
-  "description": "Composants partagés et variantes A, B, C des pages (lot 3)",
+  "description": "Composants partagés, variantes A, B, C des pages et îlots panier (lots 3 et 4)",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
@@ -13,6 +13,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@launchpadfactoryteam/commerce": "workspace:*",
     "@launchpadfactoryteam/config": "workspace:*",
     "@launchpadfactoryteam/content": "workspace:*",
     "@launchpadfactoryteam/seo": "workspace:*"

@@ -1,14 +1,16 @@
 import type { ReactNode } from "react";
 import { displayPhone, splitAddress } from "@launchpadfactoryteam/seo";
+import { CartLink } from "./client/CartLink.tsx";
 import { EVIN_TEXT, type Site, type Variant } from "./shared.tsx";
 
-export type Section = "accueil" | "boutique" | "epicerie" | "contact";
+export type Section = "accueil" | "boutique" | "epicerie" | "contact" | "panier";
+type NavSection = Exclude<Section, "accueil" | "panier">;
 
 /** Libellés propres à chaque template ; les liens et les pages sont les mêmes. */
 const LABELS: Record<
   Variant,
   {
-    nav: Record<Exclude<Section, "accueil">, string>;
+    nav: Record<NavSection, string>;
     footerShop: string;
     footerAll: string;
     footerStory: string;
@@ -46,13 +48,13 @@ export const LEGAL_LINKS = [
   ["/accessibilite", "Accessibilité : conformité partielle"],
 ] as const;
 
-const SECTION_HREF: Record<Exclude<Section, "accueil">, string> = {
+const SECTION_HREF: Record<NavSection, string> = {
   boutique: "/boutique",
   epicerie: "/epicerie",
   contact: "/contact",
 };
 
-export function navLabel(variant: Variant, section: Exclude<Section, "accueil">): string {
+export function navLabel(variant: Variant, section: NavSection): string {
   return LABELS[variant].nav[section];
 }
 
@@ -76,6 +78,12 @@ export function Header({ site, variant, current }: { site: Site; variant: Varian
             ))}
           </ul>
         </nav>
+        <CartLink
+          shop={site.config.boutique.domaine}
+          className="btn hdr__cart"
+          format={variant === "B" ? "paren" : "dot"}
+          current={current === "panier"}
+        />
       </div>
     </header>
   );

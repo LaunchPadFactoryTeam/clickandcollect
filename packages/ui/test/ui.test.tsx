@@ -114,7 +114,7 @@ describe("variantes et pages", () => {
       const page = dom(<HomePage site={withVariant(v)} />);
       expect(page.querySelector(".site")!.getAttribute("data-variant")).toBe(v);
     }
-    expect(Object.keys(PAGES)).toEqual(["accueil", "boutique", "fiche_produit", "epicerie", "contact"]);
+    expect(Object.keys(PAGES)).toEqual(["accueil", "boutique", "fiche_produit", "epicerie", "contact", "panier"]);
   });
 
   it("changer de variante change la mise en page, pas le texte (critère de sortie de la phase 0)", () => {
@@ -202,5 +202,6 @@ describe("accessibilité (axe)", () => {
         ).toEqual([]);
       }
     }
-  });
+    // 15 pages passées à axe : bien plus que les 5 s par défaut quand toute la suite tourne en parallèle.
+  }, 60_000);
 });

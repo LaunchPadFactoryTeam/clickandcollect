@@ -43,6 +43,9 @@ importers:
 
   apps/site:
     dependencies:
+      '@launchpadfactoryteam/commerce':
+        specifier: workspace:*
+        version: link:../../packages/commerce
       '@launchpadfactoryteam/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -98,7 +101,11 @@ importers:
 
   packages/admin: {}
 
-  packages/commerce: {}
+  packages/commerce:
+    dependencies:
+      '@launchpadfactoryteam/config':
+        specifier: workspace:*
+        version: link:../config
 
   packages/config:
     dependencies:
@@ -176,6 +183,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@launchpadfactoryteam/commerce':
+        specifier: workspace:*
+        version: link:../commerce
       '@launchpadfactoryteam/config':
         specifier: workspace:*
         version: link:../config

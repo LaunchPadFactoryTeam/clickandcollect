@@ -1,37 +1,10 @@
-import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
-
-const json = (file: string) => JSON.parse(readFileSync(new URL(`../generated/${file}`, import.meta.url), "utf8"));
-const content = json("content.json") as {
-  pages: { home: { title: string } };
-  catalog: {
-    slug: string;
-    name: string;
-    available: boolean;
-    isAlcohol: boolean;
-    category: { slug: string; name: string };
-    inco: { netQuantity: string };
-  }[];
-};
-const site = json("site.json") as {
-  boutique: { nom: string; domaine: string };
-  design: { variantes: { accueil: string } };
-};
+import { expect, test } from "@playwright/test";
+import { content, seriousViolations, site } from "./helpers";
 
 const product = content.catalog.find((p) => p.available && !p.isAlcohol)!;
 const offProduct = content.catalog.find((p) => !p.available);
 const category = product.category.slug;
 const PAGES = ["/", "/boutique", `/boutique/${category}`, `/produits/${product.slug}`, "/epicerie", "/contact"];
-
-async function seriousViolations(page: Page) {
-  const { violations } = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-    .analyze();
-  return violations
-    .filter((v) => v.impact === "serious" || v.impact === "critical")
-    .map((v) => `${v.id} (${v.nodes.length}) : ${v.nodes[0]?.html}`);
-}
 
 for (const path of PAGES) {
   test(`${path} : aucune violation d'accessibilité sérieuse ou critique (axe)`, async ({ page }) => {
