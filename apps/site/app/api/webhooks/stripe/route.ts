@@ -1,7 +1,10 @@
 import { alert } from "../../../../lib/alert";
+import { inBackground } from "../../../../lib/background";
+import { processPendingEmails } from "../../../../lib/emails";
 import { env, shopIdFromToken } from "../../../../lib/env";
 import { hasDatabase, recordPaidCheckout } from "../../../../lib/orders";
 import { getProvider } from "../../../../lib/payments";
+import { config, getContent, themeTokens } from "../../../../lib/site";
 import { handleWebhook } from "../../../../lib/webhook";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +24,11 @@ export async function POST(request: Request) {
     hashKey: e.SHOP_HASH_KEY,
     record: (order) => recordPaidCheckout(e, order),
     alert: (message, details) => alert(e.ALERT_WEBHOOK_URL, message, details),
+    afterRecord: () =>
+      inBackground(async () => {
+        const content = await getContent();
+        return processPendingEmails(e, { config, settings: content.pages.settings, tokens: themeTokens });
+      }),
   });
   return Response.json(body, { status });
 }

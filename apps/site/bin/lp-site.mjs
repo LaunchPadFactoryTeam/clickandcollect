@@ -33,6 +33,7 @@ if (!existsSync(join(clientDir, "launchpad.config.yaml"))) {
 
 if (command === "build") {
   run("opennextjs-cloudflare", ["build"], siteRoot);
+  run("node", [join(siteRoot, "scripts/worker-entry.mjs"), join(siteRoot, ".open-next")], siteRoot);
   rmSync(join(clientDir, ".open-next"), { recursive: true, force: true });
   cpSync(join(siteRoot, ".open-next"), join(clientDir, ".open-next"), { recursive: true });
   console.log(`Worker prêt dans ${join(clientDir, ".open-next")}`);

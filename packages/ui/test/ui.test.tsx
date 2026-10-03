@@ -174,10 +174,14 @@ describe("variantes et pages", () => {
 
   it("le formulaire de contact : champs étiquetés et obligatoires, consentement non coché", () => {
     const form = dom(<ContactPage site={base} />).querySelector("form")!;
-    for (const input of form.querySelectorAll("input:not([type=checkbox]), textarea")) {
+    for (const input of form.querySelectorAll("input:not([type=checkbox]):not([name=site_web]), textarea")) {
       expect(form.querySelector(`label[for="${input.id}"]`), input.id).not.toBeNull();
       expect((input as HTMLInputElement).required).toBe(true);
     }
+    // Champ piège anti-robots : masqué aux lecteurs d'écran et hors de l'ordre de tabulation.
+    const trap = form.querySelector<HTMLInputElement>("input[name=site_web]")!;
+    expect(trap.closest("[aria-hidden=true]")).not.toBeNull();
+    expect(trap.tabIndex).toBe(-1);
     const consent = form.querySelector<HTMLInputElement>("input[type=checkbox]")!;
     expect(consent.checked).toBe(false);
     expect(consent.required).toBe(true);

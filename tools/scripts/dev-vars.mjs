@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Écrit apps/site/.dev.vars : variables du Worker pour tester le tunnel de paiement en local, avec la base Supabase
-// locale et le faux fournisseur de paiement. Jamais pour la production : les secrets y sont ceux du poste de dev.
+// locale, le faux fournisseur de paiement et le faux prestataire d'emails. Jamais pour la production : les secrets y sont ceux du poste de dev.
 // Usage : node tools/scripts/dev-vars.mjs   (variables facultatives : SUPABASE_URL, JWT_SECRET, SHOP_ID)
 import { writeFileSync } from "node:fs";
 import { register } from "tsx/esm/api";
@@ -20,6 +20,9 @@ const vars = {
   SHOP_HASH_KEY: "cle-de-hachage-locale-de-la-boutique-de-demo",
   LP_PSP: "fake",
   FAKE_PSP_SECRET: "secret-local-du-faux-fournisseur-de-paiement",
+  // Emails composés et journalisés, jamais envoyés.
+  LP_EMAIL: "fake",
+  CRON_SECRET: "secret-local-de-la-tache-planifiee-des-emails",
 };
 const file = new URL("../../apps/site/.dev.vars", import.meta.url);
 writeFileSync(

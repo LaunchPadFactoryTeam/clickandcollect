@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     "@launchpadfactoryteam/commerce",
     "@launchpadfactoryteam/config",
     "@launchpadfactoryteam/content",
+    "@launchpadfactoryteam/emails",
     "@launchpadfactoryteam/psp",
     "@launchpadfactoryteam/seo",
     "@launchpadfactoryteam/ui",

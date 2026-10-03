@@ -137,7 +137,7 @@ jobs:
       - name: Build du site de démonstration et du Worker
         run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
       - run: pnpm --filter @launchpadfactoryteam/site exec playwright install --with-deps chromium
-      - name: Tunnel complet de bout en bout (panier, paiement, webhook, confirmation)
+      - name: Tunnel complet de bout en bout (panier, paiement, webhook, confirmation, emails)
         run: pnpm --filter @launchpadfactoryteam/site test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()

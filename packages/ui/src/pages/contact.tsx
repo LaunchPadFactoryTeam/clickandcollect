@@ -31,7 +31,7 @@ const LABELS: Record<Variant, { name: string; email: string; message: string; su
 
 /**
  * Formulaire de contact : champs étiquetés, obligatoires annoncés, consentement non pré-coché.
- * Envoi par POST vers /api/contact (l'envoi par email est branché avec les emails transactionnels).
+ * Envoi par POST vers /api/contact, sans JavaScript ; un champ piège invisible écarte les robots.
  */
 function ContactForm({ variant }: { variant: Variant }) {
   const v = variant.toLowerCase();
@@ -59,6 +59,11 @@ function ContactForm({ variant }: { variant: Variant }) {
           <Required />
         </label>
         <textarea id={id("message")} name="message" rows={6} required />
+      </div>
+      {/* Champ piège : invisible et hors du parcours clavier ; un humain le laisse vide. */}
+      <div className="hp" aria-hidden="true">
+        <label htmlFor={id("site-web")}>Ne pas remplir</label>
+        <input id={id("site-web")} name="site_web" type="text" tabIndex={-1} autoComplete="off" />
       </div>
       <label className="consent">
         <input type="checkbox" name="consentement" value="oui" required />
@@ -126,6 +131,26 @@ export function ContactC({ site }: { site: Site }) {
             <Placeholder ratio="4/3" className="c-card c-card--warm" />
             <ContactFacts site={site} variant="C" />
           </div>
+        </div>
+      </section>
+    </PageShell>
+  );
+}
+
+/** Après l'envoi du formulaire de contact (redirection depuis /api/contact). */
+export function ContactSent({ site, variant }: { site: Site; variant: Variant }) {
+  const v = variant.toLowerCase();
+  return (
+    <PageShell site={site} variant={variant} current="contact">
+      <section className={`cart-page cart-page--${v}`}>
+        <h1 className={`cart-page__title ${v}-cart-title`}>Message envoyé</h1>
+        <div className={`confirm confirm--${v}`}>
+          <p className="confirm__lead">
+            Merci, votre message est bien parti. Nous vous répondons par email au plus vite.
+          </p>
+          <a className={`btn ${v}-btn ${v}-btn--ghost confirm__back`} href="/">
+            Retour à l'accueil
+          </a>
         </div>
       </section>
     </PageShell>
