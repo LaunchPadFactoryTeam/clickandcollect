@@ -82,3 +82,20 @@ test("aucun cookie n'est déposé sur les pages vitrine", async ({ page, context
   for (const path of PAGES) await page.goto(path);
   expect(await context.cookies()).toEqual([]);
 });
+
+test("formulaire de contact sans prestataire d'emails : message clair avec le téléphone de la boutique", async ({
+  page,
+}) => {
+  test.skip(!!process.env.E2E_TUNNEL, "prestataire d'emails configuré dans ce mode");
+  await page.goto("/contact");
+  await page.locator("form.contact-form input[name=nom]").fill("Léa Martin");
+  await page.locator("form.contact-form input[name=email]").fill("lea@exemple.fr");
+  await page.locator("form.contact-form textarea[name=message]").fill("Bonjour");
+  await page.locator("form.contact-form input[name=consentement]").check();
+  const [response] = await Promise.all([
+    page.waitForResponse((r) => r.url().endsWith("/api/contact")),
+    page.locator("form.contact-form button[type=submit]").click(),
+  ]);
+  expect(response.status()).toBe(503);
+  await expect(page.locator("body")).toContainText("appelez");
+});

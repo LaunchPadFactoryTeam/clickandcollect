@@ -96,6 +96,7 @@ export type Database = {
           failed_at: string | null;
           id: number;
           kind: string;
+          last_error: string | null;
           next_attempt_at: string;
           payload: NonNullable<Json>;
           sent_at: string | null;
@@ -107,6 +108,7 @@ export type Database = {
           failed_at?: string | null;
           id?: never;
           kind: string;
+          last_error?: string | null;
           next_attempt_at?: string;
           payload: NonNullable<Json>;
           sent_at?: string | null;
@@ -118,6 +120,7 @@ export type Database = {
           failed_at?: string | null;
           id?: never;
           kind?: string;
+          last_error?: string | null;
           next_attempt_at?: string;
           payload?: NonNullable<Json>;
           sent_at?: string | null;
@@ -587,6 +590,27 @@ export type Database = {
       _table_privs: { Args: Record<PropertyKey, never>; Returns: unknown[] };
       _temptypes: { Args: { "": string }; Returns: string };
       _todo: { Args: Record<PropertyKey, never>; Returns: string };
+      claim_email_outbox: {
+        Args: { p_limit?: number };
+        Returns: {
+          attempts: number;
+          created_at: string;
+          failed_at: string | null;
+          id: number;
+          kind: string;
+          last_error: string | null;
+          next_attempt_at: string;
+          payload: NonNullable<Json>;
+          sent_at: string | null;
+          shop_id: string;
+        }[];
+        SetofOptions: {
+          from: "*";
+          to: "email_outbox";
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
+      };
       col_is_null:
         | {
             Args: { column_name: unknown; description?: string; schema_name: unknown; table_name: unknown };

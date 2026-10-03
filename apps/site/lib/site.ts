@@ -11,6 +11,8 @@ import tokens from "../public/theme/tokens.json";
  */
 export const config = siteJson as ClientConfig;
 export const fontPreload: string[] = tokens.preload ?? [];
+/** Jetons de couleur et de typographie de la boutique, pour la charte des emails. */
+export const themeTokens = { isDark: tokens.isDark, variables: tokens.variables as Record<string, string> };
 
 const env = process.env;
 

@@ -31,6 +31,7 @@ export {
   CartPage,
   ConfirmationPage,
   ContactPage,
+  ContactSentPage,
   HomePage,
   PAGES,
   PaymentPage,

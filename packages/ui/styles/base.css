@@ -834,3 +834,12 @@ a:hover {
 .confirm--c .confirm__facts {
   border-radius: var(--radius-lg);
 }
+
+/* Champ piège du formulaire de contact : hors écran, ignoré des lecteurs d'écran (aria-hidden). */
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

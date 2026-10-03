@@ -1,7 +1,7 @@
 import type { ClientConfig } from "@launchpadfactoryteam/config";
 import type { CatalogProduct } from "@launchpadfactoryteam/content";
 import { CartA, CartB, CartC, ConfirmationStep, PaymentStep } from "./pages/cart.tsx";
-import { ContactA, ContactB, ContactC } from "./pages/contact.tsx";
+import { ContactA, ContactB, ContactC, ContactSent } from "./pages/contact.tsx";
 import { HomeA, HomeB, HomeC } from "./pages/home.tsx";
 import { ProductA, ProductB, ProductC } from "./pages/product.tsx";
 import { ShopA, ShopB, ShopC } from "./pages/shop.tsx";
@@ -64,4 +64,8 @@ export function PaymentPage({ site }: { site: Site }) {
 
 export function ConfirmationPage({ site }: { site: Site }) {
   return <ConfirmationStep site={site} variant={variantOf(site.config, "panier")} />;
+}
+
+export function ContactSentPage({ site }: { site: Site }) {
+  return <ContactSent site={site} variant={variantOf(site.config, "contact")} />;
 }

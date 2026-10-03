@@ -14,6 +14,14 @@ export interface SiteEnv {
   /** « fake » : faux fournisseur de paiement (tests de bout en bout, démonstration), jamais en production. */
   LP_PSP?: string;
   FAKE_PSP_SECRET?: string;
+  /** Clé de l'API transactionnelle Brevo ; sans elle, les emails restent en file. */
+  BREVO_API_KEY?: string;
+  /** Expéditeur des emails (adresse du domaine authentifié) ; à défaut, l'email public de la boutique. */
+  EMAIL_FROM?: string;
+  /** « fake » : emails composés et journalisés mais jamais envoyés (tests, démonstration). */
+  LP_EMAIL?: string;
+  /** Secret de la tâche planifiée qui rejoue la file d'envoi (32 caractères au moins). */
+  CRON_SECRET?: string;
   /** Adresse qui reçoit les alertes (webhook Slack ou équivalent) quand un paiement n'a pas pu être enregistré. */
   ALERT_WEBHOOK_URL?: string;
 }

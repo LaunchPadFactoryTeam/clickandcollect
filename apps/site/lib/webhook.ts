@@ -15,6 +15,8 @@ export interface WebhookDeps {
   hashKey: string;
   record: (order: OrderRecord) => Promise<RecordResult>;
   alert: (message: string, details: Record<string, unknown>) => Promise<void>;
+  /** Après l'enregistrement d'une nouvelle commande : envoi des emails mis en file. */
+  afterRecord?: () => void;
 }
 
 /** Empreinte client : HMAC-SHA256 de l'email normalisé, propre à la boutique. */
@@ -84,6 +86,7 @@ export async function handleWebhook(
   }
   try {
     const result = await deps.record(await toOrderRecord(event.checkout, event, deps.hashKey));
+    if (result.status === "created") deps.afterRecord?.();
     return { status: 200, body: { received: true, ...result } };
   } catch (error) {
     await deps.alert("Paiement reçu mais commande non enregistrée", {
