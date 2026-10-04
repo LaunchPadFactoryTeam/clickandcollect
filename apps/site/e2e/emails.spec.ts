@@ -1,6 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-import pg from "pg";
-import { content, site } from "./helpers";
+import { expect, test } from "@playwright/test";
+import { payOrder, sql } from "./db";
 
 /**
  * Emails transactionnels, avec la base Supabase locale, le faux fournisseur de paiement et le faux prestataire
@@ -8,36 +7,7 @@ import { content, site } from "./helpers";
  */
 test.skip(!process.env.E2E_TUNNEL, "emails : E2E_TUNNEL=1, Supabase local, LP_PSP=fake et LP_EMAIL=fake requis");
 
-const DB_URL = process.env.E2E_DB_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 const CRON_SECRET = "secret-local-de-la-tache-planifiee-des-emails";
-const KEY = `lp:panier:${site.boutique.domaine}`;
-const first = content.catalog.find((p) => p.available && !p.isAlcohol)!;
-
-async function sql<T extends pg.QueryResultRow>(text: string, values: unknown[] = []): Promise<T[]> {
-  const client = new pg.Client({ connectionString: DB_URL });
-  await client.connect();
-  try {
-    return (await client.query<T>(text, values)).rows;
-  } finally {
-    await client.end();
-  }
-}
-
-/** Paie une commande de bout en bout et renvoie son identifiant de session. */
-async function payOrder(page: Page): Promise<string> {
-  await page.goto("/");
-  await page.evaluate(
-    ([k, v]) => localStorage.setItem(k!, v!),
-    [KEY, JSON.stringify([{ productId: first.id, quantity: 1 }])],
-  );
-  await page.goto("/panier");
-  await page.getByRole("button", { name: "Passer au paiement" }).click();
-  await page.getByLabel("Email").fill("emails.e2e@exemple.fr");
-  await page.getByRole("checkbox", { name: /conditions générales/ }).check();
-  await page.getByRole("button", { name: /^Payer/ }).click();
-  await expect(page.getByText(/est confirmée/)).toBeVisible();
-  return new URL(page.url()).searchParams.get("session_id")!;
-}
 
 const emailsOf = (sessionId: string) =>
   sql<{ kind: string; status: string; provider_message_id: string | null }>(
@@ -66,7 +36,7 @@ test("« commande prête » : un seul email, même après un retour arrière pui
   request,
 }) => {
   const sessionId = await payOrder(page);
-  for (const status of ["ready", "preparing", "ready"]) {
+  for (const status of ["preparing", "ready", "preparing", "ready"]) {
     await sql("update orders set status = $1 where stripe_session_id = $2", [status, sessionId]);
   }
   const res = await request.post("/api/emails/outbox", { headers: { "x-lp-cron-secret": CRON_SECRET } });

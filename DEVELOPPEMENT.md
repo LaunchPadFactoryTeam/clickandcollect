@@ -36,7 +36,7 @@ Migrations dans `packages/db/supabase/migrations`, données de démonstration da
 
 ```sh
 cd packages/db
-npx supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
+npx supabase start -x realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
 npx supabase db reset          # rejoue migrations et données de démonstration
 pnpm types                     # régénère src/database.types.ts (vérifié en CI)
 ```
@@ -46,6 +46,14 @@ Avec la pile locale démarrée :
 - `PGHOST=127.0.0.1 PGPORT=54322 PGUSER=postgres PGPASSWORD=postgres PGDATABASE=postgres pnpm test:db` : pgTAP et numérotation concurrente ;
 - `LP_SUPABASE_URL=http://127.0.0.1:54321 LP_SUPABASE_DB_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres LP_SUPABASE_JWT_SECRET=super-secret-jwt-token-with-at-least-32-characters-long pnpm --filter @launchpadfactoryteam/db exec vitest run` :
   tests d'intégration du jeton de site à travers l'API REST.
+
+## Tunnel de paiement, emails et back-office en local (lots 5 à 7)
+
+`node tools/scripts/dev-vars.mjs` écrit `apps/site/.dev.vars` : base locale, faux fournisseur de paiement, faux
+prestataire d'emails et clé publique de Supabase Auth. Après `pnpm --filter @launchpadfactoryteam/site build:worker`
+et `opennextjs-cloudflare preview`, le back-office est sur `/admin` avec le compte de démonstration
+`commandes@maison-ferrand.fr` / `demo-maison-ferrand` (créé par `seed.sql`, base locale uniquement). Les commandes
+de la maquette sont datées du jour du `db reset`. Tests de bout en bout : `E2E_TUNNEL=1 pnpm --filter @launchpadfactoryteam/site test:e2e`.
 
 Sans pile Supabase, `pnpm test:db` crée un Postgres jetable et reproduit les rôles et le schéma `auth` de Supabase
 (`packages/db/test/support/supabase-shim.psql`).

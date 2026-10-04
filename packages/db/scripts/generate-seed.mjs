@@ -16,12 +16,20 @@ vm.runInNewContext(
 const catalog = JSON.parse(readFileSync(join(root, "examples/maison-ferrand/content/catalogue.json"), "utf8"));
 
 const SHOP = "f0000000-0000-4000-8000-000000000001";
+// Compte de démonstration de la base locale, documenté dans DEVELOPPEMENT.md ; jamais créé en production.
+const MERCHANT = "f2000000-0000-4000-8000-000000000001";
+const MERCHANT_EMAIL = "commandes@maison-ferrand.fr";
+const MERCHANT_PASSWORD = "demo-maison-ferrand";
 // Clé de hachage de démonstration uniquement : en production, une clé aléatoire par boutique, en secret.
 const DEMO_HASH_KEY = "demo-cle-de-hachage-maison-ferrand-0001";
+// Dates relatives au jour du `supabase db reset` (heure de Paris) : « Aujourd'hui », « Demain » et « Hier » comme
+// dans la maquette, quel que soit le jour de la démonstration.
+const paris = (dayOffset, time) =>
+  `(((now() at time zone 'Europe/Paris')::date + ${dayOffset}) + time '${time}') at time zone 'Europe/Paris'`;
 const SLOTS = {
-  "Aujourd'hui 16:00 – 19:00": ["2026-10-02 16:00+02", "2026-10-02 19:00+02"],
-  "Demain 10:00 – 12:00": ["2026-10-03 10:00+02", "2026-10-03 12:00+02"],
-  "Hier 16:00 – 19:00": ["2026-10-01 16:00+02", "2026-10-01 19:00+02"],
+  "Aujourd'hui 16:00 – 19:00": [paris(0, "16:00"), paris(0, "19:00")],
+  "Demain 10:00 – 12:00": [paris(1, "10:00"), paris(1, "12:00")],
+  "Hier 16:00 – 19:00": [paris(-1, "16:00"), paris(-1, "19:00")],
 };
 const STATUS = { nouvelle: "new", preparation: "preparing", prete: "ready", retiree: "collected" };
 
@@ -31,9 +39,10 @@ const product = (name) => {
   if (!p) throw new Error(`Produit introuvable dans le catalogue : ${name}`);
   return p;
 };
+// « 2 oct. à 09:12 » dans la maquette, qui se passe le 2 octobre : même décalage par rapport au jour de la démonstration.
 const paidAt = (label) => {
   const [, day, h, m] = /(\d+) oct\. à (\d+):(\d+)/.exec(label);
-  return `2026-10-${day.padStart(2, "0")} ${h}:${m}+02`;
+  return paris(Number(day) - 2, `${h}:${m}`);
 };
 
 let sql = `-- Généré par packages/db/scripts/generate-seed.mjs — ne pas modifier à la main.
@@ -42,6 +51,18 @@ let sql = `-- Généré par packages/db/scripts/generate-seed.mjs — ne pas mod
 
 insert into public.shops (id, slug, name, domain, core_version)
 values (${q(SHOP)}, 'maison-ferrand', 'Maison Ferrand', 'maison-ferrand.fr', '1.0.0-alpha.1');
+
+-- Compte back-office de démonstration (local uniquement) : ${MERCHANT_EMAIL} / ${MERCHANT_PASSWORD}
+insert into auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data,
+                        raw_user_meta_data, created_at, updated_at, confirmation_token, recovery_token,
+                        email_change_token_new, email_change)
+values ('00000000-0000-0000-0000-000000000000', ${q(MERCHANT)}, 'authenticated', 'authenticated', ${q(MERCHANT_EMAIL)},
+        extensions.crypt(${q(MERCHANT_PASSWORD)}, extensions.gen_salt('bf')), now(),
+        '{"provider":"email","providers":["email"]}', '{}', now(), now(), '', '', '', '');
+insert into auth.identities (id, user_id, provider_id, provider, identity_data, created_at, updated_at)
+values (gen_random_uuid(), ${q(MERCHANT)}, ${q(MERCHANT)}, 'email',
+        jsonb_build_object('sub', ${q(MERCHANT)}, 'email', ${q(MERCHANT_EMAIL)}), now(), now());
+insert into public.shop_users (user_id, shop_id) values (${q(MERCHANT)}, ${q(SHOP)});
 
 insert into public.product_availability (shop_id, product_id, available) values
   (${q(SHOP)}, 'terrine', false),
@@ -61,8 +82,8 @@ insert into public.product_availability (shop_id, product_id, available) values
   const [start, end] = SLOTS[o.creneau];
   sql += `
 -- ${o.ref} ${o.client}
-insert into public.orders (id, shop_id, status, slot_start, slot_end, email, phone, customer_hash, total_cents, vat_breakdown, stripe_session_id, paid_at)
-values (${q(id)}, ${q(SHOP)}, ${q(STATUS[o.statut])}, ${q(start)}, ${q(end)}, ${q(o.email)}, ${o.tel === "—" ? "null" : q(o.tel)}, ${q(hash)}, ${total}, ${q(JSON.stringify(vat))}, ${q(`cs_demo_${o.ref.slice(1)}`)}, ${q(paidAt(o.payee))});
+insert into public.orders (id, shop_id, status, slot_start, slot_end, email, phone, customer_name, customer_hash, total_cents, vat_breakdown, stripe_session_id, paid_at)
+values (${q(id)}, ${q(SHOP)}, ${q(STATUS[o.statut])}, ${start}, ${end}, ${q(o.email)}, ${o.tel === "—" ? "null" : q(o.tel)}, ${q(o.client)}, ${q(hash)}, ${total}, ${q(JSON.stringify(vat))}, ${q(`cs_demo_${o.ref.slice(1)}`)}, ${paidAt(o.payee)});
 insert into public.order_items (order_id, shop_id, product_id, name, format, unit_price_cents, vat_rate, quantity, is_alcohol) values
 ${lines.map(({ p, qty }) => `  (${q(id)}, ${q(SHOP)}, ${q(p.id)}, ${q(p.name)}, ${q(p.format)}, ${p.priceTtcCents}, ${p.vatRate}, ${qty}, ${p.isAlcohol})`).join(",\n")};
 `;

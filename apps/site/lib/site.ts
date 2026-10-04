@@ -31,7 +31,8 @@ async function availabilityFromSupabase(): Promise<Availability[]> {
 
 /**
  * Contenus du site. Avec un projet Sanity configuré, ils sont relus à chaque revalidation (au build, puis à chaque
- * appel de /api/revalidate) ; sinon, ce sont les contenus de départ du repo client, figés au build.
+ * appel de /api/revalidate ou enregistrement du back-office) ; sinon, ce sont les contenus de départ du repo client,
+ * figés au build, avec les disponibilités de la base.
  */
 export async function getContent(): Promise<ContentSnapshot> {
   if (env.SANITY_PROJECT_ID && env.SANITY_DATASET) {
@@ -41,9 +42,27 @@ export async function getContent(): Promise<ContentSnapshot> {
       (input, init) => fetch(input, { ...init, next: { tags: ["catalogue"] } }),
     );
   }
-  return contentJson as unknown as ContentSnapshot;
+  const frozen = contentJson as unknown as ContentSnapshot;
+  if (!env.SUPABASE_URL || !env.SUPABASE_SHOP_JWT) return frozen;
+  // Contenus figés, disponibilités du back-office : un produit coupé l'est aussi sans projet Sanity.
+  const rows = await availabilityFromSupabase().catch((error: unknown) => {
+    console.error(JSON.stringify({ level: "error", message: "Disponibilités illisibles", error: String(error) }));
+    return [];
+  });
+  const saved = new Map(rows.map((r) => [r.product_id, r.available]));
+  return { ...frozen, catalog: frozen.catalog.map((p) => ({ ...p, available: saved.get(p.id) ?? p.available })) };
 }
 
 export async function getSite(): Promise<Site> {
   return { config, content: await getContent() };
+}
+
+/**
+ * Disponibilité de départ, avant celles enregistrées en base : les contenus figés du repo client, ou « en vente »
+ * pour tout produit avec un projet Sanity.
+ */
+export function defaultAvailability(): Record<string, boolean> {
+  if (env.SANITY_PROJECT_ID && env.SANITY_DATASET) return {};
+  const frozen = contentJson as unknown as ContentSnapshot;
+  return Object.fromEntries(frozen.catalog.map((p) => [p.id, p.available]));
 }

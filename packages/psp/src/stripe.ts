@@ -177,7 +177,7 @@ export class StripeProvider implements PaymentProvider {
       id: string;
       payment_intent: string | null;
       amount_total: number;
-      customer_details: { email: string | null; phone: string | null } | null;
+      customer_details: { email: string | null; phone: string | null; name: string | null } | null;
       metadata: Record<string, string>;
     }>("GET", `/v1/checkout/sessions/${encodeURIComponent(sessionId)}`);
     const items = await this.call<{ data: StripeLineItem[] }>(
@@ -191,6 +191,7 @@ export class StripeProvider implements PaymentProvider {
       paymentIntentId: session.payment_intent,
       email,
       phone: session.customer_details?.phone ?? null,
+      name: session.customer_details?.name ?? null,
       amountTotalCents: session.amount_total,
       lines: items.data.map(fromStripeLine),
       metadata: decodeMetadata(session.metadata),

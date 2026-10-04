@@ -42,6 +42,7 @@ export async function toOrderRecord(
     slot_end: m.slotEnd,
     email: checkout.email.trim(),
     phone: checkout.phone,
+    customer_name: checkout.name?.trim() || null,
     customer_hash: hash,
     // Le montant réellement débité fait foi.
     total_cents: checkout.amountTotalCents,

@@ -1,4 +1,4 @@
-/** @launchpadfactoryteam/commerce — Panier, montants et TVA, créneaux, règles alcool (lot 4). */
+/** @launchpadfactoryteam/commerce — Panier, montants et TVA, créneaux, règles alcool (lot 4), règles du back-office (lot 7). */
 export {
   addToCart,
   cartCount,
@@ -29,3 +29,22 @@ export {
   type PickupConfig,
   type PickupSlot,
 } from "./slots.ts";
+export {
+  canTransition,
+  dayBanner,
+  groupOrders,
+  isOrderStatus,
+  nextActionLabel,
+  nextStatus,
+  ORDER_STEPS,
+  parisDate,
+  pendingChanges,
+  relativeDay,
+  slotTitle,
+  STATUS_LABELS,
+  type BackOfficeOrder,
+  type DayBanner,
+  type OrderGroup,
+  type OrderStatus,
+  type StatusFilter,
+} from "./backoffice.ts";

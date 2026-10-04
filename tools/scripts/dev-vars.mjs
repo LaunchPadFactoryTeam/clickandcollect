@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Écrit apps/site/.dev.vars : variables du Worker pour tester le tunnel de paiement en local, avec la base Supabase
 // locale, le faux fournisseur de paiement et le faux prestataire d'emails. Jamais pour la production : les secrets y sont ceux du poste de dev.
-// Usage : node tools/scripts/dev-vars.mjs   (variables facultatives : SUPABASE_URL, JWT_SECRET, SHOP_ID)
+// Usage : node tools/scripts/dev-vars.mjs   (variables facultatives : SUPABASE_URL, SUPABASE_ANON_KEY, JWT_SECRET, SHOP_ID)
 import { writeFileSync } from "node:fs";
 import { register } from "tsx/esm/api";
 
@@ -14,8 +14,14 @@ const jwtSecret = process.env.JWT_SECRET ?? "super-secret-jwt-token-with-at-leas
 // Boutique Maison Ferrand de packages/db/supabase/seed.sql.
 const shopId = process.env.SHOP_ID ?? "f0000000-0000-4000-8000-000000000001";
 
+// Clé publique (anon) de la stack Supabase locale, publiée par Supabase : Supabase Auth du back-office.
+const anonKey =
+  process.env.SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0";
+
 const vars = {
   SUPABASE_URL: url,
+  SUPABASE_ANON_KEY: anonKey,
   SUPABASE_SHOP_JWT: signSiteToken({ shopId, jwtSecret }),
   SHOP_HASH_KEY: "cle-de-hachage-locale-de-la-boutique-de-demo",
   LP_PSP: "fake",
