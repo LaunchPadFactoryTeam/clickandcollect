@@ -192,6 +192,35 @@ export type Database = {
         };
         Relationships: [];
       };
+      login_failures: {
+        Row: {
+          created_at: string;
+          email_hash: string;
+          id: number;
+          shop_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email_hash: string;
+          id?: never;
+          shop_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email_hash?: string;
+          id?: never;
+          shop_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "login_failures_shop_id_fkey";
+            columns: ["shop_id"];
+            isOneToOne: false;
+            referencedRelation: "shops";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       order_items: {
         Row: {
           format: string;
@@ -296,6 +325,7 @@ export type Database = {
           anonymized_at: string | null;
           created_at: string;
           customer_hash: string | null;
+          customer_name: string | null;
           email: string | null;
           id: string;
           number: number;
@@ -315,6 +345,7 @@ export type Database = {
           anonymized_at?: string | null;
           created_at?: string;
           customer_hash?: string | null;
+          customer_name?: string | null;
           email?: string | null;
           id?: string;
           number?: number;
@@ -334,6 +365,7 @@ export type Database = {
           anonymized_at?: string | null;
           created_at?: string;
           customer_hash?: string | null;
+          customer_name?: string | null;
           email?: string | null;
           id?: string;
           number?: number;
@@ -352,6 +384,41 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "orders_shop_id_fkey";
+            columns: ["shop_id"];
+            isOneToOne: false;
+            referencedRelation: "shops";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      password_resets: {
+        Row: {
+          created_at: string;
+          expires_at: string;
+          shop_id: string;
+          token_hash: string;
+          used_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          expires_at: string;
+          shop_id: string;
+          token_hash: string;
+          used_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          expires_at?: string;
+          shop_id?: string;
+          token_hash?: string;
+          used_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "password_resets_shop_id_fkey";
             columns: ["shop_id"];
             isOneToOne: false;
             referencedRelation: "shops";
@@ -611,6 +678,7 @@ export type Database = {
           isSetofReturn: true;
         };
       };
+      clear_login_failures: { Args: { p_email: string }; Returns: undefined };
       col_is_null:
         | {
             Args: { column_name: unknown; description?: string; schema_name: unknown; table_name: unknown };
@@ -623,6 +691,7 @@ export type Database = {
             Returns: string;
           }
         | { Args: { column_name: unknown; description?: string; table_name: unknown }; Returns: string };
+      complete_password_reset: { Args: { p_password: string; p_token_hash: string }; Returns: boolean };
       diag:
         | {
             Args: { msg: unknown };
@@ -647,14 +716,18 @@ export type Database = {
       is_empty: { Args: { "": string }; Returns: string };
       isnt_empty: { Args: { "": string }; Returns: string };
       lives_ok: { Args: { "": string }; Returns: string };
+      login_blocked_until: { Args: { p_email: string }; Returns: string };
       no_plan: { Args: Record<PropertyKey, never>; Returns: boolean[] };
       num_failed: { Args: Record<PropertyKey, never>; Returns: number };
       os_name: { Args: Record<PropertyKey, never>; Returns: string };
       pass: { Args: Record<PropertyKey, never>; Returns: string } | { Args: { "": string }; Returns: string };
+      password_reset_valid: { Args: { p_token_hash: string }; Returns: boolean };
       pg_version: { Args: Record<PropertyKey, never>; Returns: string };
       pg_version_num: { Args: Record<PropertyKey, never>; Returns: number };
       pgtap_version: { Args: Record<PropertyKey, never>; Returns: number };
+      record_login_failure: { Args: { p_email: string }; Returns: undefined };
       record_paid_checkout: { Args: { p: Json }; Returns: Json };
+      request_password_reset: { Args: { p_email: string; p_token_hash: string }; Returns: string };
       runtests: { Args: Record<PropertyKey, never>; Returns: string[] } | { Args: { "": string }; Returns: string[] };
       skip: { Args: { "": string }; Returns: string } | { Args: { how_many: number; why: string }; Returns: string };
       throws_ok: { Args: { "": string }; Returns: string };

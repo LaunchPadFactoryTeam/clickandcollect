@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
     "@launchpadfactoryteam/ui",
   ],
   poweredByHeader: false,
+  // Pas de AGENTS.md ni CLAUDE.md générés par `next dev` dans le dépôt.
+  agentRules: false,
   // Sortie attendue par OpenNext ; build:worker réutilise ce build (--skipNextBuild) au lieu de le relancer.
   output: "standalone",
 };

@@ -99,3 +99,19 @@ test("formulaire de contact sans prestataire d'emails : message clair avec le t�
   expect(response.status()).toBe(503);
   await expect(page.locator("body")).toContainText("appelez");
 });
+
+test("back-office sans base configurée : écran de connexion accessible, message clair, pages protégées", async ({
+  page,
+  request,
+}) => {
+  test.skip(!!process.env.E2E_TUNNEL, "base configurée dans ce mode");
+  await page.goto("/admin");
+  await expect(page).toHaveURL(/\/admin\/connexion\?erreur=configuration$/);
+  await expect(page.locator(".bo-notice--error")).toContainText("pas encore configuré");
+  expect(await seriousViolations(page)).toEqual([]);
+  expect(
+    (await request.post("/api/admin/disponibilite", { form: { produit: "miel" }, maxRedirects: 0 })).status(),
+  ).toBe(401);
+  const robots = await (await request.get("/robots.txt")).text();
+  expect(robots).toContain("Disallow: /admin");
+});

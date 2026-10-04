@@ -30,6 +30,7 @@ async function toPayment(page: Page, { marketing = false } = {}) {
 }
 
 async function pay(page: Page, email: string) {
+  await page.getByLabel("Nom sur la carte").fill("Camille Besson");
   await page.getByLabel("Email").fill(email);
   await page.getByRole("checkbox", { name: /conditions générales/ }).check();
   await page.getByRole("button", { name: /^Payer/ }).click();

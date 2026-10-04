@@ -12,6 +12,7 @@ export interface OrderRecord {
   slot_end: string;
   email: string;
   phone: string | null;
+  customer_name: string | null;
   customer_hash: string;
   total_cents: number;
   vat_breakdown: Record<string, number>;

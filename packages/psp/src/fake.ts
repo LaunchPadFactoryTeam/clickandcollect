@@ -50,7 +50,11 @@ export class FakeProvider implements PaymentProvider {
   }
 
   /** Événement « session payée » tel que Stripe l'enverrait, signé avec le secret du faux fournisseur. */
-  async paidEvent(sessionId: string, customer: { email: string; phone?: string }, account = FAKE_ACCOUNT_ID) {
+  async paidEvent(
+    sessionId: string,
+    customer: { email: string; phone?: string; name?: string },
+    account = FAKE_ACCOUNT_ID,
+  ) {
     // Identifiant stable pour une même session (un rejeu garde le même), distinct d'une session à l'autre.
     const rawBody = JSON.stringify({
       id: `evt_fake_${(await sha256Hex(sessionId)).slice(0, 24)}`,
@@ -60,7 +64,7 @@ export class FakeProvider implements PaymentProvider {
         object: {
           id: sessionId,
           payment_status: "paid",
-          customer_details: { email: customer.email, phone: customer.phone ?? null },
+          customer_details: { email: customer.email, phone: customer.phone ?? null, name: customer.name ?? null },
         },
       },
     });
@@ -74,7 +78,11 @@ export class FakeProvider implements PaymentProvider {
       type: string;
       account?: string;
       data: {
-        object: { id: string; payment_status?: string; customer_details?: { email: string; phone: string | null } };
+        object: {
+          id: string;
+          payment_status?: string;
+          customer_details?: { email: string; phone: string | null; name?: string | null };
+        };
       };
     };
     const base = { eventId: event.id, type: event.type, account: event.account ?? null };
@@ -96,6 +104,7 @@ export class FakeProvider implements PaymentProvider {
         paymentIntentId: `pi_fake_${event.id.slice(-16)}`,
         email: object.customer_details?.email ?? "",
         phone: object.customer_details?.phone ?? null,
+        name: object.customer_details?.name ?? null,
         amountTotalCents: session.lines.reduce((sum, l) => sum + l.unitAmountCents * l.quantity, 0),
         lines: session.lines,
         metadata: decodeMetadata(session.metadata),

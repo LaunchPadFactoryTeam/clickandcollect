@@ -1,10 +1,11 @@
 {
   "name": "@launchpadfactoryteam/ui",
   "version": "1.0.0-alpha.1",
-  "description": "Composants partagés, variantes A, B, C des pages et îlots panier (lots 3 et 4)",
+  "description": "Composants partagés, variantes A, B, C des pages, îlots panier et back-office commerçant (lots 3, 4 et 7)",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./admin": "./src/admin/index.ts",
     "./styles/*": "./styles/*"
   },
   "scripts": {

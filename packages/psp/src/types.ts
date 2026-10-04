@@ -51,6 +51,8 @@ export interface PaidCheckout {
   paymentIntentId: string | null;
   email: string;
   phone: string | null;
+  /** Nom saisi au paiement (titulaire de la carte), affiché au comptoir. */
+  name: string | null;
   amountTotalCents: number;
   lines: CheckoutLine[];
   metadata: CheckoutMetadata;

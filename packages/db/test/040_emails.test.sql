@@ -7,6 +7,7 @@ select plan(11);
 -- Commerçant de A : passe la commande à « prête », revient en arrière, repasse à « prête ».
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-00000000000a","role":"authenticated"}', true);
+update public.orders set status = 'preparing' where id = 'a0000000-0000-0000-0000-000000000001';
 update public.orders set status = 'ready' where id = 'a0000000-0000-0000-0000-000000000001';
 reset role;
 select is((select count(*)::int from public.email_outbox where kind = 'order_ready'

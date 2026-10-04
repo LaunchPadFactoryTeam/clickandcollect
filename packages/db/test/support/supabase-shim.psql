@@ -15,14 +15,22 @@ $$;
 alter role service_role bypassrls;
 grant anon, authenticated, service_role to authenticator;
 
-create extension if not exists pgcrypto;
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
 
 create schema if not exists auth;
 grant usage on schema auth to anon, authenticated, service_role;
 
 create table if not exists auth.users (
   id uuid primary key default gen_random_uuid(),
-  email text unique
+  email text unique,
+  encrypted_password text,
+  updated_at timestamptz
+);
+
+create table if not exists auth.sessions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users (id) on delete cascade
 );
 
 create or replace function auth.jwt() returns jsonb

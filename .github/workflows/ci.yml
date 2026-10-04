@@ -58,7 +58,7 @@ jobs:
           version: latest
       - run: sudo apt-get update && sudo apt-get install -y postgresql-client libtap-parser-sourcehandler-pgtap-perl
       # Postgres, passerelle et PostgREST seulement ; migrations et données de démonstration appliquées au démarrage.
-      - run: supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
+      - run: supabase start -x realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
         working-directory: packages/db
       - name: Tests pgTAP et numérotation concurrente
         run: bash tools/scripts/test-db.sh
@@ -130,14 +130,17 @@ jobs:
         with:
           version: latest
       # Base locale avec la boutique de démonstration (seed) ; le site s'y connecte avec un jeton de site.
-      - run: supabase start -x gotrue,realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
+      - run: supabase start -x realtime,storage-api,imgproxy,studio,edge-runtime,logflare,vector,supavisor,postgres-meta,mailpit
         working-directory: packages/db
-      - name: Variables du Worker (faux fournisseur de paiement, base locale)
-        run: node tools/scripts/dev-vars.mjs
+      - name: Variables du Worker (faux fournisseur de paiement, base locale, Supabase Auth)
+        run: |
+          export SUPABASE_ANON_KEY="$(supabase status -o env | sed -n 's/^ANON_KEY="\{0,1\}\([^"]*\)"\{0,1\}$/\1/p')"
+          node ../../tools/scripts/dev-vars.mjs
+        working-directory: packages/db
       - name: Build du site de démonstration et du Worker
         run: pnpm turbo run build:worker --filter=@launchpadfactoryteam/site
       - run: pnpm --filter @launchpadfactoryteam/site exec playwright install --with-deps chromium
-      - name: Tunnel complet de bout en bout (panier, paiement, webhook, confirmation, emails)
+      - name: Tunnel complet de bout en bout (panier, paiement, webhook, confirmation, emails, back-office)
         run: pnpm --filter @launchpadfactoryteam/site test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()

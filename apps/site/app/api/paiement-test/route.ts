@@ -19,9 +19,9 @@ export async function POST(request: Request) {
   const provider = getProvider(e);
   const shopId = shopIdFromToken(e.SUPABASE_SHOP_JWT);
   if (!(provider instanceof FakeProvider) || !shopId || !e.SHOP_HASH_KEY) return new Response(null, { status: 404 });
-  const { sessionId, email, phone } = (await request.json().catch(() => ({}))) as Record<string, string>;
+  const { sessionId, email, phone, name } = (await request.json().catch(() => ({}))) as Record<string, string>;
   if (!sessionId || !email) return Response.json({ error: "sessionId et email attendus" }, { status: 400 });
-  const { rawBody, signature } = await provider.paidEvent(sessionId, { email, phone });
+  const { rawBody, signature } = await provider.paidEvent(sessionId, { email, phone, name });
   const { status, body } = await handleWebhook(rawBody, signature, {
     provider,
     shopId,

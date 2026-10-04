@@ -229,6 +229,7 @@ function FakePaymentForm({ created, variant }: { created: Created; variant: "A" 
         sessionId: created.sessionId,
         email: form.get("email"),
         phone: form.get("telephone") || undefined,
+        name: form.get("nom") || undefined,
       }),
     });
     if (res.ok) window.location.assign(`/confirmation?session_id=${encodeURIComponent(created.sessionId)}`);
@@ -241,6 +242,8 @@ function FakePaymentForm({ created, variant }: { created: Created; variant: "A" 
   return (
     <form className="pay__fake" onSubmit={pay}>
       <p className="pay__badge">Mode test : aucun paiement réel</p>
+      <label htmlFor="pay-nom">Nom sur la carte</label>
+      <input id="pay-nom" name="nom" type="text" autoComplete="cc-name" required />
       <label htmlFor="pay-email">Email</label>
       <input id="pay-email" name="email" type="email" autoComplete="email" required />
       <label htmlFor="pay-tel">Téléphone (facultatif)</label>
