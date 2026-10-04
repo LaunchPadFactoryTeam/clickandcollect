@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     "@launchpadfactoryteam/content",
     "@launchpadfactoryteam/emails",
     "@launchpadfactoryteam/psp",
+    "@launchpadfactoryteam/rgpd",
     "@launchpadfactoryteam/seo",
     "@launchpadfactoryteam/ui",
   ],

@@ -22,6 +22,7 @@ export {
 } from "./shared.tsx";
 export { Footer, Header, LEGAL_LINKS, navLabel, PageShell, type Section } from "./chrome.tsx";
 export { ProductCard, ProductList } from "./pages/cards.tsx";
+export { LegalPage } from "./pages/legal.tsx";
 export { ContactFacts, PickupFacts } from "./pages/facts.tsx";
 export { cartProducts, Steps } from "./pages/cart.tsx";
 export { CartView, type CartProduct, type CartTexts } from "./client/CartView.tsx";

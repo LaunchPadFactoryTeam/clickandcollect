@@ -6,6 +6,19 @@ boutique:
   adresse: "12 rue des Halles, 34000 Montpellier"
   telephone: "04 00 00 00 00"
   email_notifications: "commandes@maison-exemple.fr"
+# Obligations légales : reprises dans les mentions légales, les CGV et la politique de confidentialité.
+# Valeurs d'exemple à remplacer par celles de la société du commerçant avant toute mise en ligne.
+legal:
+  raison_sociale: "Maison Exemple SARL"
+  forme_juridique: "SARL"
+  capital: "10 000 €"
+  siret: "000 000 000 00000"
+  rcs: "RCS Montpellier"
+  directeur_publication: "Prénom Nom"
+  contact_rgpd: "donnees@maison-exemple.fr"
+  mediateur: { nom: "Nom du médiateur de la consommation", site: "https://www.example.fr" }
+  # Sans audit RGAA : non_conforme. Après un audit : partiellement_conforme ou totalement_conforme, avec date_audit.
+  accessibilite: { etat: "non_conforme" }
 design:
   couleurs: { primaire: "#2F4A3A", secondaire: "#C8A24A", fond: "#FAF8F3" }
   # Fichiers attendus : assets/fonts/playfair-display-400.woff2, -600.woff2, work-sans-400.woff2, -600.woff2

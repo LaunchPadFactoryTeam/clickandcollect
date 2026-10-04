@@ -13,6 +13,13 @@ export function cadrageExample(): Record<string, any> {
       telephone: "04 00 00 00 00",
       email_notifications: "commandes@maison-exemple.fr",
     },
+    legal: {
+      raison_sociale: "Maison Exemple SARL",
+      siret: "123 456 789 00012",
+      directeur_publication: "Paul Martin",
+      contact_rgpd: "donnees@maison-exemple.fr",
+      mediateur: { nom: "Médiateur de démonstration", site: "https://www.example.fr" },
+    },
     design: {
       couleurs: { primaire: "#2F4A3A", secondaire: "#C8A24A", fond: "#FAF8F3" },
       typographies: { titres: "Playfair Display", texte: "Work Sans" },

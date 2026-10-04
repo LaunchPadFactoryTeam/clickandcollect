@@ -5,7 +5,7 @@
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   // Toutes les 5 minutes : rejeu des emails en attente (secret CRON_SECRET du Worker).
-  "triggers": { "crons": ["*/5 * * * *"] },
+  "triggers": { "crons": ["*/5 * * * *", "0 3 1 * *"] },
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "lp-demo" }],
   // Bucket à créer une fois : wrangler r2 bucket create lp-demo-opennext-cache

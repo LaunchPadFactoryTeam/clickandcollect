@@ -1,14 +1,25 @@
 {
   "name": "@launchpadfactoryteam/rgpd",
   "version": "1.0.0-alpha.1",
-  "description": "Hachage HMAC, consentements, export, effacement, conservation (lot 8)",
+  "description": "Empreintes HMAC, durées de conservation, pages légales et modèles documentaires (lot 8)",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run",
     "lint": "eslint ."
-  }
+  },
+  "bin": {
+    "lp-rgpd": "./bin/lp-rgpd.mjs"
+  },
+  "dependencies": {
+    "@launchpadfactoryteam/config": "workspace:*",
+    "tsx": "^4.23.15"
+  },
+  "files": [
+    "src",
+    "bin"
+  ]
 }

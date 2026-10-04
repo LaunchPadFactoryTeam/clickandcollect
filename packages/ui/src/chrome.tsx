@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
+import { accessibilityLabel } from "@launchpadfactoryteam/rgpd";
 import { displayPhone, splitAddress } from "@launchpadfactoryteam/seo";
 import { CartLink } from "./client/CartLink.tsx";
 import { EVIN_TEXT, type Site, type Variant } from "./shared.tsx";
 
-export type Section = "accueil" | "boutique" | "epicerie" | "contact" | "panier";
-type NavSection = Exclude<Section, "accueil" | "panier">;
+/** « legal » : pages légales, hors de la navigation principale. */
+export type Section = "accueil" | "boutique" | "epicerie" | "contact" | "panier" | "legal";
+type NavSection = Exclude<Section, "accueil" | "panier" | "legal">;
 
 /** Libellés propres à chaque template ; les liens et les pages sont les mêmes. */
 const LABELS: Record<
@@ -45,7 +47,8 @@ export const LEGAL_LINKS = [
   ["/cgv", "Conditions générales de vente"],
   ["/mentions-legales", "Mentions légales"],
   ["/cookies", "Gestion des cookies"],
-  ["/accessibilite", "Accessibilité : conformité partielle"],
+  // Libellé remplacé à l'affichage par l'état déclaré dans la configuration (accessibilityLabel).
+  ["/accessibilite", "Accessibilité"],
 ] as const;
 
 const SECTION_HREF: Record<NavSection, string> = {
@@ -127,7 +130,7 @@ export function Footer({ site, variant }: { site: Site; variant: Variant }) {
             <ul className="ftr__list">
               {LEGAL_LINKS.map(([href, label]) => (
                 <li key={href}>
-                  <a href={href}>{label}</a>
+                  <a href={href}>{href === "/accessibilite" ? accessibilityLabel(config) : label}</a>
                 </li>
               ))}
             </ul>

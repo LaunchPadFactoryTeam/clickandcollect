@@ -91,6 +91,40 @@ export const configSchema = z.strictObject({
     }),
     email_notifications: z.email(),
   }),
+  // Obligations légales (lot 8) : mentions légales, CGV, politique de confidentialité, déclaration d'accessibilité.
+  legal: z.strictObject({
+    raison_sociale: z.string().min(1),
+    forme_juridique: z.string().min(1).optional(),
+    capital: z.string().min(1).optional(),
+    siret: z
+      .string()
+      .transform((s) => s.replace(/\s/g, ""))
+      .pipe(z.string().regex(/^\d{14}$/, { error: "SIRET attendu : 14 chiffres" })),
+    rcs: z.string().min(1).optional(),
+    tva_intracommunautaire: z
+      .string()
+      .transform((s) => s.replace(/\s/g, "").toUpperCase())
+      .pipe(z.string().regex(/^FR[0-9A-Z]{2}\d{9}$/, { error: "Numéro de TVA attendu : FR suivi de 11 caractères" }))
+      .optional(),
+    // À défaut, l'adresse de la boutique.
+    adresse_siege: z.string().min(1).optional(),
+    directeur_publication: z.string().min(1),
+    // Adresse à laquelle les clients exercent leurs droits (accès, effacement…).
+    contact_rgpd: z.email(),
+    // Médiateur de la consommation, obligatoire pour la vente aux particuliers.
+    mediateur: z.strictObject({ nom: z.string().min(1), site: z.url() }),
+    accessibilite: z
+      .strictObject({
+        // Sans audit RGAA, le site ne peut pas se déclarer partiellement ni totalement conforme.
+        etat: z.enum(["non_conforme", "partiellement_conforme", "totalement_conforme"]).default("non_conforme"),
+        date_audit: z.string().regex(DATE, { error: "Date attendue au format AAAA-MM-JJ" }).optional(),
+        taux_conformite: z.number().min(0).max(100).optional(),
+      })
+      .refine((a) => a.etat === "non_conforme" || a.date_audit, {
+        error: "Une conformité partielle ou totale suppose un audit : renseigner date_audit",
+      })
+      .default({ etat: "non_conforme" }),
+  }),
   design: z.strictObject({
     couleurs: z.strictObject({ primaire: couleur, secondaire: couleur, fond: couleur }),
     typographies: z.strictObject({ titres: police, texte: police }),

@@ -133,5 +133,6 @@ describe("robots, llms.txt, sitemap", () => {
     expect(paths).toContain("/boutique/fromages");
     expect(paths).toContain("/produits/miel-de-chataignier");
     expect(paths).toHaveLength(4 + 6 + 8);
+    expect(sitemapPaths(content, ["/cgv"]).at(-1)).toBe("/cgv");
   });
 });

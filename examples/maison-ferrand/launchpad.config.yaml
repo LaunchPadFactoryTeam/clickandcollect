@@ -5,6 +5,15 @@ boutique:
   adresse: "12 rue des Halles, 34000 Montpellier"
   telephone: "04 67 00 00 00"
   email_notifications: "commandes@maison-ferrand.fr"
+legal:
+  raison_sociale: "Maison Ferrand"
+  forme_juridique: "SARL"
+  capital: "10 000 €"
+  siret: "000 000 000 00011"
+  rcs: "RCS Montpellier"
+  directeur_publication: "Claire Ferrand"
+  contact_rgpd: "donnees@maison-ferrand.fr"
+  mediateur: { nom: "Médiateur de la consommation (démonstration)", site: "https://www.example.fr/mediateur" }
 design:
   couleurs: { primaire: "#2F4A3A", secondaire: "#B08D57", fond: "#FAF8F4" }
   typographies:

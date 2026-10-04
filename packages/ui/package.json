@@ -17,6 +17,7 @@
     "@launchpadfactoryteam/commerce": "workspace:*",
     "@launchpadfactoryteam/config": "workspace:*",
     "@launchpadfactoryteam/content": "workspace:*",
+    "@launchpadfactoryteam/rgpd": "workspace:*",
     "@launchpadfactoryteam/seo": "workspace:*"
   },
   "devDependencies": {

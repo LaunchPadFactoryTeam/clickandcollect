@@ -23,11 +23,13 @@ export function categorySlugs(content: Pick<ContentSnapshot, "catalog">): string
 }
 
 /** Toutes les URL publiques du site, pour le sitemap. */
-export function sitemapPaths(content: Pick<ContentSnapshot, "catalog">): string[] {
+/** Pages du sitemap ; `extra` : pages statiques supplémentaires (pages légales, en fin de liste). */
+export function sitemapPaths(content: Pick<ContentSnapshot, "catalog">, extra: readonly string[] = []): string[] {
   return [
     ...STATIC_PAGES,
     ...categorySlugs(content).map((c) => `/boutique/${c}`),
     ...content.catalog.map((p) => `/produits/${p.slug}`),
+    ...extra,
   ];
 }
 

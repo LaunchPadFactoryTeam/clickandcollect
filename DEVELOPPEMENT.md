@@ -55,6 +55,17 @@ et `opennextjs-cloudflare preview`, le back-office est sur `/admin` avec le comp
 `commandes@maison-ferrand.fr` / `demo-maison-ferrand` (créé par `seed.sql`, base locale uniquement). Les commandes
 de la maquette sont datées du jour du `db reset`. Tests de bout en bout : `E2E_TUNNEL=1 pnpm --filter @launchpadfactoryteam/site test:e2e`.
 
+## Données personnelles (lot 8)
+
+- Pages légales générées depuis la section `legal` de `launchpad.config.yaml` (`/mentions-legales`, `/cgv`,
+  `/confidentialite`, `/cookies`, `/mes-droits`, `/accessibilite`).
+- `pnpm --filter @launchpadfactoryteam/rgpd exec lp-rgpd documents <dossier du site>` : contrat de sous-traitance et
+  fiche du registre des traitements, en Markdown.
+- Durées de conservation appliquées le 1er de chaque mois par la tâche planifiée du Worker (`/api/rgpd/conservation`).
+- Accès et effacement, en attendant le hub, depuis l'éditeur SQL de Supabase :
+  `select public.export_customer_data('<id de la boutique>', 'client@exemple.fr');` et
+  `select public.erase_customer_data('<id de la boutique>', 'client@exemple.fr');` (journalisés dans `privacy_requests`).
+
 Sans pile Supabase, `pnpm test:db` crée un Postgres jetable et reproduit les rôles et le schéma `auth` de Supabase
 (`packages/db/test/support/supabase-shim.psql`).
 

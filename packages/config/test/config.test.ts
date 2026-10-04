@@ -160,6 +160,45 @@ describe("schéma de configuration", () => {
   });
 });
 
+describe("informations légales (lot 8)", () => {
+  it("exige la section legal : un site ne part pas sans ses mentions obligatoires", () => {
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => delete c.legal),
+        { now: NOW },
+      ),
+    );
+    expect(issues.map((i) => i.path)).toContain("legal");
+  });
+
+  it("normalise le SIRET et la TVA ; refuse un SIRET incomplet", () => {
+    const config = validateConfig(
+      withChange((c) => Object.assign(c.legal, { tva_intracommunautaire: "fr 12 123456789" })),
+      { now: NOW },
+    );
+    expect(config.legal.siret).toBe("12345678900012");
+    expect(config.legal.tva_intracommunautaire).toBe("FR12123456789");
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => (c.legal.siret = "123 456")),
+        { now: NOW },
+      ),
+    );
+    expect(issues.map((i) => i.path)).toContain("legal.siret");
+  });
+
+  it("accessibilité : non conforme par défaut ; une conformité déclarée exige une date d'audit", () => {
+    expect(validateConfig(cadrageExample(), { now: NOW }).legal.accessibilite).toEqual({ etat: "non_conforme" });
+    const issues = issuesOf(() =>
+      validateConfig(
+        withChange((c) => (c.legal.accessibilite = { etat: "partiellement_conforme" })),
+        { now: NOW },
+      ),
+    );
+    expect(issues.map((i) => i.path)).toContain("legal.accessibilite");
+  });
+});
+
 describe("téléphone", () => {
   it("T1.13 normalise « 04 67 00 00 00 » en E.164", () => {
     expect(toE164("04 67 00 00 00")).toBe("+33467000000");
