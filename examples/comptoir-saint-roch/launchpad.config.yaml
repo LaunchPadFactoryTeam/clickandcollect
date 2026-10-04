@@ -5,6 +5,15 @@ boutique:
   adresse: "7 place Saint-Roch, 34000 Montpellier"
   telephone: "04 67 00 00 01"
   email_notifications: "bonjour@comptoir-saint-roch.fr"
+legal:
+  raison_sociale: "Comptoir Saint-Roch"
+  forme_juridique: "SARL"
+  capital: "10 000 €"
+  siret: "000 000 000 00037"
+  rcs: "RCS Montpellier"
+  directeur_publication: "Inès Roch"
+  contact_rgpd: "donnees@comptoir-saint-roch.fr"
+  mediateur: { nom: "Médiateur de la consommation (démonstration)", site: "https://www.example.fr/mediateur" }
 design:
   couleurs: { primaire: "#A8572C", secondaire: "#5C6B42", fond: "#FDF6EC" }
   typographies:

@@ -15,7 +15,7 @@ import { composeEmail, shopInfo } from "../lib/emails";
 import type { StoredOrder } from "../lib/orders";
 import { handleWebhook } from "../lib/webhook";
 // @ts-expect-error script JavaScript sans déclaration de types
-import { writeWorkerEntry } from "../scripts/worker-entry.mjs";
+import { RETENTION_CRON, writeWorkerEntry } from "../scripts/worker-entry.mjs";
 
 const config = siteJson as unknown as ClientConfig;
 const settings = (contentJson as unknown as { pages: SiteContent }).pages.settings;
@@ -196,6 +196,19 @@ describe("déclenchement des envois", () => {
     );
     await Promise.all(pending);
     expect(fetch).toHaveBeenCalledWith("https://worker.internal/api/emails/outbox", {
+      method: "POST",
+      headers: { "x-lp-cron-secret": "s".repeat(32) },
+    });
+    // Le 1er du mois : durées de conservation (lot 8).
+    await entry.default.scheduled(
+      { cron: RETENTION_CRON },
+      { WORKER_SELF_REFERENCE: { fetch }, CRON_SECRET: "s".repeat(32) },
+      {
+        waitUntil: (p: Promise<unknown>) => pending.push(p),
+      },
+    );
+    await Promise.all(pending);
+    expect(fetch).toHaveBeenLastCalledWith("https://worker.internal/api/rgpd/conservation", {
       method: "POST",
       headers: { "x-lp-cron-secret": "s".repeat(32) },
     });

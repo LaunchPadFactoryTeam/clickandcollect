@@ -1,10 +1,6 @@
 import { computeTotals } from "@launchpadfactoryteam/commerce";
-import {
-  hmacSha256Hex,
-  WebhookSignatureError,
-  type PaidCheckout,
-  type PaymentProvider,
-} from "@launchpadfactoryteam/psp";
+import { WebhookSignatureError, type PaidCheckout, type PaymentProvider } from "@launchpadfactoryteam/psp";
+import { customerHash } from "@launchpadfactoryteam/rgpd";
 import type { OrderRecord, RecordResult } from "./orders";
 import type { HandlerResult } from "./checkout";
 
@@ -19,8 +15,8 @@ export interface WebhookDeps {
   afterRecord?: () => void;
 }
 
-/** Empreinte client : HMAC-SHA256 de l'email normalisé, propre à la boutique. */
-export const customerHash = (key: string, email: string) => hmacSha256Hex(key, email.trim().toLowerCase());
+/** Empreinte client : HMAC-SHA256 de l'email normalisé, propre à la boutique (lot 8). */
+export { customerHash };
 
 export async function toOrderRecord(
   checkout: PaidCheckout,

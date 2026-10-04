@@ -25,6 +25,7 @@
     "@launchpadfactoryteam/content": "workspace:*",
     "@launchpadfactoryteam/emails": "workspace:*",
     "@launchpadfactoryteam/psp": "workspace:*",
+    "@launchpadfactoryteam/rgpd": "workspace:*",
     "@launchpadfactoryteam/seo": "workspace:*",
     "@launchpadfactoryteam/theme": "workspace:*",
     "@launchpadfactoryteam/ui": "workspace:*",

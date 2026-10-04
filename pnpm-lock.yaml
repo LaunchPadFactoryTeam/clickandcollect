@@ -64,6 +64,9 @@ importers:
       '@launchpadfactoryteam/psp':
         specifier: workspace:*
         version: link:../../packages/psp
+      '@launchpadfactoryteam/rgpd':
+        specifier: workspace:*
+        version: link:../../packages/rgpd
       '@launchpadfactoryteam/seo':
         specifier: workspace:*
         version: link:../../packages/seo
@@ -235,7 +238,14 @@ importers:
         specifier: ^4.23.15
         version: 4.23.15
 
-  packages/rgpd: {}
+  packages/rgpd:
+    dependencies:
+      '@launchpadfactoryteam/config':
+        specifier: workspace:*
+        version: link:../config
+      tsx:
+        specifier: ^4.23.15
+        version: 4.23.15
 
   packages/seo:
     dependencies:
@@ -279,6 +289,9 @@ importers:
       '@launchpadfactoryteam/content':
         specifier: workspace:*
         version: link:../content
+      '@launchpadfactoryteam/rgpd':
+        specifier: workspace:*
+        version: link:../rgpd
       '@launchpadfactoryteam/seo':
         specifier: workspace:*
         version: link:../seo

@@ -5,6 +5,7 @@ export type Database = {
     Tables: {
       consents: {
         Row: {
+          archived_at: string | null;
           customer_hash: string;
           email: string | null;
           given_at: string;
@@ -15,6 +16,7 @@ export type Database = {
           withdrawn_at: string | null;
         };
         Insert: {
+          archived_at?: string | null;
           customer_hash: string;
           email?: string | null;
           given_at?: string;
@@ -25,6 +27,7 @@ export type Database = {
           withdrawn_at?: string | null;
         };
         Update: {
+          archived_at?: string | null;
           customer_hash?: string;
           email?: string | null;
           given_at?: string;
@@ -426,6 +429,47 @@ export type Database = {
           },
         ];
       };
+      privacy_requests: {
+        Row: {
+          consents_count: number;
+          created_at: string;
+          email_hash: string;
+          id: number;
+          kind: string;
+          orders_count: number;
+          requested_by: string | null;
+          shop_id: string;
+        };
+        Insert: {
+          consents_count?: number;
+          created_at?: string;
+          email_hash: string;
+          id?: never;
+          kind: string;
+          orders_count?: number;
+          requested_by?: string | null;
+          shop_id: string;
+        };
+        Update: {
+          consents_count?: number;
+          created_at?: string;
+          email_hash?: string;
+          id?: never;
+          kind?: string;
+          orders_count?: number;
+          requested_by?: string | null;
+          shop_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "privacy_requests_shop_id_fkey";
+            columns: ["shop_id"];
+            isOneToOne: false;
+            referencedRelation: "shops";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       product_availability: {
         Row: {
           available: boolean;
@@ -657,6 +701,7 @@ export type Database = {
       _table_privs: { Args: Record<PropertyKey, never>; Returns: unknown[] };
       _temptypes: { Args: { "": string }; Returns: string };
       _todo: { Args: Record<PropertyKey, never>; Returns: string };
+      apply_retention: { Args: Record<PropertyKey, never>; Returns: Json };
       claim_email_outbox: {
         Args: { p_limit?: number };
         Returns: {
@@ -707,6 +752,8 @@ export type Database = {
           };
       diag_test_name: { Args: { "": string }; Returns: string };
       do_tap: { Args: Record<PropertyKey, never>; Returns: string[] } | { Args: { "": string }; Returns: string[] };
+      erase_customer_data: { Args: { p_email: string; p_shop: string }; Returns: Json };
+      export_customer_data: { Args: { p_email: string; p_shop: string }; Returns: Json };
       fail: { Args: Record<PropertyKey, never>; Returns: string } | { Args: { "": string }; Returns: string };
       findfuncs: { Args: { "": string }; Returns: string[] };
       finish: { Args: { exception_on_failure?: boolean }; Returns: string[] };

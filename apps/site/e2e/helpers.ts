@@ -22,6 +22,7 @@ export const content = json("content.json") as {
 
 export const site = json("site.json") as {
   boutique: { nom: string; domaine: string };
+  legal: { raison_sociale: string; directeur_publication: string; contact_rgpd: string };
   design: { variantes: { accueil: string } };
   features: { alcool: boolean };
   retrait: PickupConfig;

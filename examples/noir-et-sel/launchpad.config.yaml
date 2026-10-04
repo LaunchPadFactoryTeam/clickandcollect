@@ -5,6 +5,15 @@ boutique:
   adresse: "84 rue Saint-Maur, 75011 Paris"
   telephone: "01 43 00 00 00"
   email_notifications: "commandes@noiretsel.fr"
+legal:
+  raison_sociale: "Noir & Sel"
+  forme_juridique: "SAS"
+  capital: "10 000 €"
+  siret: "000 000 000 00029"
+  rcs: "RCS Montpellier"
+  directeur_publication: "Hugo Martel"
+  contact_rgpd: "donnees@noir-et-sel.fr"
+  mediateur: { nom: "Médiateur de la consommation (démonstration)", site: "https://www.example.fr/mediateur" }
 design:
   couleurs: { primaire: "#F2F0ED", secondaire: "#C2565C", fond: "#121110" }
   typographies:

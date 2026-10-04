@@ -4,7 +4,16 @@ import { content, seriousViolations, site } from "./helpers";
 const product = content.catalog.find((p) => p.available && !p.isAlcohol)!;
 const offProduct = content.catalog.find((p) => !p.available);
 const category = product.category.slug;
-const PAGES = ["/", "/boutique", `/boutique/${category}`, `/produits/${product.slug}`, "/epicerie", "/contact"];
+const LEGAL = ["/mentions-legales", "/cgv", "/confidentialite", "/cookies", "/mes-droits", "/accessibilite"];
+const PAGES = [
+  "/",
+  "/boutique",
+  `/boutique/${category}`,
+  `/produits/${product.slug}`,
+  "/epicerie",
+  "/contact",
+  ...LEGAL,
+];
 
 for (const path of PAGES) {
   test(`${path} : aucune violation d'accessibilité sérieuse ou critique (axe)`, async ({ page }) => {
@@ -114,4 +123,31 @@ test("back-office sans base configurée : écran de connexion accessible, messag
   ).toBe(401);
   const robots = await (await request.get("/robots.txt")).text();
   expect(robots).toContain("Disallow: /admin");
+});
+
+test("pages légales : informations de la société injectées, liens du pied de page, présentes dans le sitemap", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/mentions-legales");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Mentions légales");
+  await expect(page.locator("main")).toContainText(site.legal.raison_sociale);
+  await expect(page.locator("main")).toContainText(site.legal.directeur_publication);
+  await page.goto("/confidentialite");
+  await expect(page.locator("main")).toContainText(site.legal.contact_rgpd);
+  const footer = page.getByRole("contentinfo");
+  for (const name of [
+    "Conditions générales de vente",
+    "Mentions légales",
+    "Gestion des cookies",
+    "Exercer mes droits",
+  ]) {
+    await expect(footer.getByRole("link", { name })).toBeVisible();
+  }
+  await expect(
+    footer.getByRole("link", { name: /^Accessibilité : (non|partiellement|totalement) conforme$/ }),
+  ).toHaveAttribute("href", "/accessibilite");
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  for (const path of LEGAL) expect(sitemap).toContain(`${path}</loc>`);
+  expect((await page.goto("/page-inconnue"))?.status()).toBe(404);
 });
